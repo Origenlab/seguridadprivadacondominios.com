@@ -1,0 +1,393 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Process from '@/components/Process.astro';
+import BadgeCard from '@/components/BadgeCard.astro';
+import AboutSeprico from '@/components/AboutSeprico.astro';
+import SchemaBreadcrumb from '@/components/SchemaBreadcrumb.astro';
+import SchemaSpeakable from '@/components/SchemaSpeakable.astro';
+import { SITE } from '@/config/site';
+
+// ───── METADATA ─────
+const slug = 'protocolos-y-consultoria';
+const canonicalPath = `/${slug}/`;
+const canonicalUrl = new URL(canonicalPath, SITE.url).toString();
+const seoTitle = 'Protocolos y Consultoría en Seguridad — Pilar 3 SEPRICO';
+const seoDescription = 'Análisis de riesgos, planes de contingencia, auditorías documentadas y consultoría integral para condominios en CDMX y Estado de México.';
+const keywords = [
+  'consultoría en seguridad para condominios',
+  'análisis de riesgos residencial',
+  'planes de contingencia condominio',
+  'auditoría de seguridad documentada',
+  'protocolos de emergencia residencial',
+  'consultoría seguridad privada CDMX',
+  'asesoría seguridad para comités',
+];
+
+// ───── 4 COMPONENTES del cluster (solo Consultoría tiene L3 dedicado) ─────
+const pillarComponents = [
+  {
+    title: 'Análisis de Riesgos',
+    desc: 'Diagnóstico técnico que cruza variables del condominio (geometría, accesos, vulnerabilidades) con datos del entorno (incidencia delictiva del cuadrante, eventos recurrentes en el sector). Entregable: matriz de riesgo con probabilidad e impacto cuantificado.',
+    image: '/images/servicios/consultoria-en-seguridad.jpg',
+    icon: 'check' as const,
+    href: '#analisis-riesgos',
+    badge: '01',
+  },
+  {
+    title: 'Planes de Contingencia',
+    desc: 'Protocolos documentados por escenario crítico: intrusión activa, incendio, sismo, emergencia médica residente, asalto a caseta. Cada plan se practica con simulacros y se ajusta tras cada incidente real del condominio.',
+    image: '/images/general/seguridad-condominios.jpg',
+    icon: 'alert' as const,
+    href: '#planes-contingencia',
+    badge: '02',
+  },
+  {
+    title: 'Auditorías Documentadas',
+    desc: 'Revisión semestral o anual de cumplimiento operativo: bitácoras, equipo, plantilla, capacitación vigente, prestaciones laborales del personal y cumplimiento legal. Reporte ejecutivo entregado al comité con hallazgos y plan de remediación.',
+    image: '/images/servicios/control-de-acceso.jpg',
+    icon: 'shield' as const,
+    href: '#auditorias',
+    badge: '03',
+  },
+  {
+    title: 'Consultoría Integral',
+    desc: 'Acompañamiento estratégico al comité administrativo sobre proveedores, contratos, normatividad SSPC/LFPDPPP y diseño de operación de seguridad. Trabajamos como asesor independiente o integrado al servicio operativo SEPRICO.',
+    image: '/images/general/seguridad-residenciales.jpg',
+    icon: 'phone' as const,
+    href: '/consultoria-en-seguridad/',
+    badge: '04',
+  },
+];
+
+// ───── PROCESO ─────
+const clusterProcess = [
+  { icon: 'phone' as const, title: 'Diagnóstico inicial', desc: 'Llamada con el comité y administración para entender historial de incidentes, contratos vigentes, reglamento interno y expectativas de la asamblea.' },
+  { icon: 'pin' as const, title: 'Levantamiento documental', desc: 'Recopilación de bitácoras existentes, contratos de proveedores actuales, certificaciones del personal y registro de eventos previos del condominio.' },
+  { icon: 'check' as const, title: 'Análisis y matriz de riesgo', desc: 'Cruce de variables internas y externas con cuantificación de riesgo. Identificación de brechas de cumplimiento y vulnerabilidades operativas.' },
+  { icon: 'shield' as const, title: 'Entregables documentados', desc: 'Plan de contingencia por escenario, protocolos de respuesta, recomendaciones de mejora con prioridades y cronograma para la asamblea.' },
+  { icon: 'star' as const, title: 'Acompañamiento y revisión', desc: 'Soporte en la implementación de recomendaciones, simulacros documentados y revisión trimestral con la mesa directiva.' },
+];
+
+// ───── BENEFICIOS del enfoque integrado ─────
+const integratedBenefits = [
+  { title: 'Decisiones basadas en evidencia', desc: 'El comité deja de tomar decisiones por intuición o presión y empieza a operar sobre matriz de riesgo, costos comparados y métricas auditables que se pueden defender en asamblea.' },
+  { title: 'Cumplimiento legal documentado', desc: 'SSPC, LFPDPPP, NOM aplicables y reglamento interno alineados en una sola ruta documentada. Protección legal del comité administrativo ante autoridades y aseguradoras.' },
+  { title: 'Protocolos practicados, no archivados', desc: 'Cada plan de contingencia se documenta y se simula con el guardia y residentes representantes. Cuando ocurre el evento, el equipo ya lo ha ejecutado al menos una vez.' },
+  { title: 'Independencia del asesor', desc: 'Como consultor SEPRICO puede operar de forma independiente al servicio comercial. Si recomienda no contratar más servicios, ese es el dictamen.' },
+  { title: 'Trazabilidad histórica de decisiones', desc: 'Cada recomendación, plan y auditoría queda registrada. El comité entrante hereda un expediente completo, no improvisación caso por caso.' },
+  { title: 'Mejora continua medible', desc: 'Las auditorías comparan periodos. El comité ve evolución cuantificable de cumplimiento, no descripción cualitativa de "vamos bien".' },
+];
+
+// ───── DIFERENCIADORES del cluster ─────
+const clusterValueProps = [
+  { icon: 'shield' as const, title: '25 años en consultoría residencial', desc: 'Experiencia operativa real en CDMX y Edomex desde el año 2000. Conocemos los reglamentos internos, las dinámicas de asamblea y los matices de incidencia por colonia.' },
+  { icon: 'check' as const, title: 'Asesor independiente certificado', desc: 'Consultoría puede operar separada del servicio comercial. Recomendamos lo que aplica al condominio — incluso si implica no contratar más con SEPRICO.' },
+  { icon: 'alert' as const, title: 'Conocimiento normativo actualizado', desc: 'SSPC, LFPDPPP, NOM-031-ENER, NOM-001-SEDE, protección civil. Aplicamos la norma vigente, no la del manual de hace 5 años.' },
+  { icon: 'star' as const, title: 'Entregables ejecutivos defendibles', desc: 'Reporte profesional listo para presentar en asamblea sin necesidad de interpretación técnica. Datos verificables y recomendaciones con costos comparados.' },
+  { icon: 'clock' as const, title: 'Acompañamiento de implementación', desc: 'No entregamos el documento y desaparecemos. Soporte durante la ejecución de recomendaciones con revisión trimestral incluida.' },
+  { icon: 'phone' as const, title: 'Consultor con nombre y número', desc: 'Una persona dedicada al condominio. Sin call centers, sin rotación constante de interlocutores, sin "ya no trabaja con nosotros aquel asesor que te atendió".' },
+];
+
+// ───── FAQ del cluster ─────
+const clusterFaqs = [
+  { q: '¿Puedo contratar consultoría sin contratar el servicio operativo de seguridad?', a: 'Sí. SEPRICO opera como asesor independiente: el comité puede contratar consultoría para diagnóstico, plan de contingencia o auditoría sin obligación de contratar servicios operativos. Esa independencia es lo que da valor real al dictamen.' },
+  { q: '¿Qué diferencia hay entre una auditoría y un análisis de riesgos?', a: 'El análisis de riesgos identifica vulnerabilidades y amenazas potenciales del condominio (matriz probabilidad/impacto). La auditoría revisa el cumplimiento operativo de los protocolos ya implementados. Una es prospectiva, la otra evaluativa.' },
+  { q: '¿Cuánto tiempo toma una consultoría completa?', a: 'Diagnóstico básico: 2-3 semanas. Análisis profundo con planes de contingencia documentados: 4-6 semanas. Auditoría operativa: 1-2 semanas según volumen de bitácoras y plantilla del condominio.' },
+  { q: '¿La consultoría reemplaza al administrador o al comité?', a: 'No. El consultor entrega diagnóstico, recomendaciones y planes documentados. La toma de decisiones queda en el comité administrativo. Aportamos información técnica para decidir mejor, no autoridad para decidir por la mesa directiva.' },
+  { q: '¿Qué pasa si la auditoría detecta incumplimientos de un proveedor actual?', a: 'Se reporta al comité con evidencia documentada y recomendación específica. El comité decide cómo proceder — renegociar contrato, requerir remediación o cambiar proveedor. SEPRICO no presiona ni se beneficia de la decisión que se tome.' },
+  { q: '¿Cómo se cotiza la consultoría?', a: 'Por alcance específico: análisis de riesgos, plan de contingencia o auditoría tienen costos definidos según tamaño del condominio. Acompañamiento integral se cotiza mensual o por proyecto. Diagnóstico inicial es sin costo.' },
+];
+
+// ───── Breadcrumb ─────
+const breadcrumbItems = [
+  { label: 'Servicios', href: '/servicios-de-seguridad-privada/' },
+  { label: 'Protocolos y Consultoría' },
+];
+
+// ───── QuickNav contextual + bottom ─────
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Hola SEPRICO, requiero información sobre consultoría en seguridad')}`;
+const quickNavBottomChips = [
+  { label: 'Personal SETEC', sub: 'Pilar 1 — guardias y patrullaje', href: '/personal-de-seguridad-residencial/', icon: 'shield' as const },
+  { label: 'Tecnología', sub: 'Pilar 2 — CCTV, accesos, alarmas', href: '/tecnologia-y-monitoreo/', icon: 'cctv' as const },
+  { label: 'Atención al Comité', sub: 'Pilar 4 — ejecutivo dedicado', href: '/servicios-de-seguridad-privada/#comite', icon: 'star' as const },
+  { label: 'Consultoría L3', sub: 'Servicio detallado', href: '/consultoria-en-seguridad/', icon: 'check' as const },
+  { label: 'Contacto', sub: 'Cotización sin costo', href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' as const },
+  { label: 'WhatsApp 24/7', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as const, external: true },
+];
+
+// ───── Schema CollectionPage ─────
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${canonicalUrl}#collection`,
+  url: canonicalUrl,
+  name: 'Protocolos y Consultoría en Seguridad para Condominios',
+  description: seoDescription,
+  inLanguage: 'es-MX',
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@type': 'Thing', name: 'Consultoría en seguridad privada residencial' },
+  mainEntity: {
+    '@type': 'ItemList',
+    name: 'Componentes del pilar Protocolos y Consultoría',
+    numberOfItems: pillarComponents.length,
+    itemListElement: pillarComponents.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.title,
+      description: c.desc,
+      url: c.href.startsWith('http') || c.href.startsWith('/')
+        ? (c.href.startsWith('#') ? canonicalUrl + c.href : new URL(c.href, SITE.url).toString())
+        : canonicalUrl + '#' + c.href,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical={canonicalPath}
+  type="website"
+  keywords={keywords}
+>
+  <Fragment slot="schemas">
+    <SchemaBreadcrumb items={breadcrumbItems} />
+    <SchemaSpeakable url={canonicalUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  </Fragment>
+
+  <Breadcrumb items={breadcrumbItems} />
+
+  {/* ══════════ 1. HERO ══════════ */}
+  <Hero
+    eyebrow="Pilar 3 — Protocolos y Consultoría · CDMX y Edomex"
+    label="SEPRICO · Asesoría especializada en"
+    headline="Protocolos y Consultoría"
+    subheadline="para Condominios y Residenciales"
+    body={`Análisis de riesgos cuantificado, planes de contingencia documentados y <strong class="text-white">auditorías independientes</strong> sobre la operación de seguridad del condominio. La seguridad que no se documenta no se puede auditar — ni defender en asamblea.`}
+    asideP1={`Muchos condominios operan con esquemas de seguridad que <strong class="text-white">nadie revisó en años</strong>. En SEPRICO empezamos por un diagnóstico real: recorremos el perímetro, cruzamos datos de incidentes de la zona y diseñamos una estrategia con evidencia, no con suposiciones del proveedor anterior.`}
+    asideP2={`Cada plan de contingencia se practica, cada auditoría se entrega por escrito y cada indicador se mide trimestralmente con el comité. La <strong class="text-white">independencia del asesor</strong> es lo que da valor real al dictamen — incluso si recomienda no contratar más servicios con SEPRICO.`}
+    asideEyebrow="Sobre el pilar"
+    isH1={true}
+  />
+
+  {/* ══════════ 2. QUICKNAV chips a los 4 componentes ══════════ */}
+  <nav aria-label="Componentes del pilar" class="bg-brand-500">
+    <div class="container-pro grid grid-cols-2 md:grid-cols-4">
+      {pillarComponents.map((c, i) => (
+        <a
+          href={c.href}
+          class:list={[
+            'group flex items-center gap-3 px-4 py-4 text-white transition-colors hover:bg-brand-600',
+            i > 0 && 'md:border-l border-white/10',
+          ]}
+        >
+          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-white/15">
+            <Icon name={c.icon} class="h-4 w-4" />
+          </span>
+          <span class="truncate text-xs font-bold leading-tight">{c.title}</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  {/* ══════════ 3. LOS 4 COMPONENTES — grid service-card inline ══════════ */}
+  <Section
+    id="componentes"
+    eyebrow="Componentes del pilar"
+    title="Los cuatro frentes del enfoque consultivo"
+    subtitle="Cada componente se contrata por separado o integrado al cluster. Análisis, planes y auditorías operan como herramientas independientes que se complementan en la consultoría integral."
+    desc="Solo la consultoría integral tiene página propia. Los demás son alcances definidos que se ejecutan según necesidad del condominio."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {pillarComponents.map((c) => (
+        <a
+          href={c.href}
+          class="service-card group flex flex-col"
+          title={c.title}
+        >
+          <div class="service-card-image">
+            <img
+              src={c.image}
+              alt={c.title}
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/10"></div>
+            <span class="absolute top-3 left-3 rounded-md bg-brand-500/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest2 text-white shadow-brand backdrop-blur-sm">
+              {c.badge}
+            </span>
+            <span class="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-md bg-ink-950/70 text-brand-300 backdrop-blur-sm">
+              <Icon name={c.icon} class="h-4 w-4" />
+            </span>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <h3 class="text-lg font-bold leading-tight text-white">{c.title}</h3>
+            </div>
+          </div>
+
+          <div class="service-card-body">
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{c.desc}</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+              {c.href.startsWith('/') && !c.href.startsWith('#') ? 'Ver servicio' : 'Ver detalle'}
+              <Icon name="arrow" class="h-3.5 w-3.5" />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 4. INTEGRACIÓN CRUZADA ══════════ */}
+  <Section
+    eyebrow="Cómo se conectan"
+    title="Integración cruzada entre los cuatro componentes"
+    subtitle="Análisis, planes, auditorías y consultoría forman un ciclo cerrado de mejora continua. Sin uno de los cuatro, el ciclo queda incompleto y la operación pierde trazabilidad medible."
+    desc="A continuación los tres ejes principales que el comité puede operacionalizar desde el primer mes."
+    bg="darker"
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <BadgeCard
+        icon="check"
+        title="Eje diagnóstico + planeación"
+        desc="El análisis de riesgos identifica vulnerabilidades; los planes de contingencia las atienden con protocolos documentados. Sin diagnóstico previo, los planes son genéricos del proveedor."
+      />
+      <BadgeCard
+        icon="shield"
+        title="Eje plan + auditoría"
+        desc="Los planes solo valen si se cumplen. Las auditorías validan que la operación ejecuta lo documentado y propone ajustes cuando hay brechas detectadas."
+      />
+      <BadgeCard
+        icon="star"
+        title="Eje consultoría continua"
+        desc="La consultoría integral mantiene vigentes los planes y traduce los hallazgos de auditoría en decisiones operativas que el comité puede defender en asamblea."
+      />
+    </div>
+  </Section>
+
+  {/* ══════════ 5. BENEFICIOS ══════════ */}
+  <Section
+    id="beneficios"
+    eyebrow="Ventajas del enfoque consultivo"
+    title="Por qué el comité gana defendiendo decisiones con consultoría"
+    subtitle="Un comité que toma decisiones de seguridad respaldado por análisis técnico documentado deja de operar por consenso emocional y comienza a operar sobre evidencia que la asamblea puede auditar."
+    desc="Los condominios que incorporan consultoría reducen rotación de proveedores y mejoran consistencia operativa medible mes con mes."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {integratedBenefits.map((b, i) => (
+        <BadgeCard title={b.title} desc={b.desc} number={String(i + 1).padStart(2, '0')} />
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 6. PROCESO ══════════ */}
+  <Section
+    id="proceso"
+    eyebrow="Cómo lo implementamos"
+    title="Del diagnóstico al acompañamiento estratégico"
+    subtitle="Cinco etapas con entregables documentados en cada paso. Cada documento se firma con la mesa directiva antes de avanzar a la siguiente fase."
+    desc="Tiempos típicos: diagnóstico 2-3 semanas, planes documentados 4-6 semanas, auditoría operativa 1-2 semanas según volumen del condominio."
+    bg="darker"
+  >
+    <Process items={clusterProcess} />
+
+    <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand inline-flex items-center gap-2">
+        <Icon name="phone" class="h-4 w-4" />
+        Iniciar diagnóstico gratuito
+      </a>
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-ghost inline-flex items-center gap-2">
+        <Icon name="check" class="h-4 w-4" />
+        WhatsApp 24/7
+      </a>
+    </div>
+  </Section>
+
+  {/* ══════════ 7. DIFERENCIADORES ══════════ */}
+  <Section
+    id="diferenciadores"
+    eyebrow="Por qué SEPRICO"
+    title="Qué distingue al cluster Protocolos y Consultoría de SEPRICO"
+    subtitle="No competimos por horas de asesoría: competimos por independencia del dictamen, profundidad del análisis y trazabilidad histórica del expediente que entregamos al condominio."
+    desc="Cada diferenciador es una decisión operativa concreta, verificable contra el contrato y los entregables documentados."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {clusterValueProps.map((v) => (
+        <BadgeCard title={v.title} desc={v.desc} icon={v.icon} />
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 8. FAQ del cluster ══════════ */}
+  <Section
+    id="faq"
+    eyebrow="Preguntas frecuentes"
+    title="Dudas comunes sobre consultoría en seguridad"
+    subtitle="Las preguntas que los comités administrativos hacen con más frecuencia al evaluar incorporar consultoría especializada al proceso de toma de decisiones."
+    desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un consultor especializado en seguridad residencial te responde en menos de 15 minutos."
+    bg="darker"
+  >
+    <div class="grid gap-8 lg:grid-cols-3">
+      <div class="lg:col-span-2 space-y-3">
+        {clusterFaqs.map((f, i) => (
+          <details
+            class="group rounded-lg border border-white/5 bg-ink-800 transition-colors open:border-brand-500/40"
+            open={i === 0}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-base font-semibold text-white">
+              <span>{f.q}</span>
+              <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-500 text-white transition-transform group-open:rotate-45">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-3.5 w-3.5">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+            </summary>
+            <div class="border-t border-white/5 px-5 py-4 text-sm leading-relaxed text-white/70">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <aside class="card self-start">
+        <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500 text-white shadow-brand">
+          <Icon name="phone" class="h-6 w-6" />
+        </span>
+        <h3 class="mt-5 text-xl font-bold text-white">¿Más preguntas?</h3>
+        <p class="mt-2 text-sm text-white/65">
+          Resolvemos cualquier duda sobre el enfoque consultivo en minutos. WhatsApp 24/7.
+        </p>
+        <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-brand mt-5 w-full">
+          Chatear por WhatsApp
+        </a>
+        <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="btn-ghost mt-3 w-full">
+          {SITE.contact.phoneDisplay}
+        </a>
+      </aside>
+    </div>
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: clusterFaqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      })}
+    />
+  </Section>
+
+  {/* ══════════ 9. ACERCA DE SEPRICO ══════════ */}
+  <AboutSeprico serviceContext="el enfoque consultivo y de protocolos" />
+
+  {/* ══════════ 10. QUICKNAV BOTTOM ══════════ */}
+  <QuickNavBottom chips={quickNavBottomChips} />
+</BaseLayout>

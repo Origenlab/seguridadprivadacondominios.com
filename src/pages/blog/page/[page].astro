@@ -6,9 +6,8 @@ import Icon from '@/components/Icon.astro';
 import BlogSidebar from '@/components/BlogSidebar.astro';
 import { getCollection } from 'astro:content';
 
-const PER_PAGE = 9;
-
 export async function getStaticPaths() {
+  const PER_PAGE = 9;
   const all = (await getCollection('blog', ({ data }) => !data.draft)).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );

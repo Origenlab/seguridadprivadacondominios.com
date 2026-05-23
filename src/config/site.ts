@@ -120,14 +120,14 @@ export const NAV_LINKS = [
       {
         pilar: '03',
         title: 'Protocolos y Consultoría',
-        href: '/servicios-de-seguridad-privada/#protocolos',
+        href: '/protocolos-y-consultoria/',
         icon: 'check' as const,
         desc: 'Análisis de riesgos, planes y auditorías documentadas.',
         items: [
           { label: 'Consultoría en Seguridad', href: '/consultoria-en-seguridad/', icon: 'check' as const },
-          { label: 'Análisis de Riesgos', href: '/servicios-de-seguridad-privada/#protocolos', icon: 'check' as const },
-          { label: 'Planes de Contingencia', href: '/servicios-de-seguridad-privada/#protocolos', icon: 'check' as const },
-          { label: 'Auditorías Documentadas', href: '/servicios-de-seguridad-privada/#protocolos', icon: 'check' as const },
+          { label: 'Análisis de Riesgos', href: '/protocolos-y-consultoria/#componentes', icon: 'check' as const },
+          { label: 'Planes de Contingencia', href: '/protocolos-y-consultoria/#componentes', icon: 'alert' as const },
+          { label: 'Auditorías Documentadas', href: '/protocolos-y-consultoria/#componentes', icon: 'shield' as const },
         ],
       },
       {
