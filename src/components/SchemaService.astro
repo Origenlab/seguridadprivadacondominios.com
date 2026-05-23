@@ -1,0 +1,104 @@
+---
+import { SITE } from '@/config/site';
+
+interface Props {
+  /** Nombre del servicio (sin sufijo "para condominios"). */
+  name: string;
+  /** Descripción corta (≤ 160 chars). */
+  description: string;
+  /** URL canónica (con trailing slash). */
+  url: string;
+  /** URL absoluta de la imagen principal. */
+  image?: string;
+  /** Categoría semántica (personal | tecnologia | protocolos). */
+  category?: string;
+  /** Lista de features/sub-servicios. */
+  features?: readonly string[];
+  /** Palabras clave para schema.about. */
+  keywords?: readonly string[];
+  /** ISO date — última revisión editorial. */
+  lastReviewed?: Date;
+}
+
+const {
+  name,
+  description,
+  url,
+  image,
+  category,
+  features = [],
+  keywords = [],
+  lastReviewed,
+} = Astro.props;
+
+const absoluteUrl = url.startsWith('http') ? url : new URL(url, SITE.url).toString();
+const absoluteImage = image
+  ? (image.startsWith('http') ? image : new URL(image, SITE.url).toString())
+  : new URL('/images/og/og-image.webp', SITE.url).toString();
+
+const serviceTypeMap: Record<string, string> = {
+  personal: 'Personal de seguridad privada',
+  tecnologia: 'Tecnología de seguridad electrónica',
+  protocolos: 'Consultoría y protocolos de seguridad',
+};
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${absoluteUrl}#service`,
+  name,
+  description,
+  serviceType: category ? serviceTypeMap[category] ?? 'Seguridad privada' : 'Seguridad privada',
+  category: 'Seguridad privada para condominios',
+  url: absoluteUrl,
+  image: absoluteImage,
+  provider: {
+    '@type': 'SecurityService',
+    '@id': `${SITE.url}/#organization`,
+    name: SITE.name,
+    legalName: SITE.legalName,
+    url: SITE.url,
+    telephone: SITE.contact.phone,
+    email: SITE.contact.email,
+    foundingDate: String(SITE.founded),
+    areaServed: [
+      { '@type': 'AdministrativeArea', name: 'Ciudad de México' },
+      { '@type': 'AdministrativeArea', name: 'Estado de México' },
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      addressRegion: 'CDMX',
+      addressCountry: 'MX',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: String(SITE.rating.value),
+      reviewCount: String(SITE.rating.reviews),
+    },
+  },
+  areaServed: SITE.coverage.map((c) => ({ '@type': 'AdministrativeArea', name: c })),
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'Comités de condominio, administradores de residenciales, juntas de fraccionamientos',
+  },
+  hasOfferCatalog:
+    features.length > 0
+      ? {
+          '@type': 'OfferCatalog',
+          name: `Incluye en ${name}`,
+          itemListElement: features.map((f) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: f },
+          })),
+        }
+      : undefined,
+  about: keywords.length > 0 ? keywords.map((k) => ({ '@type': 'Thing', name: k })) : undefined,
+  termsOfService: `${SITE.url}/aviso-de-privacidad/`,
+  ...(lastReviewed && { dateModified: lastReviewed.toISOString().slice(0, 10) }),
+};
+
+// Limpiar props undefined antes de serializar
+const clean = JSON.parse(JSON.stringify(serviceSchema));
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(clean)} />

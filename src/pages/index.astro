@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNav from '@/components/QuickNav.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import ServicePillars from '@/components/ServicePillars.astro';
+import PillarPersonal from '@/components/PillarPersonal.astro';
+import PillarTecnologia from '@/components/PillarTecnologia.astro';
+import PillarProtocolos from '@/components/PillarProtocolos.astro';
+import PillarComite from '@/components/PillarComite.astro';
+import ValueProps from '@/components/ValueProps.astro';
+import Communities from '@/components/Communities.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import Faq from '@/components/Faq.astro';
+---
+
+<BaseLayout
+  title="Seguridad Privada para Condominios | SEPRICO CDMX y Edomex"
+  description="SEPRICO — empresa de seguridad privada para condominios y residenciales en CDMX y Estado de México. Vigilancia 24/7, control de acceso y monitoreo electrónico."
+>
+  <Hero />
+  <QuickNav />
+
+  <Section
+    eyebrow="Modelo operativo"
+    title="Cuatro pilares que protegen tu condominio"
+    subtitle="La seguridad residencial efectiva no nace de un servicio aislado, sino de la combinación coordinada de personal capacitado, infraestructura tecnológica, protocolos auditables y atención cercana al comité administrativo, todo bajo un solo proveedor responsable."
+    desc="En SEPRICO articulamos estos cuatro pilares en propuestas personalizadas según el formato de comunidad, el presupuesto operativo y el reglamento interno de cada condominio."
+  >
+    <ServicePillars />
+  </Section>
+
+  <Section
+    eyebrow="Pilar 1 — Personal de Seguridad"
+    title="El elemento correcto, en el puesto correcto, desde el primer turno"
+    subtitle="No asignamos guardias, construimos equipos. Cada elemento pasa por cinco filtros antes de pisar tu condominio: verificación de identidad, antecedentes penales, historial laboral comprobable, análisis psicométrico y capacitación SETEC certificada."
+    desc="Supervisores rotativos validan el cumplimiento de protocolos en cada guardia, en cada turno, sin excepción."
+    bg="darker"
+    id="personal"
+  >
+    <PillarPersonal />
+  </Section>
+
+  <Section
+    eyebrow="Pilar 2 — Tecnología y Monitoreo"
+    title="Siete sistemas que trabajan juntos, no por separado"
+    subtitle="Una cámara sola no protege. Un control de acceso sin monitoreo es una puerta con cerradura rota. En SEPRICO integramos CCTV, biometría, alarmas, intercomunicación e iluminación en un ecosistema unificado que responde como un solo sistema."
+    desc="Nuestro centro de monitoreo 24/7 conecta cada dispositivo con analistas especializados en tiempo real. Cuando algo ocurre, la respuesta ya está en marcha antes de que el residente lo note."
+    id="tecnologia"
+  >
+    <PillarTecnologia />
+  </Section>
+
+  <Section
+    eyebrow="Pilar 3 — Protocolos y Consultoría"
+    title="La seguridad que no está documentada no puede auditarse ni mejorar"
+    subtitle="Muchos condominios operan con esquemas de seguridad que nadie revisó en años. En SEPRICO empezamos por un diagnóstico real: recorremos el perímetro, cruzamos datos de incidentes de la zona y diseñamos una estrategia con evidencia, no con suposiciones."
+    desc="Cada plan de contingencia se practica. Cada auditoría se entrega por escrito. Cada indicador se mide trimestralmente con el comité. Porque la seguridad que no se mide no se puede defender ante la asamblea."
+    bg="darker"
+    id="protocolos"
+  >
+    <PillarProtocolos />
+  </Section>
+
+  <Section
+    eyebrow="Pilar 4 — Atención al Comité"
+    title="Un interlocutor real, no un número de soporte"
+    subtitle="La mayoría de las empresas de seguridad asignan un guardia y desaparecen. En SEPRICO el trato con el comité es parte del servicio: ejecutivo dedicado, reportes mensuales listos para presentar en asamblea y bitácora digital consultable en cualquier momento."
+    desc="Revisamos contigo los indicadores cada trimestre porque el contrato no termina cuando se firma — empieza ahí."
+    id="comite"
+  >
+    <PillarComite />
+  </Section>
+
+  <Section
+    eyebrow="Diferenciadores SEPRICO"
+    title="¿Por qué los comités administrativos eligen SEPRICO?"
+    subtitle="Desde el año 2000 hemos atendido más de 120 comunidades en la Ciudad de México y el Estado de México. Nuestra trayectoria se sustenta en cuatro pilares operativos: selección rigurosa, supervisión activa, integración tecnológica profesional y trato cercano con cada residente."
+    desc="A diferencia del servicio tradicional —donde el guardia es un eslabón aislado— nuestro modelo opera como un ecosistema sincronizado entre caseta, centro de monitoreo y supervisores en sitio, asegurando trazabilidad total y respuesta inmediata."
+    bg="darker"
+  >
+    <ValueProps />
+  </Section>
+
+  <Section
+    eyebrow="Casos reales"
+    title="Lo que dicen los comités y administradores"
+    subtitle="Reseñas de presidentes de comité y administradores de condominios que actualmente operan con nosotros en Polanco, Interlomas, Coyoacán, Bosque Real, Naucalpan y otras zonas premium de la ZMVM."
+    desc="Cada testimonio refleja resultados medibles tras la implementación: reducción de incidentes, mejor relación con residentes y reportes mensuales que el comité puede presentar en asamblea con respaldo documental completo."
+  >
+    <Testimonials />
+  </Section>
+
+  <Section
+    eyebrow="Sectores atendidos"
+    title="Diseñamos protección según el tipo de comunidad"
+    subtitle="No existe una sola fórmula de seguridad. Una torre vertical con lobby concurrido necesita una operación radicalmente distinta a un fraccionamiento con perímetro extenso o un residencial premium con expectativas de trato VIP."
+    desc="Por eso desarrollamos cuatro modelos operativos diferenciados —torres verticales, fraccionamientos privados, residenciales premium y cotos cerrados— cada uno con su propio mix de personal, tecnología y protocolos."
+    bg="darker"
+  >
+    <Communities />
+  </Section>
+
+  <Section
+    eyebrow="Preguntas frecuentes"
+    title="Resolvemos las dudas más comunes antes de cotizar"
+    subtitle="Estas son las preguntas que más recibimos de comités administrativos durante el proceso de evaluación: alcance del servicio, estructura de costos, tiempos de implementación, certificaciones del personal y protocolos ante emergencias."
+    desc="Si tu duda no aparece en este listado, escríbenos por WhatsApp y un asesor especializado te responderá en menos de 15 minutos durante horario hábil."
+  >
+    <Faq />
+  </Section>
+
+  <QuickNavBottom />
+</BaseLayout>

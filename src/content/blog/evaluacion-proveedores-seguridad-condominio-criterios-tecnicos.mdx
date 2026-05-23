@@ -1,0 +1,84 @@
+---
+title: 'Cómo Evaluar Propuestas de Seguridad con Criterio Técnico Independiente: Guía para Comités'
+description: 'Marco técnico para la evaluación objetiva de propuestas de servicios de seguridad privada para condominios residenciales. Matriz de comparación, preguntas de verificación técnica, señales de alerta contractuales y criterios que distinguen un proveedor con proceso real de uno con documentación cosmética.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'protocolos-y-consultoria'
+tags: ['evaluacion-proveedores', 'consultoria-seguridad', 'contratacion-seguridad', 'comite-administrativo', 'condominios']
+---
+
+El comité que evalúa propuestas de seguridad privada para su condominio enfrenta un problema de información asimétrica estructural: el proveedor conoce sus costos reales, sus márgenes, las limitaciones de su servicio y las cláusulas contractuales que lo protegen; el comité generalmente no conoce ninguna de esas cosas con suficiente precisión para negociar en condiciones de paridad. Esta asimetría es la razón por la que los contratos de seguridad privada para condominios frecuentemente producen compromisos imprecisos, SLAs ausentes, y servicios que se degradan progresivamente sin consecuencia contractual.
+
+La forma más efectiva de reducir esa asimetría no es contratar más asesoría externa —aunque el diagnóstico técnico independiente descrito en el artículo anterior es una herramienta valiosa— sino desarrollar, en el comité, la capacidad de hacer las preguntas correctas y de interpretar las respuestas con criterio técnico independiente. Las preguntas que producen la mayor diferenciación entre proveedores son técnicas y específicas; las respuestas que las revelan son verificables, no basadas en confianza.
+
+## La Matriz de Evaluación: Del Precio al Valor Técnico
+
+El primer error que cometen la mayoría de los comités al evaluar propuestas de seguridad es organizar la comparación alrededor del precio. El precio es una variable necesaria pero insuficiente: dos propuestas al mismo precio pueden ofrecer niveles de protección radicalmente diferentes, y dos propuestas con precios diferentes pueden tener el mismo valor real si la propuesta más costosa incluye componentes que el desarrollo necesita y la más económica los excluye.
+
+La matriz de evaluación correcta tiene cinco dimensiones que deben evaluarse independientemente antes de integrar el precio como variable:
+
+**Dimensión 1 — Personal:** Proceso de investigación de antecedentes (con documentación verificable, no declaración), certificación SETEC vigente de todos los elementos asignados, programa de entrenamiento continuo con frecuencia y contenidos especificados, protocolo de sustitución en ausencias. El peso relativo de esta dimensión debería ser el más alto en la mayoría de los desarrollos, porque el personal es el componente que más directamente determina la efectividad operativa del servicio.
+
+**Dimensión 2 — Tecnología:** Especificaciones técnicas verificables de todos los componentes del sistema (no solo marcas y modelos, sino parámetros de desempeño como los descritos en los artículos de este sitio), diseño de arquitectura del sistema con identificación de redundancias y puntos de falla únicos, integración entre subsistemas (alarma + videovigilancia + control de acceso + intercomunicación).
+
+**Dimensión 3 — Centro de monitoreo:** Infraestructura verificada (mediante visita o auditoría in situ), ratio operador/cámara en turno, plataforma VMS con nombre y versión específicos, redundancia de conectividad, protocolos de respuesta documentados por tipo de evento.
+
+**Dimensión 4 — Gestión y reporte:** Frecuencia y contenido de los reportes al comité, métricas incluidas en el reporte (MTTD, MTTR, tasa de alarmas válidas, cobertura del sistema), ejecutivo de cuenta dedicado con accesibilidad verificable, mecanismo de escalamiento ante incidentes.
+
+**Dimensión 5 — Marco contractual:** SLAs con valores específicos y consecuencias ante incumplimiento, estándares de investigación de antecedentes como obligación contractual, programa de entrenamiento continuo especificado en el contrato, derecho de auditoría del comité sobre el servicio, penalizaciones por rotación excesiva de personal asignado al desarrollo.
+
+## Las Preguntas de Verificación Técnica
+
+Las siguientes preguntas, formuladas directamente al representante del proveedor en la presentación de propuesta, producen información diferenciadora que no aparece en ningún documento comercial:
+
+**Sobre el proceso de investigación de antecedentes:**
+
+"¿Pueden mostrarme un expediente de muestra (anonimizado) de un elemento activo que ilustre todos los componentes del proceso de investigación que aplican?" — Un proveedor con proceso real puede mostrar el expediente. Uno que describe el proceso pero no puede mostrarlo tiene documentación sin contenido.
+
+"¿Qué bases de datos consultan para la verificación de antecedentes penales? ¿Solo registros estatales o también bases federales a través del SESNSP? ¿Consultan el REPUVE?" — Las respuestas específicas con nombres de bases de datos son verificables; las respuestas vagas ("consultamos todas las bases disponibles") no lo son.
+
+"¿Quién aplica e interpreta la evaluación psicométrica? ¿Es un psicólogo con cédula profesional? ¿Pueden mostrar qué instrumento utilizan?" — La cédula profesional del psicólogo es un dato público verificable en el RENAP (Registro Nacional de Profesionistas). Un instrumento psicométrico válido tiene nombre: MMPI-2-RF, 16PF, NEO-PI-R. Un instrumento sin nombre no tiene validación documentada.
+
+**Sobre el sistema tecnológico:**
+
+"Para las cámaras propuestas, ¿cuál es el tamaño del sensor de imagen y el nivel de WDR en dB?" — Si el representante no puede responder estos parámetros de memoria, puede buscarlos en la ficha técnica del fabricante durante la reunión. Si no tiene la ficha técnica disponible, la propuesta no está sustentada técnicamente.
+
+"¿Pueden mostrar el cálculo de almacenamiento que justifica la capacidad del NVR propuesto para los días de retención comprometidos?" — El cálculo es simple: (Bitrate Mbps × 3,600 segundos × horas × cámaras) / 8,000 = GB/día. Si el proveedor no puede mostrarlo, la especificación de almacenamiento no está verificada.
+
+"¿Qué ocurre con el sistema si el internet del desarrollo falla durante más de 4 horas? ¿Cómo es el diseño de comunicación del sistema de alarma: solo IP o también celular?" — La respuesta revela si el sistema tiene diseño resiliente o si depende de una sola vía de comunicación.
+
+**Sobre el centro de monitoreo:**
+
+"¿Cuántas cámaras hay en total en el sistema que su centro monitorea, y cuántos operadores tienen en turno durante la noche?" — El cociente es el ratio operador/cámara. Cualquier valor superior a 1:24 merece una conversación sobre qué significa operativamente para la calidad del monitoreo del desarrollo.
+
+"¿Pueden mostrarnos la certificación de operación del centro emitida por la SSC CDMX o el equivalente estatal?" — La certificación es un documento público que puede solicitarse directamente a la autoridad emisora para verificar su autenticidad.
+
+**Sobre la gestión del contrato:**
+
+"¿Cuáles son las penalizaciones específicas si el proveedor no cumple los SLAs de tiempo de respuesta acordados en el contrato?" — Si el representante responde "lo evaluamos en cada caso" o "trabajamos para corregirlo", no hay penalizaciones reales. La penalización debe expresarse como un descuento monetario específico o como derecho de rescisión con costos definidos.
+
+"¿Cuál es la tasa de rotación anual de su personal en el segmento de condominios residenciales?" — La respuesta honesta a esta pregunta, con datos reales, es más informativa que cualquier declaración de compromiso de continuidad de personal.
+
+## Las Señales de Alerta en los Documentos de Propuesta
+
+Además de las preguntas directas, existen características de los documentos de propuesta que señalan riesgos contractuales o de servicio:
+
+**Señal de alerta 1 — Compromiso de almacenamiento sin especificar el estándar de compresión y el bitrate de grabación.** Una propuesta que ofrece "30 días de almacenamiento" sin especificar el bitrate de grabación y el estándar de compresión no puede verificarse: la capacidad de almacenamiento necesaria para 30 días varía entre 3 TB y 20 TB dependiendo de esos parámetros para el mismo número de cámaras.
+
+**Señal de alerta 2 — Términos de contrato con cláusulas de ajuste de tarifa unilateral.** Algunos contratos incluyen cláusulas que permiten al proveedor ajustar el precio del servicio con un aviso de 30 días sin necesidad de aceptación del cliente. Esta cláusula convierte el precio acordado en el contrato en una referencia inicial, no en un compromiso.
+
+**Señal de alerta 3 — Garantía de servicio sin especificación de la cobertura.** Una garantía de "satisfacción garantizada" o "servicio de calidad garantizado" sin especificar qué parámetros de calidad están garantizados y qué remedios tiene el cliente si no se alcanzan no es una garantía verificable.
+
+**Señal de alerta 4 — Ausencia de cláusula de auditoría.** Un contrato que no establece explícitamente el derecho del comité a auditar el servicio —visitar el centro de monitoreo, revisar los expedientes del personal, verificar los registros del sistema— crea ambigüedad sobre si el proveedor está obligado a facilitar esa auditoría cuando se solicita.
+
+**Señal de alerta 5 — Plazo de contrato largo sin mecanismo de rescisión por incumplimiento.** Los contratos a 3 o 5 años con penalización por rescisión anticipada son comunes en la industria. Aceptables si incluyen mecanismos claros de rescisión sin penalización cuando el proveedor incumple los SLAs acordados; inaceptables si el comité queda vinculado al proveedor independientemente del nivel de servicio real entregado.
+
+## El Proceso de Evaluación Comparativa
+
+El comité que ha recopilado las respuestas a las preguntas anteriores de múltiples proveedores puede construir una comparación objetiva usando la siguiente estructura:
+
+Para cada dimensión de evaluación, asignar una puntuación a cada proveedor basada en evidencia verificable —no en la presentación comercial— y ponderarla por la importancia relativa de esa dimensión para el perfil de riesgo específico del desarrollo. El precio se introduce como variable final una vez que las dimensiones técnicas están evaluadas: en este marco, el precio más bajo de un proveedor con puntuación técnica significativamente inferior al segundo lugar puede no ser la mejor decisión económica real cuando se consideran los costos de un incidente que el sistema deficiente no previno.
+
+---
+
+*SEPRICO facilita el proceso de evaluación comparativa de proveedores para comités que están tomando la decisión de contratación, incluyendo orientación técnica sin costo sobre las preguntas correctas y los criterios de evaluación, independientemente de si el comité considera a SEPRICO como uno de los proveedores a evaluar. El beneficio para el sector es que los comités mejor informados elevan el estándar de servicio exigible en toda la industria.*

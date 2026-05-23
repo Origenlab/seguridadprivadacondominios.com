@@ -1,0 +1,120 @@
+---
+import Icon from '@/components/Icon.astro';
+import { SITE } from '@/config/site';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const total = allPosts.length;
+
+const CATS = [
+  { slug: 'seguridad-privada',        label: 'Seguridad Privada',        icon: 'shield' },
+  { slug: 'tecnologia-y-monitoreo',   label: 'Tecnología y Monitoreo',   icon: 'cctv'   },
+  { slug: 'personal-de-seguridad',    label: 'Personal de Seguridad',    icon: 'patrol' },
+  { slug: 'protocolos-y-consultoria', label: 'Protocolos y Consultoría', icon: 'check'  },
+  { slug: 'atencion-al-comite',       label: 'Atención al Comité',       icon: 'phone'  },
+  { slug: 'vigilancia',               label: 'Vigilancia',               icon: 'patrol' },
+] as const;
+
+const catCounts = CATS.map((c) => ({
+  ...c,
+  count: allPosts.filter((p) => p.data.category === c.slug).length,
+})).filter((c) => c.count > 0);
+
+const recientes = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+---
+
+<aside class="lg:sticky lg:top-24 flex flex-col gap-6 self-start">
+
+  <!-- ── CATEGORÍAS ── -->
+  <div class="overflow-hidden rounded-2xl border border-white/10 bg-ink-800">
+    <header class="flex items-center justify-between border-b border-white/10 bg-ink-900/60 px-5 py-4">
+      <span class="eyebrow">Categorías</span>
+      <span class="text-[10px] font-semibold text-white/40">{total} artículos</span>
+    </header>
+    <nav class="flex flex-col">
+      {catCounts.map((c) => (
+        <a
+          href={`/category/${c.slug}/`}
+          class="group flex items-center gap-3 border-b border-white/5 px-5 py-3.5 last:border-b-0 hover:bg-brand-500/5"
+        >
+          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-brand-500/10 text-brand-400 group-hover:bg-brand-500 group-hover:text-white">
+            <Icon name={c.icon as any} class="h-4 w-4" />
+          </span>
+          <span class="flex-1 text-sm font-medium text-white/80 group-hover:text-white">
+            {c.label}
+          </span>
+          <span class="rounded-full bg-white/5 px-2 py-0.5 text-[11px] font-bold text-white/60 group-hover:bg-brand-500 group-hover:text-white">
+            {c.count}
+          </span>
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <!-- ── ÚLTIMOS ARTÍCULOS ── -->
+  <div class="overflow-hidden rounded-2xl border border-white/10 bg-ink-800">
+    <header class="border-b border-white/10 bg-ink-900/60 px-5 py-4">
+      <span class="eyebrow">Más recientes</span>
+    </header>
+    <ol class="flex flex-col">
+      {recientes.map((p, i) => (
+        <li class="border-b border-white/5 last:border-b-0">
+          <a
+            href={`/${p.data.category}/${p.slug}/`}
+            class="group flex items-start gap-3 px-5 py-4 hover:bg-brand-500/5"
+          >
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-white/10 bg-ink-900 text-[11px] font-bold text-brand-400">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="flex-1 min-w-0">
+              <p class="text-sm font-semibold leading-snug text-white/85 line-clamp-2 group-hover:text-white">
+                {p.data.title}
+              </p>
+              <p class="mt-1.5 flex items-center gap-1.5 text-[10px] text-white/40">
+                <Icon name="clock" class="h-3 w-3" />
+                {fmt(p.data.pubDate)}
+              </p>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <!-- ── CTA WHATSAPP ── -->
+  <div class="rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 p-6 shadow-lg shadow-brand-500/20">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest2 text-white">
+      <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+      Asesoría 24/7
+    </span>
+    <h3 class="mt-4 text-lg font-bold leading-snug text-white">
+      ¿Tu condominio necesita una auditoría de seguridad?
+    </h3>
+    <p class="mt-2 text-xs leading-relaxed text-white/85">
+      Un especialista SEPRICO responde en menos de 15 minutos. Diagnóstico inicial gratuito para comités vecinales.
+    </p>
+    <a
+      href={wa}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-bold text-brand-600 hover:bg-white/95"
+    >
+      <Icon name="phone" class="h-4 w-4" />
+      Chatear por WhatsApp
+    </a>
+    <a
+      href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`}
+      class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-white/30 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
+    >
+      {SITE.contact.phoneDisplay}
+    </a>
+  </div>
+
+</aside>

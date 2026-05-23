@@ -1,0 +1,351 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNav from '@/components/QuickNav.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Certifications from '@/components/Certifications.astro';
+import Process from '@/components/Process.astro';
+import Faq from '@/components/Faq.astro';
+import { SITE } from '@/config/site';
+
+// Catálogo de equipo con features — patrón ServicePillars
+const catalogo = [
+  {
+    title: 'Cámaras IP HD y 4K',
+    short: 'Videovigilancia',
+    desc: 'Videovigilancia profesional con visión nocturna real, detección inteligente de movimiento y almacenamiento con respaldo redundante. Sin puntos ciegos.',
+    icon: 'cctv',
+    image: '/images/servicios/sistemas-de-camaras-de-vigilancia.jpg',
+    href: '/sistemas-de-camaras-de-vigilancia/',
+    marcas: 'Hikvision · Dahua',
+    features: ['Resolución HD y 4K', 'Visión nocturna real', 'Detección de movimiento', 'Almacenamiento con respaldo'],
+  },
+  {
+    title: 'Control de Acceso Biométrico',
+    short: 'Acceso',
+    desc: 'Lectores de huella dactilar y reconocimiento facial para accesos críticos. Sin llaves, sin tarjetas compartidas, sin accesos no autorizados.',
+    icon: 'access',
+    image: '/images/servicios/control-biometrico-de-acceso.jpg',
+    href: '/control-biometrico-de-acceso/',
+    marcas: 'ZKTeco · HID',
+    features: ['Huella dactilar', 'Reconocimiento facial', 'Registro de accesos', 'Zonas restringidas'],
+  },
+  {
+    title: 'Paneles y Alarmas Perimetrales',
+    short: 'Alarmas',
+    desc: 'Sistemas de alarma integrados al centro de monitoreo SEPRICO. Cuando se activa un sensor, el operador ya está respondiendo antes de que el guardia lo note.',
+    icon: 'alert',
+    image: '/images/servicios/alarmas-de-seguridad.jpg',
+    href: '/alarmas-de-seguridad/',
+    marcas: 'Bosch · Honeywell',
+    features: ['Sensores perimetrales', 'Integración monitoreo 24/7', 'Alerta a operadores', 'Respaldo energético'],
+  },
+  {
+    title: 'Intercomunicación IP',
+    short: 'Intercomunicación',
+    desc: 'Videoportero inteligente con videollamada directa entre caseta y unidad. Verificación visual del visitante antes del acceso, sin que el residente baje al lobby.',
+    icon: 'phone',
+    image: '/images/servicios/intercomunicacion-avanzada.jpg',
+    href: '/intercomunicacion-avanzada/',
+    marcas: 'Hikvision · 2N',
+    features: ['Videollamada unidad-caseta', 'Verificación visual visitante', 'Registro de llamadas', 'Integración con acceso'],
+  },
+  {
+    title: 'Iluminación LED Inteligente',
+    short: 'Iluminación',
+    desc: 'Luminarias con sensor de movimiento integradas a cámaras y monitoreo. Cuando la luz se activa, la cámara ya está grabando. Cada metro iluminado es un metro vigilado.',
+    icon: 'shield',
+    image: '/images/servicios/sistemas-de-iluminacion-segura.jpg',
+    href: '/sistemas-de-iluminacion-segura/',
+    marcas: 'Philips · Ledvance',
+    features: ['Sensor de movimiento', 'Activación automática', 'Integración con CCTV', 'Bajo consumo LED'],
+  },
+  {
+    title: 'Monitoreo y Centro de Control',
+    short: 'Monitoreo',
+    desc: 'Plataforma de monitoreo centralizado que unifica cámaras, alarmas, accesos e intercomunicación. Un solo panel, visibilidad total, analistas especializados en turno.',
+    icon: 'cctv',
+    image: '/images/servicios/monitoreo-electronico.jpg',
+    href: '/monitoreo-electronico/',
+    marcas: 'Genetec · Milestone',
+    features: ['Panel centralizado', 'Analistas 24/7', 'Alertas en tiempo real', 'Historial de eventos'],
+  },
+];
+
+// Marcas con descripción
+const marcas = [
+  { name: 'Hikvision',  cat: 'CCTV y monitoreo',            color: 'text-red-400' },
+  { name: 'Dahua',      cat: 'Videovigilancia HD',           color: 'text-blue-400' },
+  { name: 'ZKTeco',     cat: 'Control de acceso biométrico', color: 'text-green-400' },
+  { name: 'Bosch',      cat: 'Alarmas y detección',          color: 'text-gray-300' },
+  { name: 'Honeywell',  cat: 'Sistemas integrados',          color: 'text-orange-400' },
+  { name: 'Motorola',   cat: 'Radiocomunicación',            color: 'text-blue-300' },
+];
+
+// Por qué SEPRICO instala, no solo vende
+const diferenciadoresEquipo = [
+  {
+    icon: 'shield' as const,
+    titulo: 'Levantamiento técnico previo sin costo',
+    desc: 'Antes de proponer un solo equipo, recorremos físicamente el condominio. Identificamos ángulos muertos, zonas de sombra, necesidades reales de iluminación y puntos de vulnerabilidad. Lo que instalamos tiene propósito, no es catálogo.',
+  },
+  {
+    icon: 'check' as const,
+    titulo: 'Instalación certificada con garantía',
+    desc: 'Cada instalación la ejecuta personal técnico certificado por el fabricante. Entregamos documentación completa: mapa de instalación, configuración base, credenciales y manual operativo para el personal de caseta.',
+  },
+  {
+    icon: 'cctv' as const,
+    titulo: 'Integración al centro de monitoreo SEPRICO',
+    desc: 'El equipo que instalamos no opera en isla. Cámaras, alarmas, accesos e intercomunicación se integran al centro de monitoreo SEPRICO: analistas en turno, redundancia energética, sin subcontratos.',
+  },
+  {
+    icon: 'clock' as const,
+    titulo: 'Mantenimiento preventivo incluido',
+    desc: 'Revisión semestral de todos los equipos instalados, actualización de firmware, verificación de almacenamiento y prueba de sensores. El mantenimiento está en el contrato — no es un extra que se cobra después.',
+  },
+  {
+    icon: 'phone' as const,
+    titulo: 'Soporte técnico con tiempo de respuesta contractual',
+    desc: 'Ante una falla de equipo, el SLA de atención está en el contrato. No hay un número de soporte de fabricante: el ejecutivo de cuenta de SEPRICO coordina la atención y da seguimiento hasta la resolución.',
+  },
+  {
+    icon: 'star' as const,
+    titulo: 'Sin costos de equipo al finalizar el contrato',
+    desc: 'El equipo instalado bajo contrato integral es propiedad de la comunidad desde el primer día. Al renovar o cambiar de esquema, el condominio no pierde la infraestructura que ya tiene instalada.',
+  },
+];
+
+// Proceso de evaluación e instalación
+const procesoInstalacion = [
+  {
+    icon: 'pin' as const,
+    title: 'Levantamiento técnico sin costo',
+    desc: 'Visita física al condominio. Mapeo de accesos, perímetro, zonas comunes y puntos críticos. Se identifican ángulos muertos, zonas de sombra y necesidades reales antes de proponer cualquier equipo.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Propuesta técnica documentada en 48 hrs',
+    desc: 'Especificaciones técnicas de cada equipo, marcas, modelos, cantidades y precios desglosados. Incluye render de cobertura para que el comité vea exactamente qué cubrirá cada cámara o sensor.',
+  },
+  {
+    icon: 'star' as const,
+    title: 'Instalación certificada y supervisada',
+    desc: 'El trabajo lo ejecuta personal técnico certificado por el fabricante, supervisado por el jefe de proyecto SEPRICO. Cada equipo se prueba al momento de instalación — no hay "pruebas después".',
+  },
+  {
+    icon: 'cctv' as const,
+    title: 'Integración y configuración al centro de monitoreo',
+    desc: 'Configuración completa, integración al centro de monitoreo SEPRICO y entrega de credenciales de acceso. El comité recibe capacitación para consultar grabaciones y estados del sistema desde cualquier dispositivo.',
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Entrega formal con documentación completa',
+    desc: 'Mapa de instalación, inventario de equipos con serie, configuración base, manual operativo y datos de garantía. Todo entregado al comité por escrito, no de forma verbal.',
+  },
+];
+---
+
+<BaseLayout
+  title="Equipo de Seguridad para Condominios | SEPRICO CDMX y Edomex"
+  description="Catálogo de equipo profesional de seguridad para condominios: cámaras HD/4K, control biométrico, alarmas Bosch y Honeywell, intercomunicación IP e iluminación inteligente. Instalación certificada y monitoreo 24/7 integrado."
+>
+  <Breadcrumb items={[{ label: 'Catálogo de Equipo' }]} />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       1. HERO
+  ══════════════════════════════════════════════════════════════ -->
+  <Hero
+    eyebrow="Tecnología de Seguridad · CDMX y Edomex"
+    label="SEPRICO · Catálogo de"
+    headline="Equipo de Seguridad"
+    subheadline="instalado, integrado y mantenido por SEPRICO"
+    body={`Trabajamos exclusivamente con marcas líderes del sector: <strong class="text-white">Hikvision, Dahua, ZKTeco, Bosch, Honeywell y Motorola</strong>. Cada equipo se instala certificado, se integra al centro de monitoreo y se mantiene durante toda la vigencia del servicio.`}
+    asideP1={`En <strong class="text-white">SEPRICO</strong> no somos un proveedor de equipo: somos el responsable operativo de cada dispositivo que instalamos. Desde el levantamiento técnico hasta el mantenimiento semestral, la responsabilidad es nuestra — no del fabricante, no de un tercero.`}
+    asideP2={`Cada instalación inicia con un <strong class="text-white">levantamiento técnico sin costo</strong> y termina con documentación formal entregada al comité: mapa de cobertura, inventario con número de serie, manual operativo y SLAs de soporte técnico incorporados al contrato.`}
+    isH1={true}
+  />
+  <QuickNav />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       2. CATÁLOGO — 6 categorías de equipo
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Catálogo de equipo"
+    title="Seis categorías de tecnología integradas en un solo sistema"
+    subtitle="No instalamos equipos aislados. Cámaras, accesos, alarmas, intercomunicación e iluminación forman un ecosistema unificado conectado al centro de monitoreo SEPRICO — con analistas especializados en turno, redundancia energética y sin subcontratos."
+    desc="Cada categoría está disponible de forma independiente o integrada en un paquete. El alcance exacto se define tras el levantamiento técnico gratuito."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {catalogo.map((p) => (
+        <a href={p.href} class="service-card group flex flex-col">
+
+          {/* ── Imagen ── */}
+          <div class="service-card-image">
+            <img
+              src={p.image}
+              alt={p.title}
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
+
+            {/* Icono */}
+            <span class="absolute top-3 left-3 grid h-10 w-10 place-items-center rounded-md bg-brand-500/90 text-white backdrop-blur-sm">
+              <Icon name={p.icon as any} class="h-5 w-5" />
+            </span>
+
+            {/* Badge categoría */}
+            <span class="absolute top-3 right-3 rounded-md bg-ink-950/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-brand-300 backdrop-blur-sm">
+              {p.short}
+            </span>
+
+            {/* Título sobre imagen */}
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <h2 class="text-xl font-bold leading-tight text-white">{p.title}</h2>
+              <p class="mt-1 text-[11px] font-semibold text-brand-400">{p.marcas}</p>
+            </div>
+          </div>
+
+          {/* ── Body ── */}
+          <div class="service-card-body flex flex-1 flex-col">
+            <p class="text-sm leading-relaxed text-white/75">{p.desc}</p>
+
+            {/* Chips features */}
+            <div class="mt-5 border-t border-white/5 pt-4">
+              <p class="mb-3 text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Incluye</p>
+              <div class="grid grid-cols-2 gap-1.5">
+                {p.features.map((feat) => (
+                  <div class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-medium text-white/80 transition-colors hover:border-brand-500/50 hover:bg-brand-500/15 hover:text-brand-300">
+                    <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>
+                    <span class="leading-tight">{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+              Ver servicio completo
+              <Icon name="arrow" class="h-3.5 w-3.5" />
+            </span>
+          </div>
+
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       3. MARCAS LÍDERES + CERTIFICACIONES
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Marcas y certificaciones"
+    title="Solo trabajamos con marcas líderes del mercado global"
+    subtitle="No usamos marcas genéricas ni equipos de bajo costo que comprometan la operación. Cada marca con la que trabajamos tiene soporte técnico documentado, firmware actualizable, garantía extendida y compatibilidad total con los sistemas de monitoreo que integramos."
+    desc="Los contratos directos con fabricantes nos permiten ofrecer soporte técnico real en caso de falla — no depender de un tercero distribuidor que no asume responsabilidad operativa."
+  >
+    {/* Marcas */}
+    <div class="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      {marcas.map((m) => (
+        <div class="flex flex-col items-center justify-center gap-2 rounded-xl border border-white/5 bg-ink-800 px-4 py-6 text-center">
+          <span class={`text-lg font-black tracking-tight ${m.color}`}>{m.name}</span>
+          <span class="text-[10px] leading-tight text-white/45">{m.cat}</span>
+        </div>
+      ))}
+    </div>
+
+    {/* Certificaciones */}
+    <div class="mt-2">
+      <p class="mb-6 text-[11px] font-semibold uppercase tracking-widest2 text-white/40">Certificaciones y respaldo legal</p>
+      <Certifications />
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       4. POR QUÉ SEPRICO INSTALA — no solo vende
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Nuestra diferencia"
+    title="La diferencia entre un proveedor de equipo y un responsable operativo"
+    subtitle="Cualquier distribuidor puede vender una cámara Hikvision. La diferencia está en quién asume la responsabilidad operativa del sistema después de la instalación: soporte técnico contractual, integración al monitoreo, mantenimiento preventivo y un ejecutivo de cuenta que responde cuando algo falla."
+    desc="En SEPRICO el equipo y la operación van juntos. No vendemos hardware que el comité tendrá que hacer funcionar solo."
+    bg="darker"
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {diferenciadoresEquipo.map((d) => (
+        <article class="card group flex flex-col">
+          <div class="flex items-start gap-4">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-400 ring-1 ring-brand-500/25">
+              <Icon name={d.icon} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-1 text-base font-bold text-white">{d.titulo}</h3>
+          </div>
+          <p class="mt-4 flex-1 text-sm leading-relaxed text-white/65">{d.desc}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       5. PROCESO DE INSTALACIÓN — 5 etapas
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Cómo instalamos"
+    title="De la visita técnica a la operación integrada: cinco etapas sin sorpresas"
+    subtitle="El proceso de instalación está documentado desde el inicio. El comité sabe en qué etapa está el proyecto en todo momento — sin tiempos muertos, sin cambios de alcance no comunicados y sin sorpresas en la entrega final."
+    desc="Tiempo estándar de instalación: 5 a 10 días hábiles según el alcance del proyecto. En casos urgentes o de reposición de equipo dañado: 24 a 48 horas."
+  >
+    <Process items={procesoInstalacion} />
+
+    <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a
+        href="/empresa-de-seguridad-privada-para-condominios/"
+        class="btn-brand inline-flex items-center gap-2"
+      >
+        <Icon name="pin" class="h-4 w-4" />
+        Solicitar levantamiento técnico
+      </a>
+      <a
+        href={`https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Hola, quisiera cotizar equipo de seguridad para mi condominio')}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost inline-flex items-center gap-2"
+      >
+        <Icon name="phone" class="h-4 w-4" />
+        Cotizar por WhatsApp
+      </a>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       6. PREGUNTAS FRECUENTES + CONTACTO
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Preguntas frecuentes"
+    title="Resolvemos tus dudas sobre el equipo antes de cotizar"
+    subtitle="Las preguntas más comunes de comités administrativos sobre marcas, garantías, integración con sistemas existentes, tiempos de instalación y soporte técnico posterior."
+    desc="Si tienes una duda específica sobre un equipo o escenario técnico, escríbenos por WhatsApp — un especialista te responde en menos de 15 minutos durante horario hábil."
+    bg="darker"
+  >
+    <Faq />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       7. QUICK NAV BOTTOM
+  ══════════════════════════════════════════════════════════════ -->
+  <QuickNavBottom chips={[
+    { label: 'Cámaras HD/4K',    sub: 'Sin puntos ciegos en tu condominio',        href: '/sistemas-de-camaras-de-vigilancia/',   icon: 'cctv'   },
+    { label: 'Control Acceso',   sub: 'Biometría y registro de visitantes',         href: '/control-de-acceso/',                   icon: 'access' },
+    { label: 'Alarmas',          sub: 'Integradas al monitoreo SEPRICO',            href: '/alarmas-de-seguridad/',                icon: 'alert'  },
+    { label: 'Intercomunicación',sub: 'Videoportero IP inteligente',                href: '/intercomunicacion-avanzada/',          icon: 'phone'  },
+    { label: 'Servicios',        sub: 'Catálogo completo de seguridad',             href: '/servicios-de-seguridad-privada/',      icon: 'shield' },
+    { label: 'Cotizar ahora',    sub: 'Levantamiento técnico sin costo',            href: `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`, icon: 'phone', external: true },
+  ]} />
+
+</BaseLayout>

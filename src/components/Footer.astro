@@ -1,0 +1,139 @@
+---
+import { SITE, ZONAS_CDMX, ZONAS_EDOMEX } from '@/config/site';
+import Icon from '@/components/Icon.astro';
+const year = new Date().getFullYear();
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+---
+
+<footer class="bg-ink-950">
+  <div class="container-pro grid gap-10 py-16 lg:grid-cols-12">
+    <!-- Brand + contacto -->
+    <div class="lg:col-span-4">
+      <a href="/" aria-label="SEPRICO — Inicio" class="inline-block">
+        <span class="block text-xs font-bold uppercase tracking-widest text-white/50 leading-none">Seguridad Privada Para</span>
+        <span class="block text-xl font-extrabold uppercase tracking-widest text-white leading-tight">Condominios</span>
+      </a>
+
+      <p class="mt-5 text-sm leading-relaxed text-white/65">
+        Empresa especializada en seguridad privada para condominios,
+        fraccionamientos y residenciales en CDMX y Estado de México.
+        Operación 24/7 con personal capacitado y tecnología profesional.
+      </p>
+
+      <div class="mt-6 flex items-center gap-3 rounded-lg border border-white/5 bg-ink-900 p-3">
+        <span class="flex gap-0.5 text-brand-500">
+          {[...Array(5)].map(() => (<Icon name="star" class="h-4 w-4" />))}
+        </span>
+        <p class="text-sm">
+          <span class="font-bold text-white">{SITE.rating.value}</span>
+          <span class="text-white/55"> / 5 · {SITE.rating.reviews} reseñas</span>
+        </p>
+      </div>
+
+      <div class="mt-6 space-y-3 text-sm text-white/75">
+        <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="flex items-center gap-2.5 hover:text-white">
+          <span class="grid h-7 w-7 place-items-center rounded-md bg-brand-500/15 text-brand-400"><Icon name="phone" class="h-3.5 w-3.5" /></span>
+          {SITE.contact.phoneDisplay}
+        </a>
+        <a href={wa} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 hover:text-white">
+          <span class="grid h-7 w-7 place-items-center rounded-md bg-[#25D366]/20 text-[#25D366]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5">
+              <path d="M19.05 4.91A10 10 0 0 0 12 2C6.5 2 2 6.48 2 12c0 1.76.46 3.45 1.34 4.95L2 22l5.27-1.31A10 10 0 0 0 12 22c5.5 0 10-4.48 10-10 0-2.67-1.05-5.18-2.95-7.09Z"/>
+            </svg>
+          </span>
+          WhatsApp directo
+        </a>
+        <a href={`mailto:${SITE.contact.email}`} class="flex items-center gap-2.5 break-all hover:text-white">
+          <span class="grid h-7 w-7 place-items-center rounded-md bg-brand-500/15 text-brand-400"><Icon name="mail" class="h-3.5 w-3.5" /></span>
+          {SITE.contact.email}
+        </a>
+        <p class="flex items-start gap-2.5">
+          <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md bg-brand-500/15 text-brand-400"><Icon name="pin" class="h-3.5 w-3.5" /></span>
+          {SITE.contact.fiscalAddress}
+        </p>
+        <p class="flex items-center gap-2.5 text-brand-400">
+          <span class="grid h-7 w-7 place-items-center rounded-md bg-brand-500/15"><Icon name="clock" class="h-3.5 w-3.5" /></span>
+          {SITE.contact.hours}
+        </p>
+      </div>
+    </div>
+
+    <!-- Columnas -->
+    <div class="lg:col-span-2">
+      <h3 class="text-sm font-bold uppercase tracking-widest2 text-white">Servicios</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-white/65">
+        <li><a href="/personal-de-seguridad/" class="hover:text-brand-400">Guardias</a></li>
+        <li><a href="/monitoreo-electronico/" class="hover:text-brand-400">CCTV 24/7</a></li>
+        <li><a href="/control-de-acceso/" class="hover:text-brand-400">Control de acceso</a></li>
+        <li><a href="/vigilancia-y-patrullaje/" class="hover:text-brand-400">Rondines</a></li>
+        <li><a href="/alarmas-de-seguridad/" class="hover:text-brand-400">Emergencias</a></li>
+        <li><a href="/consultoria-en-seguridad/" class="hover:text-brand-400">Auditoría</a></li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-2">
+      <h3 class="text-sm font-bold uppercase tracking-widest2 text-white">Pilares</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-white/65">
+        <li><a href="/personal-de-seguridad-residencial/" class="hover:text-brand-400">Personal de seguridad</a></li>
+        <li><a href="/tecnologia-y-monitoreo/" class="hover:text-brand-400">Tecnología y monitoreo</a></li>
+        <li><a href="/servicios-de-seguridad-privada/#protocolos" class="hover:text-brand-400">Protocolos y consultoría</a></li>
+        <li><a href="/servicios-de-seguridad-privada/#comite" class="hover:text-brand-400">Atención al comité</a></li>
+        <li class="pt-1"><a href="/servicios-de-seguridad-privada/" class="text-brand-500 hover:text-brand-400">Ver catálogo →</a></li>
+      </ul>
+
+      <h3 class="mt-8 text-sm font-bold uppercase tracking-widest2 text-white">Empresa</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-white/65">
+        <li><a href="/nosotros" class="hover:text-brand-400">Nosotros</a></li>
+        <li><a href="/comunidades" class="hover:text-brand-400">Tipos de comunidad</a></li>
+        <li><a href="/zonas" class="hover:text-brand-400">Zonas de cobertura</a></li>
+        <li><a href="/blog" class="hover:text-brand-400">Blog</a></li>
+        <li><a href="/empresa-de-seguridad-privada-para-condominios/" class="hover:text-brand-400">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-2">
+      <h3 class="text-sm font-bold uppercase tracking-widest2 text-white">CDMX</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-white/65">
+        {ZONAS_CDMX.slice(0, 6).map((z) => (
+          <li><a href={`/zonas/${z.slug}`} class="hover:text-brand-400">{z.name}</a></li>
+        ))}
+        <li><a href="/zonas#cdmx" class="text-brand-500 hover:text-brand-400">Ver todas →</a></li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-2">
+      <h3 class="text-sm font-bold uppercase tracking-widest2 text-white">Estado de México</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-white/65">
+        {ZONAS_EDOMEX.slice(0, 6).map((z) => (
+          <li><a href={`/zonas/${z.slug}`} class="hover:text-brand-400">{z.name}</a></li>
+        ))}
+        <li><a href="/zonas#edomex" class="text-brand-500 hover:text-brand-400">Ver todas →</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hairline"></div>
+
+  <div class="container-pro flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] uppercase tracking-widest2 text-white/40">
+      <span>Tecnología:</span>
+      {SITE.brands.map((b) => (<span class="text-white/65">{b}</span>))}
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {SITE.certifications.slice(0, 2).map((c) => (
+        <span class="rounded-md border border-brand-500/30 bg-brand-500/10 px-2.5 py-1 text-[10px] uppercase tracking-widest2 text-brand-300">{c}</span>
+      ))}
+    </div>
+  </div>
+
+  <div class="hairline"></div>
+
+  <div class="container-pro flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/40 md:flex-row">
+    <p>© {year} {SITE.name}. Todos los derechos reservados.</p>
+    <nav class="flex gap-5">
+      <a href="/aviso-de-privacidad" class="hover:text-white">Aviso de Privacidad</a>
+      <a href="/empresa-de-seguridad-privada-para-condominios/" class="hover:text-white">Contacto</a>
+      <a href="/sitemap-index.xml" class="hover:text-white">Sitemap</a>
+    </nav>
+  </div>
+</footer>

@@ -1,0 +1,79 @@
+---
+/**
+ * ClusterGrid — grid de service-cards para L2 sub-hubs.
+ * Recibe array de slugs (no exclusión) y renderiza con badge + imagen overlay.
+ * Reutilizable para Tecnología, Personal, Protocolos, Comité.
+ */
+import Icon from '@/components/Icon.astro';
+import { resolveServiceMeta } from '@/config/site';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  /** Slugs a mostrar en orden. */
+  slugs: readonly string[];
+  /** Columnas en desktop. Default 4. */
+  cols?: 3 | 4;
+}
+
+const { slugs, cols = 4 } = Astro.props;
+const items = resolveServiceMeta([...slugs]);
+
+const enriched = await Promise.all(
+  items.map(async (it) => {
+    try {
+      const entry = await getEntry('servicios', it.slug);
+      return {
+        ...it,
+        description: entry?.data.description ?? '',
+        image: entry?.data.image ?? '/images/og/og-image.webp',
+      };
+    } catch {
+      return { ...it, description: '', image: '/images/og/og-image.webp' };
+    }
+  }),
+);
+
+const gridClass = cols === 3
+  ? 'grid gap-5 sm:grid-cols-2 lg:grid-cols-3'
+  : 'grid gap-5 sm:grid-cols-2 lg:grid-cols-4';
+---
+
+<div class={gridClass}>
+  {enriched.map((s, i) => (
+    <a
+      href={s.href}
+      class="service-card group flex flex-col"
+      title={`Conoce el servicio de ${s.title}`}
+    >
+      <div class="service-card-image">
+        <img
+          src={s.image}
+          alt={s.title}
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/10"></div>
+        <span class="absolute top-3 left-3 rounded-md bg-brand-500/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest2 text-white shadow-brand backdrop-blur-sm">
+          0{i + 1}
+        </span>
+        <span class="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-md bg-ink-950/70 text-brand-300 backdrop-blur-sm">
+          <Icon name={s.icon as any} class="h-4 w-4" />
+        </span>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <h3 class="text-lg font-bold leading-tight text-white">{s.title}</h3>
+        </div>
+      </div>
+
+      <div class="service-card-body">
+        {s.description && (
+          <p class="flex-1 text-sm leading-relaxed text-white/70">{s.description}</p>
+        )}
+        <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+          Ver servicio
+          <Icon name="arrow" class="h-3.5 w-3.5" />
+        </span>
+      </div>
+    </a>
+  ))}
+</div>

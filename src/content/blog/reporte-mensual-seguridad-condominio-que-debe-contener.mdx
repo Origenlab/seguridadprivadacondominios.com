@@ -1,0 +1,95 @@
+---
+title: 'El Reporte Mensual de Seguridad que el Comité Debe Exigir: Contenido Mínimo, Métricas Verificables y Señales de Alerta'
+description: 'Estructura técnica del reporte mensual de seguridad para condominios residenciales: secciones obligatorias, métricas de desempeño con valores objetivo, análisis de incidentes, estado del sistema tecnológico y personal, y cómo el comité puede usar el reporte como herramienta de gestión activa del servicio.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'atencion-al-comite'
+tags: ['reporte-mensual', 'metricas-seguridad', 'gestion-proveedores', 'comite-administrativo', 'condominios']
+---
+
+El reporte mensual de seguridad es el documento que convierte la relación entre el comité y el proveedor de un acuerdo basado en confianza en una relación basada en evidencia. Un proveedor que entrega reportes mensuales con contenido técnico específico, métricas verificables y análisis honesto de incidentes y deficiencias está creando las condiciones para una relación de largo plazo basada en demostración de valor real. Un proveedor que entrega reportes genéricos, o que no entrega reportes, está protegiendo la opacidad de su operación —lo que es diagnóstico sobre su nivel de confianza en que su servicio resistiría el escrutinio.
+
+El comité que establece desde el inicio del contrato los requerimientos específicos del reporte mensual —contenido, formato, plazo de entrega, métricas incluidas— y que los verifica cada mes con criterio técnico, recibe consistentemente mejor servicio que el comité que acepta cualquier reporte que el proveedor decide entregar.
+
+## La Estructura del Reporte Mensual Profesional
+
+### Sección 1: Resumen Ejecutivo
+
+El resumen ejecutivo es la sección de lectura obligatoria para todos los miembros del comité, incluyendo los que no tienen formación técnica en seguridad. Debe producirse en lenguaje claro, sin jerga técnica, y responder tres preguntas: ¿cómo estuvo la seguridad del desarrollo este mes? ¿Hubo incidentes significativos? ¿Hay algo que el comité necesita decidir o autorizar?
+
+El resumen ejecutivo debe ser auto-contenido: un miembro del comité que solo lee el resumen debe tener suficiente información para saber si el mes fue normal o si hay situaciones que requieren su atención. Si la única forma de saber que algo relevante ocurrió es leer el reporte completo hasta el final, el resumen ejecutivo no cumple su función.
+
+### Sección 2: Métricas de Desempeño del Período
+
+Esta sección contiene los indicadores cuantitativos del desempeño del sistema durante el mes, comparados con el objetivo contractual y con el resultado del mes anterior. El formato de tabla es el más efectivo para esta comparación:
+
+| Métrica | Objetivo | Mes actual | Mes anterior | Tendencia |
+|---------|----------|------------|--------------|-----------|
+| MTTD (min) | &lt;2 | 1.8 | 2.1 | ↑ Mejorando |
+| MTTR (min) | &lt;5 | 4.2 | 5.8 | ↑ Mejorando |
+| Tasa de alarmas válidas (%) | >75% | 82% | 71% | ↑ Mejorando |
+| Disponibilidad del sistema (%) | >98.5% | 99.1% | 97.8% | ↑ Mejorando |
+| Accesos procesados sin intervención manual (%) | >85% | 87% | 84% | ↑ Mejorando |
+| FRR sistema biométrico (%) | &lt;1% | 0.8% | 1.2% | ↑ Mejorando |
+
+La columna de tendencia es tan importante como los valores absolutos: una métrica que está dentro del objetivo pero lleva tres meses deteriorándose continuamente es una señal de alerta que el reporte mensual debe capturar.
+
+**Qué hacer cuando las métricas están fuera del objetivo.** El reporte mensual que solo reporta métricas sin análisis es un reporte incompleto. Cuando alguna métrica está fuera del objetivo, el reporte debe incluir: el análisis de causa identificada, las acciones tomadas durante el mes para remediarla, y el plan con fecha de remediación si el problema persiste. Un reporte que muestra tasa de alarmas válidas del 45% sin análisis ni plan de mejora es una señal de que el proveedor está reportando por cumplimiento formal, no por gestión de calidad.
+
+### Sección 3: Registro de Incidentes del Período
+
+Todos los incidentes del mes, clasificados por tipo y nivel de severidad, con la siguiente información para cada uno:
+
+- Fecha y hora del incidente
+- Zona del desarrollo afectada
+- Descripción objetiva del evento (qué ocurrió, sin interpretación)
+- Tiempo de detección desde el inicio del evento (MTTD del incidente específico)
+- Acciones tomadas y tiempo de respuesta (MTTR del incidente específico)
+- Resultado del incidente
+- Acciones correctivas implementadas o en proceso
+
+Los incidentes de Nivel 3 y 4 deben incluir adicionalmente el análisis de causa raíz y el plan de remediación para prevenir recurrencia.
+
+**La distinción entre incidente y anomalía.** El reporte debe distinguir entre incidentes (eventos que produjeron o pudieron producir daño a personas, bienes o la operación del desarrollo) y anomalías (eventos que el sistema detectó y gestionó sin escalamiento pero que son relevantes para el análisis de tendencias). Una anomalía de este mes puede ser el precursor del incidente del próximo mes si el patrón no se detecta e interviene.
+
+### Sección 4: Estado del Sistema Tecnológico
+
+Esta sección documenta el estado operativo de cada componente del sistema de seguridad al final del período:
+
+**Videovigilancia:** Estado de cada cámara (operativa / en mantenimiento / en falla), número de días con grabación continua completa, porcentaje de días con cobertura al 100%, días de retención actuales con el almacenamiento disponible.
+
+**Control de acceso:** Estado de cada punto de control, número de incidentes de falla del sistema (accesos que requirieron operación manual por falla del sistema electrónico), resultado de la última prueba de fallback.
+
+**Sistema de alarma:** Número total de activaciones, número de alarmas válidas vs. falsas alarmas, zonas con tasa de falsas alarmas superior al umbral de alerta, acciones de mantenimiento o calibración realizadas.
+
+**Iluminación:** Estado de todas las luminarias de seguridad, luminarias que requieren reemplazo, resultado de la última medición de iluminancia si se realizó durante el período.
+
+**Intercomunicación:** Disponibilidad del sistema, tasa de llamadas atendidas por unidad (si el sistema tiene esta capacidad), incidencias técnicas y resoluciones.
+
+### Sección 5: Estado del Personal
+
+**Asistencia y coberturas.** Número de turnos programados vs. turnos cubiertos con el personal asignado habitual vs. turnos que requirieron sustitución. La tasa de sustitución es un indicador de la estabilidad del personal asignado: una tasa superior al 15% mensual indica que el desarrollo está siendo servido por personal de cobertura más frecuentemente que el comité podría asumir.
+
+**Certificaciones y vigencias.** Estado de las certificaciones SETEC del personal asignado, con fechas de vencimiento próximas (alerta a 60 días) que deben renovarse antes de que venzan.
+
+**Formación del período.** Si el mes incluyó sesión de entrenamiento continuo: fecha, contenido, evaluación de resultados y elementos participantes.
+
+**Evaluaciones realizadas.** Resultado de cualquier evaluación de competencias o simulacro realizado durante el período.
+
+### Sección 6: Mantenimiento Preventivo
+
+Registro de las actividades de mantenimiento preventivo realizadas durante el período, con: fecha, componentes revisados, acciones realizadas, estado post-mantenimiento, y componentes que requieren intervención en el siguiente período.
+
+### Sección 7: Recomendaciones y Puntos de Decisión
+
+Esta sección presenta al comité los puntos que requieren su decisión o atención: componentes que han alcanzado el final de su vida útil recomendada y deben reemplazarse, situaciones del entorno de amenaza que sugieren revisar la configuración del sistema, solicitudes del personal sobre condiciones de trabajo que afectan la calidad del servicio, y propuestas de mejora del sistema con análisis de costo-beneficio.
+
+## El Plazo de Entrega y el Proceso de Revisión
+
+El reporte mensual debe entregarse dentro de los 10 días hábiles siguientes al cierre del mes reportado. Un reporte del mes de enero que se entrega en marzo no tiene valor de gestión: el comité no puede actuar sobre problemas de enero en marzo con la misma efectividad que pudo haberlo hecho en febrero.
+
+El proceso de revisión del reporte debe incluir una reunión mensual de 30–45 minutos entre el comité y el ejecutivo de cuenta para revisar los hallazgos, resolver dudas técnicas, y acordar las acciones del siguiente período. El acta de esa reunión —con los compromisos acordados y los responsables— es el mecanismo que convierte el reporte de un documento de archivo en una herramienta de gestión activa.
+
+---
+
+*Los reportes mensuales de SEPRICO se entregan dentro de los 7 días hábiles siguientes al cierre del mes, en formato digital con acceso online para todos los miembros del comité. El portal del comité permite acceder en tiempo real a las métricas de desempeño sin esperar el reporte mensual. Cada reporte incluye las secciones 1–7 descritas en este artículo, con comparación versus el mes anterior y versus el objetivo contractual.*

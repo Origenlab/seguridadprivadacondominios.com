@@ -1,0 +1,46 @@
+---
+/**
+ * BadgeCard — card unificada para benefits, valueProps, numbered items.
+ * Reemplaza el markup duplicado en ServiceLayout (3 lugares).
+ * Soporta badge numerado (01-NN) o icono según prop.
+ */
+import Icon from '@/components/Icon.astro';
+
+type IconName = 'shield' | 'cctv' | 'patrol' | 'access' | 'alert' | 'check' | 'phone' | 'mail' | 'pin' | 'clock' | 'star' | 'arrow';
+
+interface Props {
+  title: string;
+  desc: string;
+  /** Icono del badge superior (mutuamente excluyente con `number`). */
+  icon?: IconName;
+  /** Número del badge superior (formato "01"). Si se pasa, se ignora `icon`. */
+  number?: string;
+  /** Nivel de heading semántico. */
+  as?: 'h3' | 'h4';
+  /** Si true, el icono usa fondo brand sólido (vs ring sutil). */
+  emphasis?: boolean;
+}
+
+const { title, desc, icon, number, as: Tag = 'h3', emphasis = false } = Astro.props;
+---
+
+<article class="card group flex flex-col">
+  <div class="flex items-start gap-4">
+    <span
+      class:list={[
+        'grid h-12 w-12 shrink-0 place-items-center rounded-xl',
+        emphasis
+          ? 'bg-brand-500 text-white shadow-brand'
+          : 'bg-brand-500/10 text-brand-400 ring-1 ring-brand-500/25',
+      ]}
+    >
+      {number ? (
+        <span class="text-sm font-extrabold">{number}</span>
+      ) : icon ? (
+        <Icon name={icon} class="h-6 w-6" />
+      ) : null}
+    </span>
+    <Tag class="mt-1 text-base font-bold leading-tight text-white">{title}</Tag>
+  </div>
+  <p class="mt-4 flex-1 text-sm leading-relaxed text-white/65">{desc}</p>
+</article>

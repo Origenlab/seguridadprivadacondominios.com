@@ -1,0 +1,398 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNav from '@/components/QuickNav.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import ServicePillars from '@/components/ServicePillars.astro';
+import PillarPersonal from '@/components/PillarPersonal.astro';
+import PillarTecnologia from '@/components/PillarTecnologia.astro';
+import PillarProtocolos from '@/components/PillarProtocolos.astro';
+import PillarComite from '@/components/PillarComite.astro';
+import Process from '@/components/Process.astro';
+import Faq from '@/components/Faq.astro';
+import { SITE } from '@/config/site';
+
+const PAQUETES = [
+  {
+    nivel: 'Esencial',
+    badge: null,
+    target: 'Edificios y condominios pequeños',
+    rango: 'Hasta 60 unidades',
+    color: 'border-white/8',
+    incluye: [
+      'Personal de seguridad en accesos 24/7',
+      'Bitácora digital de visitantes',
+      'Reporte mensual básico',
+      'Supervisor regional rotativo',
+      'Respaldo telefónico 24/7',
+    ],
+    destacado: false,
+  },
+  {
+    nivel: 'Avanzado',
+    badge: 'Más solicitado',
+    target: 'Condominios medianos y fraccionamientos',
+    rango: '60 a 200 unidades',
+    color: 'border-brand-500',
+    incluye: [
+      'Todo lo del paquete Esencial',
+      'CCTV con monitoreo remoto 24/7',
+      'Control de acceso biométrico',
+      'Intercomunicación de visitantes',
+      'Reporte mensual ejecutivo + KPIs',
+      'Auditoría de seguridad anual',
+    ],
+    destacado: true,
+  },
+  {
+    nivel: 'Premium',
+    badge: null,
+    target: 'Residenciales grandes y exclusivos',
+    rango: '+200 unidades',
+    color: 'border-white/8',
+    incluye: [
+      'Todo lo del paquete Avanzado',
+      'Patrullaje motorizado perimetral',
+      'Sistema de iluminación segura',
+      'Alarmas perimetrales integradas',
+      'Consultoría dedicada y revisión trimestral',
+      'Plan de contingencia documentado',
+      'Cobertura ampliada en eventos especiales',
+    ],
+    destacado: false,
+  },
+];
+
+const procesoImpl = [
+  {
+    icon: 'phone' as const,
+    title: 'Diagnóstico inicial',
+    desc: 'Llamada de 30 minutos con el comité. Entendemos prioridades, historial de incidentes y presupuesto antes de proponer cualquier solución.',
+  },
+  {
+    icon: 'pin' as const,
+    title: 'Visita técnica sin costo',
+    desc: 'Levantamiento físico del condominio: accesos, perímetro, amenidades, puntos ciegos y vulnerabilidades. Sin costo ni compromiso.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Propuesta en 48 horas',
+    desc: 'Cotización desglosada con plan operativo, KPIs y cronograma. Sin letras chiquitas ni cláusulas ambiguas.',
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Implementación supervisada',
+    desc: 'Selección del personal, instalación tecnológica y arranque con supervisor regional presente los primeros 7 días.',
+  },
+  {
+    icon: 'star' as const,
+    title: 'Operación y mejora continua',
+    desc: 'Servicio 24/7, reporte mensual al comité y revisión trimestral de KPIs. Visibilidad total en todo momento.',
+  },
+];
+
+const diferenciadores = [
+  {
+    icon: 'shield' as const,
+    titulo: 'Un solo proveedor responsable',
+    desc: 'Personal, tecnología y consultoría bajo una misma operación. No subcontratamos a terceros ni fragmentamos la responsabilidad.',
+  },
+  {
+    icon: 'check' as const,
+    titulo: 'Propuesta en 48 hrs',
+    desc: 'Tras la visita técnica entregamos cotización documentada y desglosada en menos de 48 horas hábiles, sin costo ni compromiso.',
+  },
+  {
+    icon: 'cctv' as const,
+    titulo: 'Marcas líderes del mercado',
+    desc: 'Hikvision, Dahua, ZKTeco, Bosch, Honeywell y Motorola. Cada instalación con garantía y soporte técnico documentado.',
+  },
+  {
+    icon: 'phone' as const,
+    titulo: 'Ejecutivo dedicado 24/7',
+    desc: 'Cada comunidad tiene un punto de contacto único con nombre y número directo. Sin call centers ni interlocutores anónimos.',
+  },
+  {
+    icon: 'clock' as const,
+    titulo: 'SLAs contractuales',
+    desc: 'Tiempos de respuesta, entrega de reportes y reemplazos de personal incorporados al contrato. No promesas verbales.',
+  },
+  {
+    icon: 'star' as const,
+    titulo: '25 años en residencial',
+    desc: 'Empresa fundada el año 2000 con especialización exclusiva en condominios. El 94% de los comités renuevan contrato al primer año.',
+  },
+];
+---
+
+<BaseLayout
+  title="Servicios de Seguridad Privada para Condominios | SEPRICO"
+  description="Catálogo completo de servicios SEPRICO: vigilancia 24/7, monitoreo electrónico, control biométrico, alarmas, intercomunicación, iluminación y consultoría para condominios en CDMX y Edomex."
+>
+  <Breadcrumb items={[{ label: 'Servicios' }]} />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       1. HERO — mismo layout que index y nosotros
+  ══════════════════════════════════════════════════════════════ -->
+  <Hero
+    eyebrow="Servicios · CDMX y Edomex"
+    label="SEPRICO · Catálogo completo de"
+    headline="Servicios"
+    subheadline="de Seguridad Privada para Condominios"
+    body={`<strong class="text-white">9 servicios especializados</strong> para condominios: personal de seguridad, monitoreo electrónico, control biométrico, alarmas, intercomunicación, iluminación y consultoría — todo bajo un solo proveedor responsable.`}
+    asideP1={`En <strong class="text-white">SEPRICO</strong> diseñamos soluciones de seguridad integral específicamente para condominios, fraccionamientos y residenciales. Cada servicio puede contratarse de forma independiente o integrarse en un paquete único adaptado al perfil de riesgo y presupuesto de tu comunidad.`}
+    asideP2={`Nuestro equipo realiza un <strong class="text-white">levantamiento técnico sin costo</strong>, identifica los puntos críticos del condominio y entrega una propuesta documentada y desglosada en menos de <strong class="text-white">48 horas hábiles</strong> — sin costo ni compromiso para el comité administrativo.`}
+    isH1={true}
+  />
+  <QuickNav />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       2. MODELO OPERATIVO — cuatro pilares (overview)
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Modelo operativo"
+    title="Cuatro pilares que protegen tu condominio"
+    subtitle="La seguridad residencial efectiva no nace de un servicio aislado, sino de la combinación coordinada de personal capacitado, infraestructura tecnológica, protocolos auditables y atención cercana al comité administrativo, todo bajo un solo proveedor responsable."
+    desc="En SEPRICO articulamos estos cuatro pilares en propuestas personalizadas según el formato de comunidad, el presupuesto operativo y el reglamento interno de cada condominio."
+    bg="darker"
+  >
+    <ServicePillars />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       3. PILAR 1 — PERSONAL DE SEGURIDAD
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    id="personal"
+    eyebrow="Pilar 1 — Personal de Seguridad"
+    title="El elemento correcto, en el puesto correcto, desde el primer turno"
+    subtitle="No asignamos guardias, construimos equipos. Cada elemento pasa por cinco filtros antes de pisar tu condominio: verificación de identidad, antecedentes penales, historial laboral comprobable, análisis psicométrico y capacitación SETEC certificada."
+    desc="Supervisores rotativos validan el cumplimiento de protocolos en cada guardia, en cada turno, sin excepción."
+  >
+    <PillarPersonal />
+
+    <div class="mt-10 flex justify-center">
+      <a
+        href="/personal-de-seguridad-residencial/"
+        class="btn-brand inline-flex items-center gap-2"
+      >
+        Ver el pilar Personal de Seguridad
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       4. PILAR 2 — TECNOLOGÍA Y MONITOREO
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    id="tecnologia"
+    eyebrow="Pilar 2 — Tecnología y Monitoreo"
+    title="Siete sistemas que trabajan juntos, no por separado"
+    subtitle="Una cámara sola no protege. Un control de acceso sin monitoreo es una puerta con cerradura rota. En SEPRICO integramos CCTV, biometría, alarmas, intercomunicación e iluminación en un ecosistema unificado que responde como un solo sistema."
+    desc="Nuestro centro de monitoreo 24/7 conecta cada dispositivo con analistas especializados en tiempo real. Cuando algo ocurre, la respuesta ya está en marcha antes de que el residente lo note."
+    bg="darker"
+  >
+    <PillarTecnologia />
+
+    <div class="mt-10 flex justify-center">
+      <a
+        href="/tecnologia-y-monitoreo/"
+        class="btn-brand inline-flex items-center gap-2"
+      >
+        Ver el pilar Tecnología y Monitoreo
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       5. PILAR 3 — PROTOCOLOS Y CONSULTORÍA
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    id="protocolos"
+    eyebrow="Pilar 3 — Protocolos y Consultoría"
+    title="La seguridad que no está documentada no puede auditarse ni mejorar"
+    subtitle="Muchos condominios operan con esquemas de seguridad que nadie revisó en años. En SEPRICO empezamos por un diagnóstico real: recorremos el perímetro, cruzamos datos de incidentes de la zona y diseñamos una estrategia con evidencia, no con suposiciones."
+    desc="Cada plan de contingencia se practica. Cada auditoría se entrega por escrito. Cada indicador se mide trimestralmente con el comité. Porque la seguridad que no se mide no se puede defender ante la asamblea."
+  >
+    <PillarProtocolos />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       6. PILAR 4 — ATENCIÓN AL COMITÉ
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    id="comite"
+    eyebrow="Pilar 4 — Atención al Comité"
+    title="Un interlocutor real, no un número de soporte"
+    subtitle="La mayoría de las empresas de seguridad asignan un guardia y desaparecen. En SEPRICO el trato con el comité es parte del servicio: ejecutivo dedicado, reportes mensuales listos para presentar en asamblea y bitácora digital consultable en cualquier momento."
+    desc="Revisamos contigo los indicadores cada trimestre porque el contrato no termina cuando se firma — empieza ahí."
+    bg="darker"
+  >
+    <PillarComite />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       7. PAQUETES INTEGRADOS
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    id="paquetes"
+    eyebrow="Modalidades de contratación"
+    title="Tres niveles de protección, un solo proveedor responsable"
+    subtitle="No existe un paquete estándar que funcione igual para un edificio de 40 departamentos y un residencial de 300. Por eso presentamos tres niveles de referencia — el precio real y el alcance exacto se definen tras el levantamiento técnico gratuito."
+    desc="Todos los paquetes incluyen contrato formal con SLAs, póliza de responsabilidad civil, ejecutivo de cuenta con nombre propio y revisión trimestral de KPIs con el comité."
+  >
+    <div class="grid gap-6 md:grid-cols-3">
+      {PAQUETES.map((p) => (
+        <article
+          class:list={[
+            'relative flex flex-col overflow-hidden rounded-2xl border bg-ink-800 p-8',
+            p.color,
+          ]}
+        >
+          {p.badge && (
+            <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-brand-500 px-4 py-1 text-[10px] font-bold uppercase tracking-widest2 text-white shadow-brand">
+              {p.badge}
+            </span>
+          )}
+
+          <!-- Header -->
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-widest2 text-brand-400">{p.nivel}</span>
+              <h3 class="mt-1 text-xl font-bold text-white">{p.target}</h3>
+            </div>
+            <span class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] font-semibold text-white/50">
+              {p.rango}
+            </span>
+          </div>
+
+          <!-- Divider -->
+          <div class="my-6 h-px w-full bg-white/5"></div>
+
+          <!-- Features -->
+          <ul class="flex-1 space-y-3">
+            {p.incluye.map((item, i) => (
+              <li class:list={[
+                'flex items-start gap-3 text-sm',
+                i === 0 && p.destacado ? 'text-white font-medium' : 'text-white/75',
+              ]}>
+                <span class:list={[
+                  'mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px]',
+                  i === 0 && p.destacado
+                    ? 'bg-brand-500 text-white'
+                    : 'bg-brand-500/15 text-brand-400',
+                ]}>
+                  <Icon name="check" class="h-3 w-3" />
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- CTA -->
+          <a
+            href="/empresa-de-seguridad-privada-para-condominios/"
+            class:list={[
+              'mt-8 block w-full rounded-xl py-3 text-center text-sm font-bold transition-colors',
+              p.destacado
+                ? 'bg-brand-500 text-white hover:bg-brand-600'
+                : 'border border-white/10 bg-white/5 text-white hover:bg-white/10',
+            ]}
+          >
+            Solicitar cotización
+          </a>
+        </article>
+      ))}
+    </div>
+    <p class="mt-8 text-center text-xs text-white/35">
+      Los precios finales se determinan tras el levantamiento técnico sin costo. Sin letras chiquitas ni compromisos de contratación.
+    </p>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       8. DIFERENCIADORES — 6 cards
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Por qué SEPRICO"
+    title="¿Por qué los comités eligen SEPRICO y no a la competencia?"
+    subtitle="El 94% de los condominios que contratan con SEPRICO renuevan al primer año. No es coincidencia: son decisiones operativas concretas que marcan la diferencia entre un proveedor que cumple y uno que desaparece después de firmar."
+    bg="darker"
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {diferenciadores.map((d) => (
+        <article class="card group flex flex-col">
+          <div class="flex items-start gap-4">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-400 ring-1 ring-brand-500/25">
+              <Icon name={d.icon} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-1 text-base font-bold text-white">{d.titulo}</h3>
+          </div>
+          <p class="mt-4 flex-1 text-sm leading-relaxed text-white/65">{d.desc}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       9. PROCESO DE IMPLEMENTACIÓN
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Cómo empezamos"
+    title="Del diagnóstico a la operación 24/7: cinco pasos sin sorpresas"
+    subtitle="Arranque estándar en 7 a 10 días hábiles. En casos de emergencia o transición urgente de proveedor: operativo en 48 a 72 horas. Cada etapa documentada, supervisada y comunicada al comité en tiempo real."
+    desc="Sabemos que cambiar de empresa de seguridad genera incertidumbre. Por eso el proceso es transparente desde el primer contacto: sin letras chiquitas, sin tiempos muertos y con un ejecutivo de cuenta acompañando cada paso."
+  >
+    <Process items={procesoImpl} />
+
+    <!-- CTAs finales de proceso -->
+    <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a
+        href="/empresa-de-seguridad-privada-para-condominios/"
+        class="btn-brand inline-flex items-center gap-2"
+      >
+        <Icon name="phone" class="h-4 w-4" />
+        Iniciar diagnóstico gratuito
+      </a>
+      <a
+        href={`https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost inline-flex items-center gap-2"
+      >
+        <Icon name="check" class="h-4 w-4" />
+        WhatsApp 24/7
+      </a>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       10. PREGUNTAS FRECUENTES + CONTACTO WHATSAPP
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Preguntas frecuentes"
+    title="Resolvemos tus dudas antes de cotizar"
+    subtitle="Estas son las preguntas que más nos hacen los comités administrativos al evaluar un cambio de proveedor: alcance del servicio, certificaciones, tiempos de arranque, estructura de costos y protocolos de emergencia."
+    desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un asesor especializado en seguridad residencial te responde en menos de 15 minutos durante horario hábil."
+    bg="darker"
+  >
+    <Faq />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       CTA FINAL
+  ══════════════════════════════════════════════════════════════ -->
+  <QuickNavBottom chips={[
+    { label: 'Nosotros',         sub: 'Empresa desde el año 2000',        href: '/nosotros/',                                icon: 'shield' },
+    { label: 'Personal SETEC',   sub: 'Vigilancia y patrullaje 24/7',     href: '/vigilancia-y-patrullaje/',                 icon: 'patrol' },
+    { label: 'CCTV y Monitoreo', sub: 'Centro de monitoreo propio',       href: '/monitoreo-electronico/',                   icon: 'cctv' },
+    { label: 'Control Acceso',   sub: 'Biometría y registro',             href: '/control-de-acceso/',                       icon: 'access' },
+    { label: 'Consultoría',      sub: 'Auditorías y protocolos',          href: '/consultoria-en-seguridad/',                icon: 'check' },
+    { label: 'WhatsApp 24/7',    sub: 'Respuesta en menos de 15 min',     href: `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`, icon: 'phone', external: true },
+  ]} />
+
+</BaseLayout>

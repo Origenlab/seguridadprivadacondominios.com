@@ -1,0 +1,89 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const pillars = [
+  {
+    title: 'Personal de Seguridad',
+    short: 'Pilar 1',
+    desc: 'Guardias capacitados SETEC, supervisores rotativos y servicio intramuros. Selección rigurosa con investigación de antecedentes y exámenes psicométricos.',
+    href: '/personal-de-seguridad-residencial/',
+    icon: 'shield',
+    image: '/images/rrhh/personal-de-seguridad.jpg',
+    services: ['Vigilancia y patrullaje', 'Personal de seguridad', 'Entrenamiento continuo', 'Investigación de antecedentes'],
+  },
+  {
+    title: 'Tecnología y Monitoreo',
+    short: 'Pilar 2',
+    desc: 'CCTV de alta definición, control de acceso biométrico, alarmas perimetrales, intercomunicación IP e iluminación inteligente. Centro de monitoreo 24/7.',
+    href: '/tecnologia-y-monitoreo/',
+    icon: 'cctv',
+    image: '/images/servicios/monitoreo-electronico.jpg',
+    services: ['Monitoreo electrónico', 'Control de acceso', 'Cámaras de vigilancia', 'Control biométrico', 'Alarmas', 'Intercomunicación', 'Iluminación segura'],
+  },
+  {
+    title: 'Protocolos y Consultoría',
+    short: 'Pilar 3',
+    desc: 'Análisis de riesgos, planes de contingencia, auditorías de seguridad y diseño de protocolos a la medida. Estrategias documentadas y revisables trimestralmente.',
+    href: '/servicios-de-seguridad-privada/#protocolos',
+    icon: 'check',
+    image: '/images/servicios/consultoria-en-seguridad.jpg',
+    services: ['Consultoría en seguridad', 'Análisis de riesgos', 'Planes de contingencia', 'Auditorías documentadas'],
+  },
+  {
+    title: 'Atención al Comité',
+    short: 'Pilar 4',
+    desc: 'Ejecutivo de cuenta dedicado, reportes mensuales documentados, bitácora digital consultable y revisión trimestral de indicadores con el comité administrativo.',
+    href: '/empresa-de-seguridad-privada-para-condominios/',
+    icon: 'phone',
+    image: '/images/general/seguridad-condominios.jpg',
+    services: ['Ejecutivo de cuenta dedicado', 'Reportes mensuales al comité', 'Bitácora digital en tiempo real', 'Revisión trimestral con KPIs'],
+  },
+];
+---
+
+<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+  {pillars.map((p) => (
+    <a href={p.href} class="service-card group flex flex-col">
+      <div class="service-card-image">
+        <img
+          src={p.image}
+          alt={p.title}
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
+        <span class="absolute top-3 left-3 grid h-10 w-10 place-items-center rounded-md bg-brand-500/90 text-white backdrop-blur-sm">
+          <Icon name={p.icon as any} class="h-5 w-5" />
+        </span>
+        <span class="absolute top-3 right-3 rounded-md bg-ink-950/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-brand-300 backdrop-blur-sm">
+          {p.short}
+        </span>
+        <div class="absolute bottom-0 left-0 right-0 p-5">
+          <h3 class="text-xl font-bold leading-tight text-white">{p.title}</h3>
+        </div>
+      </div>
+
+      <div class="service-card-body">
+        <p class="text-sm leading-relaxed text-white/75">{p.desc}</p>
+
+        <div class="mt-5 border-t border-white/5 pt-4">
+          <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500 mb-3">Incluye</p>
+          <div class="grid grid-cols-2 gap-1.5">
+            {p.services.map((srv) => (
+              <div class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-medium text-white/80 hover:border-brand-500/50 hover:bg-brand-500/15 hover:text-brand-300 transition-colors">
+                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>
+                <span class="leading-tight">{srv}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+          Ver detalle
+          <Icon name="arrow" class="h-3.5 w-3.5" />
+        </span>
+      </div>
+    </a>
+  ))}
+</div>

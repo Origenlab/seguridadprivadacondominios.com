@@ -1,0 +1,148 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  /** Texto pequeño encima del título (ej. "SEPRICO ·" o "Paso 03"). */
+  pretitle?: string;
+  title?: string;
+  subtitle?: string;
+  desc?: string;
+  align?: 'left' | 'center';
+  bg?: 'default' | 'darker';
+  /** Nivel semántico del título — usa "h1" para la primera Section de cada página */
+  as?: 'h1' | 'h2';
+  /** Número de sección visible como badge (ej. "01", "02"). Opcional. */
+  step?: string;
+  class?: string;
+}
+
+const {
+  id,
+  eyebrow,
+  pretitle,
+  title,
+  subtitle,
+  desc,
+  align = 'left',
+  bg = 'default',
+  as: Tag = 'h2',
+  step,
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    'section relative',
+    bg === 'darker' && 'bg-ink-900',
+    className,
+  ]}
+>
+  <div class="container-pro">
+    {(eyebrow || title || subtitle || desc || step) && (
+      align === 'center' ? (
+        <header class="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+          {/* Step badge centrado */}
+          {step && (
+            <div class="mb-5 flex justify-center">
+              <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-base font-extrabold text-white shadow-brand">
+                {step}
+              </span>
+            </div>
+          )}
+
+          {/* Eyebrow centrado con línea decorativa */}
+          {eyebrow && (
+            <div class="mb-4 flex items-center justify-center gap-3">
+              <span class="h-px w-8 bg-brand-500/40"></span>
+              <span class="eyebrow !text-brand-400 before:!hidden">{eyebrow}</span>
+              <span class="h-px w-8 bg-brand-500/40"></span>
+            </div>
+          )}
+
+          {pretitle && (
+            <p class="mb-2 text-sm font-semibold uppercase tracking-widest2 text-white/50">
+              {pretitle}
+            </p>
+          )}
+
+          {title && (
+            <Tag class="section-title bg-gradient-to-br from-white to-white/75 bg-clip-text text-transparent">
+              {title}
+            </Tag>
+          )}
+
+          {/* Barra decorativa centrada con dot terminal */}
+          <div class="mx-auto mt-6 flex items-center justify-center gap-3">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-500/40"></span>
+            <span class="h-[3px] w-20 bg-brand-500"></span>
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-500/40"></span>
+          </div>
+
+          {subtitle && <p class="mt-7 text-lg leading-relaxed text-white/90 text-pretty md:text-xl">{subtitle}</p>}
+          {desc && <p class="mt-4 text-sm leading-relaxed text-white/55 text-pretty">{desc}</p>}
+        </header>
+      ) : (
+        <header class="mb-12 grid gap-10 md:mb-16 md:grid-cols-2 md:items-stretch md:gap-12 lg:gap-16">
+          {/* COLUMNA IZQUIERDA — eyebrow + title + bar */}
+          <div class="flex flex-col justify-center">
+            {/* Step badge + eyebrow en línea */}
+            <div class="flex flex-wrap items-center gap-4">
+              {step && (
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-extrabold text-white shadow-brand">
+                  {step}
+                </span>
+              )}
+              {eyebrow && (
+                <span class="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-widest2 text-brand-400">
+                  <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                  {eyebrow}
+                  <span class="h-px w-12 bg-brand-500/40"></span>
+                </span>
+              )}
+            </div>
+
+            {pretitle && (
+              <p class="mt-5 text-sm font-semibold uppercase tracking-widest2 text-white/50">
+                {pretitle}
+              </p>
+            )}
+
+            {title && (
+              <Tag class="mt-5 section-title bg-gradient-to-br from-white to-white/75 bg-clip-text text-transparent">
+                {title}
+              </Tag>
+            )}
+
+            {/* Barra decorativa con gradiente */}
+            <div class="mt-6 flex items-center gap-3">
+              <span class="h-[3px] w-20 bg-gradient-to-r from-brand-500 to-brand-500/0"></span>
+              <span class="h-1.5 w-1.5 rounded-full bg-brand-500/40"></span>
+            </div>
+          </div>
+
+          {/* COLUMNA DERECHA — subtitle + desc verticalmente centradas */}
+          {(subtitle || desc) && (
+            <div class="relative flex flex-col justify-center border-l border-white/5 pl-6 md:pl-10">
+              {/* Acento vertical brand centrado */}
+              <span class="absolute left-0 top-1/2 h-16 w-[2px] -translate-y-1/2 bg-brand-500"></span>
+
+              {subtitle && (
+                <p class="text-lg leading-relaxed text-white/90 text-pretty md:text-xl">
+                  {subtitle}
+                </p>
+              )}
+              {desc && (
+                <p class="mt-5 text-sm leading-relaxed text-white/55 text-pretty">
+                  {desc}
+                </p>
+              )}
+            </div>
+          )}
+        </header>
+      )
+    )}
+    <slot />
+  </div>
+</section>

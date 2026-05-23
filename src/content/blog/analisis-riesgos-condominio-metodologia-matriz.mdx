@@ -1,0 +1,90 @@
+---
+title: 'Análisis de Riesgos de Seguridad para Condominios: Metodología, Matriz de Evaluación y Cómo Usar los Resultados'
+description: 'Metodología estructurada de análisis de riesgos de seguridad para condominios residenciales: identificación de amenazas por fuentes de datos estadísticas, evaluación de vulnerabilidades, cálculo de riesgo residual, construcción de matriz de riesgos y traducción a decisiones de inversión verificables.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'protocolos-y-consultoria'
+tags: ['analisis-riesgos', 'matriz-riesgos', 'gestion-riesgos', 'consultoria-seguridad', 'condominios']
+---
+
+El análisis de riesgos de seguridad es el ejercicio intelectual que convierte la intuición del comité sobre "qué puede pasar" en un marco estructurado que permite comparar, priorizar y decidir con criterio técnico. Sin este marco, las decisiones de inversión en seguridad se toman por presión del momento —el desarrollo vecino tuvo un incidente y el comité instala cámaras— o por argumento de autoridad —el proveedor dice que lo que necesitan es tal sistema—. Ambos mecanismos pueden producir buenas decisiones por coincidencia, pero no de forma sistemática y replicable.
+
+El análisis de riesgos profesional aplica una metodología estándar derivada de frameworks internacionales —ISO 31000 (Gestión del Riesgo), NIST SP 800-30 (Guía para la Evaluación del Riesgo de Seguridad), y la metodología MAGERIT del Centro Criptológico Nacional de España— adaptada a las características específicas de los condominios residenciales en México.
+
+## Los Conceptos Fundamentales: Un Vocabulario Preciso
+
+El análisis de riesgos requiere precisión conceptual porque los términos más comunes —"peligro", "riesgo", "amenaza"— se usan coloquialmente de forma intercambiable pero tienen definiciones técnicas distintas que determinan cómo se analiza cada variable:
+
+**Activo:** Todo elemento del desarrollo que tiene valor y que puede ser dañado o comprometido por una amenaza. Los activos de un condominio incluyen: las personas (residentes, empleados, visitantes), los bienes materiales (vehículos, objetos de valor en unidades privadas, equipamiento de áreas comunes), la infraestructura (instalaciones del desarrollo, sistemas tecnológicos), la información (datos de residentes, historial de accesos, información de situación patrimonial), y la reputación del desarrollo (el valor de mercado de las propiedades, que se afecta negativamente por incidentes de seguridad).
+
+**Amenaza:** Un evento potencial que, si ocurre, puede causar daño a uno o más activos del desarrollo. Las amenazas pueden ser de origen externo (robo, secuestro, vandalismo, extorsión) o interno (robo por personal, divulgación de información confidencial, conflictos entre residentes). Una amenaza es una posibilidad, no una certeza: su caracterización incluye tanto la naturaleza del evento como la probabilidad estimada de que ocurra.
+
+**Vulnerabilidad:** Una condición del sistema de seguridad del desarrollo que reduce su capacidad para prevenir, detectar o responder a una amenaza específica. La vulnerabilidad no tiene valor por sí misma: cobra relevancia solo en relación con una amenaza que puede explotarla. Un perímetro con iluminación insuficiente es una vulnerabilidad; su relevancia depende de si existe una amenaza (intrusos que pueden aprovecharse de la oscuridad) y de la probabilidad de que esa amenaza se materialice.
+
+**Riesgo:** La combinación de la probabilidad de que una amenaza se materialice y el impacto que produciría si lo hace. El riesgo no puede expresarse solo con uno de estos factores: una amenaza de alta probabilidad pero impacto mínimo tiene un nivel de riesgo diferente a una amenaza de baja probabilidad pero impacto catastrófico.
+
+**Riesgo residual:** El nivel de riesgo que permanece después de implementar las medidas de control o mitigación. Ningún sistema de seguridad elimina el riesgo completamente: siempre existe un riesgo residual que el comité debe aceptar de forma consciente o transferir a través de seguros.
+
+## Paso 1: Identificación de Amenazas con Fuentes de Datos Verificables
+
+El análisis de amenazas de un desarrollo específico no puede basarse exclusivamente en la experiencia del consultor o en la intuición del comité: debe sustentarse en datos estadísticos que permitan estimar la probabilidad de cada amenaza con criterio verificable.
+
+**Fuente 1 — Plataforma de Datos Abiertos de la Secretaría de Seguridad Ciudadana (SSC CDMX).** Disponible en datos.cdmx.gob.mx, proporciona estadísticas de incidentes delictivos a nivel de colonia con desagregación por tipo de delito y mes. Para un análisis de riesgos, los datos relevantes son: robo a casa habitación (con y sin violencia), robo de vehículo (con y sin violencia), robo a transeúnte, y narcomenudeo —este último como indicador indirecto de presencia de grupos delictivos organizados en la zona que pueden generar amenazas de mayor complejidad.
+
+**Fuente 2 — Sistema Nacional de Seguridad Pública (SNSP).** Para desarrollos en el Estado de México, los datos equivalentes están en el portal del SNSP bajo el SESNSP. La desagregación geográfica puede ser menos granular que la de la SSC CDMX, lo que puede requerir complementar con datos de la SSEM (Secretaría de Seguridad del Estado de México).
+
+**Fuente 3 — Registros históricos del propio desarrollo.** El historial de incidentes documentados en las bitácoras del desarrollo y en los reportes del proveedor de seguridad es la fuente más relevante para el análisis porque es específico al desarrollo y a su contexto inmediato. Incidentes que nunca fueron reportados a las autoridades pero quedaron en la bitácora interna —intentos de acceso no autorizados, confrontaciones en el acceso, comportamiento sospechoso en el perímetro— tienen mayor valor predictivo que las estadísticas generales de la zona.
+
+**Fuente 4 — Entrevistas con residentes y personal de seguridad.** Las percepciones de los residentes sobre la seguridad del desarrollo —aunque no sean estadísticamente verificables— revelan patrones de comportamiento de riesgo que los datos formales no capturan: el horario en que los residentes sienten mayor inseguridad al llegar a su casa, los incidentes menores que nunca se reportaron, los visitantes recurrentes que generan incomodidad sin que haya ocurrido ningún incidente formal.
+
+## Paso 2: Evaluación de Vulnerabilidades por Zona y Sistema
+
+La evaluación de vulnerabilidades aplica el análisis técnico descrito en el artículo de consultoría y diagnóstico a cada zona del desarrollo y cada componente del sistema de seguridad. Para el análisis de riesgos, la vulnerabilidad se expresa como una escala de 1 a 5 que indica qué tan expuesto está cada activo ante cada amenaza identificada:
+
+- **1 (Muy baja):** El sistema de seguridad tiene controles efectivos que hacen muy difícil explotar esta vulnerabilidad
+- **2 (Baja):** Existen controles razonables con algunas limitaciones menores
+- **3 (Media):** Los controles son parciales o tienen deficiencias identificadas
+- **4 (Alta):** Los controles son insuficientes o tienen deficiencias significativas
+- **5 (Muy alta):** No existen controles efectivos o los existentes pueden evadirse con facilidad
+
+## Paso 3: La Matriz de Riesgos
+
+La matriz de riesgos es la herramienta visual que integra las dos dimensiones del riesgo —probabilidad e impacto— para cada combinación de amenaza y activo vulnerado.
+
+La probabilidad se expresa en una escala de 1 a 5:
+- 1: Raro (menos de una vez en 5 años en desarrollos del perfil similar)
+- 2: Infrecuente (entre una y tres veces en 5 años)
+- 3: Ocasional (más de tres veces en 5 años, menos de una por año)
+- 4: Frecuente (entre una y cuatro veces por año)
+- 5: Muy frecuente (más de cuatro veces por año)
+
+El impacto se expresa también en escala de 1 a 5, considerando el impacto combinado sobre personas, bienes, infraestructura y reputación:
+- 1: Insignificante
+- 2: Menor
+- 3: Moderado
+- 4: Mayor
+- 5: Catastrófico
+
+El nivel de riesgo se calcula multiplicando probabilidad × impacto, produciendo valores entre 1 (mínimo) y 25 (máximo). Los niveles de riesgo se clasifican:
+- 1–4: Riesgo bajo (aceptable sin acción inmediata)
+- 5–9: Riesgo moderado (requiere monitoreo y plan de mejora)
+- 10–16: Riesgo alto (requiere acción correctiva dentro de 90 días)
+- 17–25: Riesgo crítico (requiere acción inmediata)
+
+## Paso 4: Traducción a Decisiones de Inversión
+
+El valor del análisis de riesgos no es la matriz en sí: es la capacidad de traducir los resultados de la matriz en decisiones de inversión con criterio de retorno.
+
+Para cada riesgo alto o crítico identificado, el análisis debe determinar: la medida de control que reduce ese riesgo de forma más efectiva, el costo de implementar esa medida, la reducción de probabilidad y/o impacto que produce esa medida (lo que permite calcular el nuevo nivel de riesgo residual post-implementación), y el costo esperado del incidente si no se implementa la medida (calculado como probabilidad anual × impacto económico estimado).
+
+Este cálculo permite comparar el costo de la medida de seguridad con la pérdida esperada que previene. Para un riesgo con probabilidad de 0.2 por año (una vez cada 5 años) e impacto de 150,000 pesos, la pérdida esperada anual es de 30,000 pesos. Una medida que cuesta 15,000 pesos anuales y reduce la probabilidad en un 70% tiene un retorno positivo claro; una que cuesta 80,000 pesos para el mismo nivel de reducción no lo tiene, independientemente de su sofisticación técnica.
+
+## El Análisis de Riesgos como Documento Vivo
+
+El análisis de riesgos de un condominio no es un documento que se elabora una vez y conserva vigencia indefinida: las amenazas del entorno evolucionan, el sistema de seguridad se modifica, y la demografía y el valor de los activos del desarrollo cambian. El análisis debe revisarse formalmente al menos una vez al año, y debe actualizarse inmediatamente después de cualquier incidente significativo que haya revelado una vulnerabilidad no identificada previamente.
+
+La revisión anual del análisis de riesgos es también la oportunidad para evaluar si las medidas de control implementadas en el período anterior produjeron la reducción de riesgo esperada. Si la incidencia de un tipo de evento no disminuyó después de implementar la medida de control, hay dos posibilidades: la medida de control no se implementó correctamente, o la relación causal entre la vulnerabilidad corregida y el tipo de incidente era diferente a la supuesta. Ambas conclusiones tienen implicaciones de acción que el análisis de riesgos actualizado debe capturar.
+
+---
+
+*En SEPRICO el análisis de riesgos forma parte del diagnóstico inicial de cada desarrollo y se actualiza en las revisiones trimestrales de KPIs. Los resultados del análisis son el fundamento de las recomendaciones de inversión que hacemos al comité, con el cálculo de retorno esperado para cada medida propuesta.*

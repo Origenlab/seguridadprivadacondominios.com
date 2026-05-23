@@ -1,0 +1,41 @@
+---
+/**
+ * ItemList JSON-LD — para techStack[] grupos.
+ * Mejora indexación de listas técnicas y elegibilidad para listings en SERP.
+ */
+
+interface Group {
+  title: string;
+  items: readonly string[];
+}
+
+interface Props {
+  name: string;
+  groups: readonly Group[];
+}
+
+const { name, groups } = Astro.props;
+
+// Aplanamos todos los items en un ItemList único con names contextualizados
+const allItems = groups.flatMap((g) =>
+  g.items.map((item) => ({ category: g.title, name: item }))
+);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name,
+  numberOfItems: allItems.length,
+  itemListElement: allItems.map((it, idx) => ({
+    '@type': 'ListItem',
+    position: idx + 1,
+    item: {
+      '@type': 'Thing',
+      name: it.name,
+      additionalType: it.category,
+    },
+  })),
+};
+---
+
+{groups.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

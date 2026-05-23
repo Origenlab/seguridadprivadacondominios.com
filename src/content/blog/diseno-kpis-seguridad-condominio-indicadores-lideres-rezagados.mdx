@@ -1,0 +1,143 @@
+---
+title: 'Diseño del Set de KPIs de Seguridad: Indicadores Líderes, Rezagados y Cómo Calibrar los Objetivos al Perfil del Condominio'
+description: 'Metodología para diseñar el conjunto correcto de indicadores clave de desempeño (KPIs) para el sistema de seguridad de un condominio residencial: distinción entre indicadores líderes y rezagados, calibración de objetivos al perfil de riesgo, KPIs mínimos indispensables versus complementarios, y cómo los datos acumulados de múltiples trimestres sirven para renegociar contratos e inversiones.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'atencion-al-comite'
+tags: ['kpis-seguridad', 'indicadores-desempeno', 'gestion-contratos', 'perfil-de-riesgo', 'condominios']
+---
+
+La mayoría de los comités que solicitan KPIs de seguridad reciben del proveedor un conjunto estándar de métricas —MTTD, MTTR, disponibilidad del sistema, tasa de falsas alarmas— aplicado con los mismos valores objetivo a todos sus desarrollos, independientemente de si el condominio tiene 40 unidades residenciales o 400, si está en una zona de incidencia alta o en un área de bajo riesgo histórico, y si su perfil de amenaza predominante son los accesos no autorizados o los incidentes entre residentes.
+
+Este enfoque de "talla única" produce un fenómeno específico: el proveedor cumple formalmente los objetivos de los KPIs mientras el comité percibe que la seguridad no está mejorando. La razón es que los KPIs estándar pueden no estar midiendo las variables que más importan para ese desarrollo específico, y los objetivos fijados pueden no representar el nivel de exigencia apropiado para su perfil operativo.
+
+El diseño correcto de un set de KPIs requiere dos decisiones que el comité debe tomar con criterio técnico: qué medir, y con qué nivel de exigencia medirlo.
+
+## La Distinción Fundamental: Indicadores Líderes versus Indicadores Rezagados
+
+La distinción entre indicadores líderes (*leading indicators*) e indicadores rezagados (*lagging indicators*) es el marco conceptual más útil para entender por qué algunos KPIs de seguridad tienen mayor valor predictivo que otros.
+
+**Los indicadores rezagados** miden resultados que ya ocurrieron: número de incidentes del período, tiempo promedio de respuesta, disponibilidad histórica del sistema. Son precisos y verificables, pero tienen una limitación operativa crítica: cuando el indicador se deteriora, el daño ya ocurrió. El MTTR que sube de 4 minutos a 8 minutos en el reporte del mes pasado documenta respuestas lentas que ya tuvieron lugar; no permite anticipar la próxima respuesta lenta.
+
+**Los indicadores líderes** miden condiciones que predicen el desempeño futuro antes de que el deterioro se manifieste en incidentes. Son más difíciles de medir y de interpretar, pero tienen mayor valor para la gestión preventiva porque permiten intervenir antes de que los indicadores rezagados se deterioren.
+
+La tabla siguiente clasifica los KPIs más comunes del servicio de seguridad residencial:
+
+| KPI | Tipo | Qué predice o documenta |
+|-----|------|------------------------|
+| Tasa de rotación del personal | Líder | Calidad del servicio en 30–60 días; guardia nuevo = desempeño degradado |
+| Tasa de cumplimiento de rondines | Líder | Probabilidad de detección de anomalías; el rondín no realizado es el intervalo de riesgo |
+| Tasa de actualización de firmware | Líder | Vulnerabilidades técnicas explotables en próximos 90 días |
+| Tasa de renovación de certificaciones SETEC | Líder | Desempeño operativo legal del personal en próximo ciclo |
+| Porcentaje de cámaras con cobertura >90 días continuos | Líder | Disponibilidad del archivo de evidencia en investigaciones futuras |
+| MTTD (Mean Time to Detect) | Rezagado | Velocidad de detección en el período reportado |
+| MTTR (Mean Time to Respond) | Rezagado | Velocidad de respuesta en el período reportado |
+| Número de incidentes de Nivel 3–4 | Rezagado | Materialización de amenazas en el período |
+| Disponibilidad del sistema (%) | Rezagado | Cobertura técnica real del período |
+| Tasa de falsas alarmas | Rezagado | Precisión del sistema en el período; también indicador líder de cry-wolf effect |
+
+Un set de KPIs bien diseñado incluye al menos un 30–40% de indicadores líderes, porque un conjunto compuesto exclusivamente de indicadores rezagados solo permite documentar el deterioro del servicio, no anticiparlo y prevenirlo.
+
+## El Perfil de Riesgo como Determinante del Set de KPIs
+
+El perfil de riesgo del desarrollo determina cuáles KPIs tienen mayor relevancia y cuáles objetivos son apropiados para ese contexto específico. El diagnóstico del perfil de riesgo debe basarse en datos verificables, no en percepción subjetiva.
+
+**Variables del perfil de riesgo que afectan el diseño de KPIs:**
+
+*Densidad del desarrollo y complejidad operativa.* Un condominio horizontal de 80 casas tiene un perímetro y número de puntos de acceso radicalmente diferente a una torre vertical de 200 departamentos. La tasa de accesos procesados por turno, el tiempo de rondín completo del perímetro, y el número de cámaras que un guardia puede monitorear activamente son diferentes en ambos casos. Los objetivos de MTTD no deben ser idénticos.
+
+*Nivel de incidencia del entorno inmediato.* Los datos del SESNSP (Secretariado Ejecutivo del Sistema Nacional de Seguridad Pública) permiten obtener la tasa de incidencia delictiva por alcaldía o municipio. Un desarrollo en una zona con tasa de robo de casa habitación superior a 15 por cada 1,000 habitantes requiere objetivos de MTTD y MTTR más exigentes —y probablemente más personal— que uno en una zona con tasa inferior a 3.
+
+*Historial de incidentes del propio desarrollo.* Si el desarrollo ha experimentado en los últimos 24 meses incidentes recurrentes de una categoría específica —accesos no autorizados por el perímetro norte, robos de vehículo en el estacionamiento descubierto, conflictos de acceso en el turno nocturno— esa categoría merece KPIs específicos con mayor granularidad que los KPIs generales del servicio.
+
+*Perfil demográfico de los residentes.* Un desarrollo con alta proporción de residentes adultos mayores tiene una necesidad de respuesta ante emergencias médicas que puede ser igual o superior a su necesidad de respuesta ante incidentes de seguridad. La inclusión de tiempo de respuesta ante activaciones de emergencia médica como KPI puede ser más relevante para ese perfil que el MTTD ante intrusiones.
+
+*Rotación de residentes y proveedores.* Un desarrollo con alta rotación de residentes (más del 20% anual) tiene mayor frecuencia de altas y bajas en los registros de acceso, mayor número de mudanzas con sus vulnerabilidades asociadas, y mayor complejidad en el control de acceso. Los KPIs de gestión de credenciales —tiempo promedio entre notificación de egreso y baja del acceso, porcentaje de accesos activos de residentes que ya no habitan el desarrollo— son altamente relevantes en este perfil.
+
+## El Set Mínimo Indispensable: Seis KPIs que Ningún Contrato Debe Omitir
+
+Independientemente del perfil de riesgo específico del desarrollo, existe un conjunto de seis KPIs que deben estar presentes en cualquier contrato de seguridad residencial con objetivos verificables:
+
+**1. MTTD — Mean Time to Detect (Objetivo: ≤ 3 minutos para eventos de Nivel 2–4)**
+
+El tiempo promedio desde que un evento de seguridad es detectable por el sistema hasta que el guardia o el centro de monitoreo lo detecta y activa respuesta. El objetivo de 3 minutos es el umbral por encima del cual la ventana de actuación del agresor supera la capacidad de respuesta preventiva del sistema.
+
+Nota metodológica: el MTTD se calcula únicamente sobre los eventos donde el momento de inicio es verificable (activación de alarma con timestamp, registro de cámara con timestamp). No debe calcularse sobre eventos cuyo momento de inicio es estimado, porque la imprecisión del denominador invalida la métrica.
+
+**2. MTTR — Mean Time to Respond (Objetivo: ≤ 5 minutos para Nivel 2; ≤ 2 minutos para Nivel 3–4)**
+
+El tiempo promedio desde que el evento es detectado hasta que el guardia está físicamente en el punto del incidente o el centro de monitoreo ha contactado a las autoridades (para eventos que requieren apoyo externo). El objetivo diferenciado por nivel de severidad es importante: el mismo tiempo de respuesta es adecuado para una alarma de movimiento en zona periférica y claramente insuficiente para una intrusión en zona residencial activa.
+
+**3. Disponibilidad del sistema de videovigilancia (Objetivo: ≥ 98.5% del tiempo con cobertura ≥ 90% de cámaras operativas)**
+
+El porcentaje del tiempo en que al menos el 90% de las cámaras del desarrollo están operativas y grabando. El umbral del 90% permite que una o dos cámaras estén en mantenimiento programado sin que el indicador se degrade, pero detecta los períodos con fallas simultáneas de múltiples cámaras que crean zonas ciegas sistémicas.
+
+**4. Tasa de alarmas válidas por zona (Objetivo: ≥ 75% de activaciones válidas en cada zona)**
+
+El porcentaje de activaciones del sistema de alarma que corresponden a eventos reales (no falsas alarmas) en cada zona del desarrollo. El objetivo del 75% por zona —no solo en promedio— es crítico porque un promedio general puede ocultar una zona específica con 30% de alarmas válidas que está generando el cry-wolf effect en el guardia responsable de esa zona.
+
+**5. Tasa de rotación del personal asignado (Objetivo: ≤ 2 cambios de guardia por posición por trimestre)**
+
+El número de cambios de personal en cada posición (turno y punto de control) durante el período. Más de 2 cambios por posición por trimestre significa que la posición ha sido cubierta por al menos 3 guardias diferentes en 90 días, lo que impide el nivel de familiarización con el desarrollo, los residentes y los protocolos que requiere un desempeño de calidad.
+
+**6. Tasa de cumplimiento de rondines programados (Objetivo: ≥ 95% de los rondines completados según protocolo)**
+
+El porcentaje de los rondines programados que fueron realizados dentro de la ventana temporal establecida en el protocolo y con todos los puntos de verificación completados. El 5% de margen permite ausencias por atención a eventos durante el período del rondín, pero detecta los turnos con omisión sistemática de rondines — que es el indicador más directo de guardia inactivo o en complacencia.
+
+## KPIs Complementarios por Perfil de Riesgo
+
+Además del set mínimo, los siguientes KPIs son apropiados para perfiles de riesgo específicos:
+
+**Para desarrollos con acceso vehicular de alto volumen (>100 ingresos diarios):**
+- Tasa de accesos procesados sin intervención manual del guardia (objetivo: >85%)
+- Tiempo promedio de procesamiento por vehículo en hora pico (objetivo: &lt;45 segundos)
+- Porcentaje de placas reconocidas vs. registradas en base de datos activa (objetivo: >95%)
+
+**Para desarrollos con historial de incidentes en perímetro:**
+- Porcentaje del perímetro con cobertura de cámara ≥ DORI "Detección" (25 píxeles por metro) en horas nocturnas (objetivo: 100%)
+- Tiempo entre último rondín perimetral y siguiente en hora nocturna (objetivo: &lt;90 minutos)
+- Número de activaciones del sensor perimetral por semana (para detectar deterioro o manipulación del sensor)
+
+**Para desarrollos con alta rotación de residentes:**
+- Tiempo promedio entre notificación de egreso de residente y baja del acceso activo (objetivo: &lt;24 horas)
+- Porcentaje de accesos activos auditados contra padrón de residentes en el último mes (objetivo: 100% trimestral)
+
+**Para desarrollos con histórico de incidentes internos (entre residentes o con proveedores):**
+- Porcentaje de accesos de proveedores registrados con identificación completa (objetivo: 100%)
+- Tasa de activaciones de intercomunicación atendidas vs. generadas en las últimas 24 horas (objetivo: >95%)
+
+## Calibración de Objetivos: El Error de Usar Benchmarks Genéricos
+
+Los benchmarks genéricos de la industria —publicados en estudios de asociaciones como ASIS International o el Security Industry Association— representan promedios de desempeño en contextos muy diversos que incluyen instalaciones industriales, corporativos y comerciales. Aplicar esos benchmarks sin calibración al contexto específico de un condominio residencial mexicano produce objetivos que pueden ser simultáneamente demasiado exigentes en algunas métricas y demasiado laxos en otras.
+
+La calibración correcta de objetivos sigue este proceso:
+
+**Paso 1: Línea base del primer trimestre operativo.** El primer trimestre del contrato establece la línea base real del desempeño del sistema en ese desarrollo específico. Los objetivos contractuales del primer trimestre deben ser realistas dado el estado inicial del sistema; deben ser revisables en la primera sesión de revisión trimestral con base en los datos reales.
+
+**Paso 2: Trayectoria de mejora comprometida.** Para cada KPI que inicia por debajo del objetivo ideal, el proveedor debe comprometer una trayectoria de mejora trimestral con incrementos verificables. Un MTTD inicial de 6 minutos con un objetivo final de 3 minutos puede tener una trayectoria de mejora: Q1 = ≤5.0 min, Q2 = ≤4.0 min, Q3 = ≤3.5 min, Q4 = ≤3.0 min.
+
+**Paso 3: Ajuste de objetivos por cambio de condiciones.** Condiciones que pueden justificar una revisión del objetivo sin que represente incumplimiento del proveedor: expansión del desarrollo (nuevas torres o fases), cambio en el entorno de amenaza documentado por datos del SESNSP, o modificaciones estructurales del desarrollo que afectan la operación (remodelaciones, cierre de accesos). Condiciones que no justifican revisión: aumento del costo de personal, rotación del equipo del proveedor, o problemas de suministro de equipos.
+
+## El Uso de Datos Acumulados para Renegociar Contratos e Inversiones
+
+El valor de los datos de KPIs se multiplica con el tiempo: un trimestre de datos establece una línea base; cuatro trimestres revelan tendencias anuales; ocho trimestres permiten comparación interanual con control de estacionalidad.
+
+**Renegociación de condiciones contractuales.** Un comité que llega a la renovación del contrato con cuatro trimestres consecutivos de datos que demuestran que el proveedor ha cumplido todos sus KPIs al 100% está negociando desde una posición de información: puede solicitar mejoras en las condiciones (reducción del tiempo de respuesta, aumento de la cobertura de cámaras, extensión del período de retención) porque tiene evidencia de que el proveedor tiene la capacidad de cumplirlas. Un comité sin datos negocia desde la percepción.
+
+**Justificación de inversiones ante la asamblea.** La relación entre la evolución de un KPI específico y la inversión requerida para mejorarlo es el argumento técnico más efectivo para obtener la autorización de la asamblea. "El MTTD nocturno es 4.8 minutos porque el guardia tiene que recorrer 180 metros desde su punto de vigilancia hasta la zona de mayor incidencia. La instalación de un segundo punto de monitoreo remoto reduciría ese MTTD a menos de 2 minutos según el análisis de tiempo de respuesta del proveedor. El costo de la instalación es X pesos; el costo del seguro que el condominio pagaría en caso de un incidente en ese intervalo es Y pesos según la póliza actual" — este argumento tiene una lógica verificable que la asamblea puede evaluar con criterio propio.
+
+**Identificación del proveedor correcto en la renovación.** Los datos acumulados permiten comparar el desempeño real del proveedor actual con las propuestas de proveedores alternativos en una evaluación objetiva. Un proveedor alternativo que propone objetivos de MTTD de 1.5 minutos cuando el proveedor actual con el mismo tipo de desarrollo ha demostrado consistentemente 2.8 minutos tiene que explicar cómo logrará ese resultado —con qué equipamiento, personal y protocolo— antes de que su propuesta sea técnicamente creíble.
+
+## Señales de que el Set de KPIs Necesita Revisión
+
+El set de KPIs requiere revisión cuando:
+
+**Los KPIs muestran "verde" pero el comité recibe quejas crecientes de los residentes.** Si todos los KPIs están dentro del objetivo pero los residentes reportan percepción de inseguridad, hay un desalineamiento entre lo que se está midiendo y lo que importa para ese desarrollo. Probablemente faltan KPIs de experiencia del residente (tiempo de respuesta ante llamadas al intercomunicador, trato del guardia en el acceso, comunicación de incidentes).
+
+**El proveedor nunca incumple ningún KPI.** Un proveedor que cumple el 100% de sus KPIs todos los trimestres puede estar operando con excelencia o puede haber negociado objetivos demasiado laxos en relación con su capacidad real. La calibración correcta produce un set de KPIs que el proveedor cumple la mayoría del tiempo pero que requiere esfuerzo activo para lograrlo — no un conjunto que se cumple automáticamente sin gestión específica.
+
+**Los KPIs no capturan el tipo de incidente más recurrente del desarrollo.** Si el 60% de los incidentes del desarrollo son conflictos en el acceso vehicular en hora pico y ningún KPI mide el desempeño del sistema de control de acceso vehicular, el set de KPIs es inadecuado para ese desarrollo, independientemente de cuántas métricas incluya.
+
+---
+
+*El proceso de diseño del set de KPIs de SEPRICO se realiza en la reunión de kickoff con el comité, utilizando los datos del diagnóstico inicial del desarrollo y el historial de incidentes documentado. El set se revisa en cada sesión trimestral y se ajusta cuando cambian las condiciones del desarrollo o cuando los datos acumulados revelan variables no capturadas en el set original.*

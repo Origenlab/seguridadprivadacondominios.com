@@ -1,0 +1,105 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const subcategories = [
+  {
+    title: 'Consultoría en Seguridad',
+    href: '/consultoria-en-seguridad/',
+    icon: 'shield',
+    prose: 'Antes de proponer cualquier cosa, el equipo de SEPRICO hace un diagnóstico presencial: recorremos el perímetro, evaluamos los accesos, identificamos puntos de vulnerabilidad y revisamos el historial de incidentes de la zona. Con ese mapa en mano diseñamos una estrategia a la medida — qué personal se necesita, qué tecnología tiene sentido, qué protocolos deben existir y en qué orden actuar. No hay dos condominios con el mismo perfil de riesgo, y no vendemos el mismo paquete a todos.',
+  },
+  {
+    title: 'Análisis de Riesgos',
+    href: '/consultoria-en-seguridad/#analisis',
+    icon: 'alert',
+    prose: 'Un análisis de riesgos no es un checklist de oficina. Cruzamos la geografía del condominio, el perfil de sus residentes, los registros de incidentes de la colonia y las debilidades operativas del esquema de seguridad vigente. Cada hallazgo se documenta con evidencia fotográfica, planos anotados y niveles de criticidad clasificados. El resultado es un informe técnico que el comité puede usar para tomar decisiones de inversión con argumento, no con intuición.',
+  },
+  {
+    title: 'Planes de Contingencia',
+    href: '/consultoria-en-seguridad/#contingencia',
+    icon: 'clock',
+    prose: 'Una emergencia no es el momento de preguntar qué hacer — es el momento de ejecutar lo que ya está planeado. Desarrollamos planes específicos para cada tipo de eventualidad: intrusión perimetral, corte de suministro eléctrico, incendio, sismo, conflicto entre residentes o situación crítica de seguridad. Cada plan define roles, canales de comunicación, rutas de evacuación y coordinación con servicios de emergencia. Se revisan con el comité, se practican con el personal y se actualizan cada trimestre.',
+  },
+  {
+    title: 'Auditorías Documentadas',
+    href: '/consultoria-en-seguridad/#auditorias',
+    icon: 'check',
+    prose: 'Lo que no se mide no se puede mejorar — y lo que no está documentado no puede defenderse ante la asamblea. Cada trimestre entregamos una auditoría completa: cumplimiento de protocolos por el personal, estado de la infraestructura tecnológica, revisión de bitácora de incidentes y medición de los indicadores acordados al inicio del contrato. El informe está listo para presentarse ante los residentes sin necesidad de intermediario ni traducción técnica.',
+  },
+];
+---
+
+<div class="grid gap-10 lg:grid-cols-5 lg:items-stretch">
+
+  <!-- Columna izquierda -->
+  <div class="lg:col-span-2 flex flex-col">
+    <div class="overflow-hidden rounded-2xl flex flex-col flex-1">
+      <div class="relative aspect-[4/3] w-full">
+        <img
+          src="/images/servicios/consultoria-en-seguridad.jpg"
+          alt="Protocolos y consultoría SEPRICO"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/40 to-transparent"></div>
+
+        <span class="absolute top-4 left-4 rounded-lg bg-brand-500/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+          Pilar 3
+        </span>
+
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="text-2xl font-bold leading-tight text-white">
+            Protocolos y<br/>Consultoría
+          </h3>
+          <p class="mt-1 text-sm text-white/60">4 servicios especializados</p>
+        </div>
+      </div>
+
+      <div class="bg-ink-900 p-6 flex flex-col flex-1">
+        <p class="text-sm leading-relaxed text-white/70">
+          Análisis de riesgos con evidencia, planes de contingencia practicados y auditorías trimestrales documentadas. La seguridad de tu condominio respaldada con metodología, no con improvisación.
+        </p>
+
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          {[
+            { value: '6+', label: 'Tipos de contingencia' },
+            { value: 'Trim.', label: 'Ciclo de auditoría' },
+            { value: '100%', label: 'Documentado y entregable' },
+            { value: '0', label: 'Improvisación' },
+          ].map((stat) => (
+            <div class="rounded-lg border border-white/8 bg-white/4 px-3 py-2.5 text-center">
+              <span class="block text-lg font-bold text-brand-400">{stat.value}</span>
+              <span class="text-[10px] leading-tight text-white/50">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="/servicios-de-seguridad-privada/#protocolos"
+          class="mt-auto pt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+        >
+          Ver servicio completo
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: párrafos apilados -->
+  <div class="lg:col-span-3 flex flex-col justify-between gap-0 divide-y divide-white/8">
+    {subcategories.map((sub) => (
+      <div class="py-6 first:pt-0 last:pb-0">
+        <h4 class="text-sm font-bold text-white mb-2">{sub.title}</h4>
+        <p class="text-sm leading-relaxed text-white/60">{sub.prose}</p>
+        <a
+          href={sub.href}
+          class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-500 hover:text-brand-400 transition-colors"
+        >
+          Ver más <Icon name="arrow" class="h-3 w-3" />
+        </a>
+      </div>
+    ))}
+  </div>
+
+</div>

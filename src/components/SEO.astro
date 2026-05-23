@@ -1,0 +1,77 @@
+---
+import { SITE } from '@/config/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  /** Palabras clave semánticas (uso secundario en buscadores; refuerza intención). */
+  keywords?: readonly string[];
+  /** Sección temática (sólo se aplica si type='article'). */
+  articleSection?: string;
+  /** Fecha de última revisión (E-E-A-T). */
+  lastReviewed?: Date;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = '/images/og/og-image.webp',
+  canonical,
+  type = 'website',
+  noindex = false,
+  keywords = [],
+  articleSection,
+  lastReviewed,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+const canonicalUrl = canonical
+  ? new URL(canonical, SITE.url).toString()
+  : new URL(Astro.url.pathname, SITE.url).toString();
+const ogImage = new URL(image, SITE.url).toString();
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+
+{noindex
+  ? <meta name="robots" content="noindex, nofollow" />
+  : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content="es_MX" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={title ?? SITE.name} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+{type === 'article' && articleSection && (
+  <meta property="article:section" content={articleSection} />
+)}
+{type === 'article' && lastReviewed && (
+  <meta property="article:modified_time" content={lastReviewed.toISOString()} />
+)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<meta name="theme-color" content="#050505" />
+<meta name="author" content={SITE.name} />
+<meta name="publisher" content={SITE.legalName} />
+<meta name="geo.region" content="MX-CMX" />
+<meta name="geo.placename" content="Ciudad de México" />
+<meta name="format-detection" content="telephone=yes" />

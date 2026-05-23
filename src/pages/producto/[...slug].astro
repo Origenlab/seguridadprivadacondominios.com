@@ -1,0 +1,24 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+
+// Placeholder: cuando migremos productos WooCommerce, esta ruta servirá cada uno.
+// Por ahora se mantiene la URL viva con un mensaje informativo.
+
+export async function getStaticPaths() {
+  // Sin productos por ahora — la ruta existe pero no genera páginas hasta que se llene la collection.
+  return [];
+}
+---
+
+<BaseLayout title="Producto SEPRICO" description="Catálogo de productos de seguridad SEPRICO." noindex>
+  <Breadcrumb items={[
+    { label: 'Catálogo', href: '/equipo-de-seguridad/' },
+    { label: 'Producto' },
+  ]} />
+  <Section title="Producto" subtitle="Catálogo en migración.">
+    <p>Estamos actualizando nuestro catálogo de productos. Mientras tanto, contáctanos para cotizar el equipo que necesitas.</p>
+    <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand mt-6 inline-flex">Solicitar cotización</a>
+  </Section>
+</BaseLayout>

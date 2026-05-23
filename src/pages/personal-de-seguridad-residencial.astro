@@ -1,0 +1,331 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Process from '@/components/Process.astro';
+import BadgeCard from '@/components/BadgeCard.astro';
+import ClusterGrid from '@/components/ClusterGrid.astro';
+import AboutSeprico from '@/components/AboutSeprico.astro';
+import SchemaBreadcrumb from '@/components/SchemaBreadcrumb.astro';
+import SchemaSpeakable from '@/components/SchemaSpeakable.astro';
+import { SITE, SERVICIOS, RRHH } from '@/config/site';
+
+// ───── METADATA ─────
+const slug = 'personal-de-seguridad-residencial';
+const canonicalPath = `/${slug}/`;
+const canonicalUrl = new URL(canonicalPath, SITE.url).toString();
+const seoTitle = 'Personal de Seguridad para Condominios — Pilar 1 SEPRICO';
+const seoDescription = 'Guardias capacitados SETEC, supervisión rotativa, investigación de antecedentes y entrenamiento continuo para condominios en CDMX y Edomex.';
+const keywords = [
+  'personal de seguridad para condominios',
+  'guardias capacitados SETEC',
+  'vigilancia residencial profesional',
+  'supervisión de personal de seguridad',
+  'investigación de antecedentes guardias',
+  'entrenamiento continuo seguridad privada',
+  'guardias condominio CDMX y Edomex',
+];
+
+// ───── L3 del cluster Personal ─────
+const pillarSlugs = [
+  'vigilancia-y-patrullaje',
+  'personal-de-seguridad',
+  'entrenamiento-continuo',
+  'investigacion-de-antecedentes',
+];
+
+// ───── PROCESO ─────
+const clusterProcess = [
+  { icon: 'phone' as const, title: 'Diagnóstico operativo', desc: 'Revisamos número de accesos, turnos requeridos, perfil del condominio y nivel de riesgo. Definimos plantilla óptima y protocolos de respuesta.' },
+  { icon: 'pin' as const, title: 'Levantamiento en sitio sin costo', desc: 'Recorrido perimetral con la administración: identificación de puntos críticos, vulnerabilidades operativas y necesidades específicas del comité.' },
+  { icon: 'check' as const, title: 'Propuesta de plantilla en 48 horas', desc: 'Cotización con perfil de cada guardia, supervisión asignada, protocolos documentados y SLAs contractuales medibles.' },
+  { icon: 'shield' as const, title: 'Selección y enrolamiento', desc: 'Filtros psicométricos, investigación de antecedentes, capacitación SETEC inicial y validación con el comité antes del go-live.' },
+  { icon: 'star' as const, title: 'Operación y mejora continua', desc: 'Supervisor regional en sitio los primeros 7 días, evaluación mensual de KPIs y rotación planificada con revisión trimestral del comité.' },
+];
+
+// ───── BENEFICIOS del enfoque integrado ─────
+const integratedBenefits = [
+  { title: 'Un solo proveedor por el equipo completo', desc: 'Personal, supervisión, capacitación e investigación bajo SEPRICO. Cero subcontratación, cero cadena de responsabilidad fragmentada cuando falla un elemento.' },
+  { title: 'Filtros psicométricos antes de asignar', desc: 'Cada guardia aprueba pruebas psicométricas estandarizadas, polígrafo opcional y validación domiciliaria antes de pisar el condominio.' },
+  { title: 'Supervisión activa documentada', desc: 'Supervisor regional visita el condominio sin previo aviso, audita bitácora, valida cumplimiento de protocolos y entrega reporte mensual al comité.' },
+  { title: 'Capacitación SETEC continua incluida', desc: 'Refuerzo mensual + módulos trimestrales + actualización anual. La formación corre por cuenta de SEPRICO, no se traslada al guardia ni al condominio.' },
+  { title: 'Plantilla acreditada ante SSPC', desc: 'Permiso vigente, registro patronal en regla y prestaciones de ley. El comité queda blindado ante revisiones laborales o de aseguradoras.' },
+  { title: 'Rotación inteligente sin colusión', desc: 'Cara conocida para residentes + rotación interna planificada cada 6 meses. Equilibrio entre confianza y prevención de complicidad operativa.' },
+];
+
+// ───── DIFERENCIADORES del cluster ─────
+const clusterValueProps = [
+  { icon: 'shield' as const, title: '25 años en seguridad residencial', desc: 'Desde el año 2000 capacitando guardias para condominios CDMX y Edomex. Permiso SSPC vigente, ISO 9001:2015, registro SETEC actualizado.' },
+  { icon: 'check' as const, title: 'Filtro de selección riguroso', desc: 'Solo el 30% de candidatos llega a asignación. Investigación de antecedentes, psicométricos y entrevista a profundidad antes de uniformar.' },
+  { icon: 'star' as const, title: 'Supervisor regional dedicado', desc: 'Mando intermedio con nombre y número directo asignado a tu condominio. Visitas no anunciadas y coaching individual al equipo en sitio.' },
+  { icon: 'clock' as const, title: 'Cobertura ante ausencia en <60 min', desc: 'Rol de cobertura 24/7 activo. Si un guardia falta por enfermedad o contingencia, sustituto en sitio antes de la siguiente hora.' },
+  { icon: 'phone' as const, title: 'Ejecutivo de cuenta dedicado', desc: 'Una persona atiende el cluster completo de personal de tu condominio. Sin call centers ni interlocutores rotativos para reclamos operativos.' },
+  { icon: 'patrol' as const, title: '94% de renovación al primer año', desc: 'Los comités que contratan plantilla integrada renuevan con SEPRICO. La consistencia operativa es más difícil de reemplazar que un proveedor único.' },
+];
+
+// ───── FAQ del cluster ─────
+const clusterFaqs = [
+  { q: '¿Puedo contratar guardias por separado o necesito el cluster completo?', a: 'Por separado. Vigilancia y patrullaje, personal de seguridad, entrenamiento continuo e investigación de antecedentes se contratan individualmente. El valor crece cuando se integran, pero no exigimos paquete completo.' },
+  { q: '¿Qué diferencia hay entre contratar personal SEPRICO vs contratarlos directos?', a: 'Cadena legal completa. Contratando directo, el comité asume responsabilidad patronal, IMSS, SSPC, capacitación SETEC, sustitución por ausencia, supervisión y conflictos laborales. SEPRICO absorbe todo eso bajo contrato comercial con SLAs medibles.' },
+  { q: '¿Cuántos guardias necesita mi condominio?', a: 'Depende del número de accesos, área a patrullar, horarios críticos y nivel de protección deseado. Un condominio mediano se cubre con 2-4 elementos por turno. La auditoría sin costo define la plantilla óptima.' },
+  { q: '¿Los guardias están armados?', a: 'La gran mayoría opera desarmado bajo protocolo de disuasión y escalación. Personal armado solo si la evaluación de riesgo y los permisos vigentes lo respaldan. Te asesoramos cuál perfil aplica a tu condominio.' },
+  { q: '¿Qué pasa si un guardia falta o no cumple expectativas?', a: 'Rol de cobertura 24/7 activo: ausencia imprevista se cubre en <60 minutos. Si el comité considera que un elemento no encaja, lo sustituimos sin discusión ni cargo adicional. Profesionalismo, no fricción.' },
+  { q: '¿Qué reportes recibe el comité administrativo?', a: 'Informe mensual con cumplimiento de rondas (geolocalizadas), completitud de bitácora, incidencias detectadas, evaluación del comité y observaciones del supervisor regional. Revisión trimestral con la mesa directiva para ajustar protocolos.' },
+];
+
+// ───── Breadcrumb ─────
+const breadcrumbItems = [
+  { label: 'Servicios', href: '/servicios-de-seguridad-privada/' },
+  { label: 'Personal de Seguridad' },
+];
+
+// ───── QuickNav contextual + bottom ─────
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Hola SEPRICO, requiero información sobre personal de seguridad')}`;
+const quickNavBottomChips = [
+  { label: 'Tecnología', sub: 'Pilar 2 — CCTV, accesos, alarmas', href: '/tecnologia-y-monitoreo/', icon: 'cctv' as const },
+  { label: 'Protocolos', sub: 'Pilar 3 — consultoría', href: '/servicios-de-seguridad-privada/#protocolos', icon: 'check' as const },
+  { label: 'Atención al Comité', sub: 'Pilar 4 — ejecutivo dedicado', href: '/servicios-de-seguridad-privada/#comite', icon: 'star' as const },
+  { label: 'Catálogo completo', sub: '13 servicios SEPRICO', href: '/servicios-de-seguridad-privada/', icon: 'shield' as const },
+  { label: 'Contacto', sub: 'Cotización sin costo', href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' as const },
+  { label: 'WhatsApp 24/7', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as const, external: true },
+];
+
+// ───── Schema CollectionPage ─────
+const allServices = [...SERVICIOS, ...RRHH];
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${canonicalUrl}#collection`,
+  url: canonicalUrl,
+  name: 'Personal de Seguridad para Condominios',
+  description: seoDescription,
+  inLanguage: 'es-MX',
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@type': 'Thing', name: 'Personal de seguridad privada residencial' },
+  mainEntity: {
+    '@type': 'ItemList',
+    name: 'Servicios del pilar Personal de Seguridad',
+    numberOfItems: pillarSlugs.length,
+    itemListElement: pillarSlugs.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(`/${s}/`, SITE.url).toString(),
+      name: allServices.find((sv) => sv.slug === s)?.title || s,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical={canonicalPath}
+  type="website"
+  keywords={keywords}
+>
+  <Fragment slot="schemas">
+    <SchemaBreadcrumb items={breadcrumbItems} />
+    <SchemaSpeakable url={canonicalUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  </Fragment>
+
+  <Breadcrumb items={breadcrumbItems} />
+
+  {/* ══════════ 1. HERO ══════════ */}
+  <Hero
+    eyebrow="Pilar 1 — Personal de Seguridad · CDMX y Edomex"
+    label="SEPRICO · Ecosistema integral de"
+    headline="Personal de Seguridad"
+    subheadline="para Condominios y Residenciales"
+    body={`<strong class="text-white">Guardias capacitados SETEC</strong>, supervisión rotativa documentada e investigación de antecedentes para cada elemento. El equipo correcto, en el puesto correcto, desde el primer turno operativo.`}
+    asideP1={`No asignamos guardias: <strong class="text-white">construimos equipos operativos</strong>. Cada elemento pasa por cinco filtros antes de pisar tu condominio: verificación de identidad, antecedentes penales, historial laboral comprobable, análisis psicométrico y capacitación SETEC certificada vigente.`}
+    asideP2={`<strong class="text-white">Supervisores regionales</strong> validan el cumplimiento de protocolos en cada guardia, en cada turno, sin excepción. El comité recibe reporte mensual con métricas auditables y revisión trimestral de KPIs con la mesa directiva.`}
+    asideEyebrow="Sobre el pilar"
+    isH1={true}
+  />
+
+  {/* ══════════ 2. QUICKNAV chips a los 4 L3 ══════════ */}
+  <nav aria-label="Servicios del cluster Personal" class="bg-brand-500">
+    <div class="container-pro grid grid-cols-2 md:grid-cols-4">
+      {pillarSlugs.map((s, i) => {
+        const meta = allServices.find((sv) => sv.slug === s);
+        return (
+          <a
+            href={`/${s}/`}
+            class:list={[
+              'group flex items-center gap-3 px-4 py-4 text-white transition-colors hover:bg-brand-600',
+              i > 0 && 'md:border-l border-white/10',
+            ]}
+          >
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-white/15">
+              <Icon name={meta?.icon as any || 'shield'} class="h-4 w-4" />
+            </span>
+            <span class="truncate text-xs font-bold leading-tight">{meta?.title}</span>
+          </a>
+        );
+      })}
+    </div>
+  </nav>
+
+  {/* ══════════ 3. LOS 4 SERVICIOS ══════════ */}
+  <Section
+    id="servicios"
+    eyebrow="Servicios del ecosistema"
+    title="Los cuatro servicios que conforman tu plantilla"
+    subtitle="Cada servicio se contrata por separado o integrado al cluster. La selección rigurosa y la supervisión activa son las mismas en ambos casos."
+    desc="Dos servicios cubren operación en sitio (vigilancia, personal asignado), uno asegura calidad continua (entrenamiento) y uno valida confianza desde el origen (investigación de antecedentes)."
+  >
+    <ClusterGrid slugs={pillarSlugs} cols={4} />
+  </Section>
+
+  {/* ══════════ 4. INTEGRACIÓN CRUZADA ══════════ */}
+  <Section
+    eyebrow="Cómo se conectan"
+    title="Integración cruzada entre los cuatro servicios"
+    subtitle="Selección + capacitación + operación + supervisión forman un solo ciclo cerrado. El valor del cluster está en la coordinación de los cuatro, no en cada uno aislado."
+    desc="A continuación los tres ejes principales que el comité puede operacionalizar desde el primer mes."
+    bg="darker"
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <BadgeCard
+        icon="check"
+        title="Eje selección + capacitación"
+        desc="Cada candidato aprobado por investigación de antecedentes recibe capacitación SETEC inicial antes de asignarse. El guardia llega listo al condominio, no aprende sobre la marcha."
+      />
+      <BadgeCard
+        icon="patrol"
+        title="Eje operación + supervisión"
+        desc="Vigilancia y patrullaje opera bajo supervisión regional rotativa. Cada ronda queda con geolocalización y validación posterior — sin auditoría no hay calidad operativa real."
+      />
+      <BadgeCard
+        icon="star"
+        title="Eje mejora continua"
+        desc="Capacitación mensual + módulos trimestrales se nutren de incidentes reales del cluster operativo. Los guardias aprenden de los casos del sector, no solo del manual."
+      />
+    </div>
+  </Section>
+
+  {/* ══════════ 5. BENEFICIOS ══════════ */}
+  <Section
+    id="beneficios"
+    eyebrow="Ventajas del ecosistema"
+    title="Por qué el cluster integrado supera al modelo tradicional"
+    subtitle="Cuando una sola empresa cubre selección, capacitación, operación y supervisión, la cadena de responsabilidad termina en un solo número de teléfono — el del ejecutivo asignado al condominio."
+    desc="Los comités que migran de proveedores múltiples a este modelo reducen la fricción administrativa y mejoran tiempos de respuesta documentados."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {integratedBenefits.map((b, i) => (
+        <BadgeCard title={b.title} desc={b.desc} number={String(i + 1).padStart(2, '0')} />
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 6. PROCESO ══════════ */}
+  <Section
+    id="proceso"
+    eyebrow="Cómo lo implementamos"
+    title="Del diagnóstico a la plantilla en operación 24/7"
+    subtitle="Cinco etapas documentadas que el comité supervisa en tiempo real. Cada elemento asignado pasa por el mismo proceso, sin importar la criticidad del puesto."
+    desc="Arranque estándar entre 7 y 10 días hábiles. En emergencias activamos plan acelerado en 48 a 72 horas con elementos de respaldo."
+    bg="darker"
+  >
+    <Process items={clusterProcess} />
+
+    <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand inline-flex items-center gap-2">
+        <Icon name="phone" class="h-4 w-4" />
+        Iniciar diagnóstico gratuito
+      </a>
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-ghost inline-flex items-center gap-2">
+        <Icon name="check" class="h-4 w-4" />
+        WhatsApp 24/7
+      </a>
+    </div>
+  </Section>
+
+  {/* ══════════ 7. DIFERENCIADORES ══════════ */}
+  <Section
+    id="diferenciadores"
+    eyebrow="Por qué SEPRICO"
+    title="Qué distingue al cluster Personal de Seguridad de SEPRICO"
+    subtitle="No competimos por precio del guardia: competimos por filtros de selección, supervisión activa y continuidad operativa medible mes con mes."
+    desc="Cada diferenciador es una decisión operativa concreta, verificable contra el contrato y los reportes mensuales que recibe el comité."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {clusterValueProps.map((v) => (
+        <BadgeCard title={v.title} desc={v.desc} icon={v.icon} />
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 8. FAQ del cluster ══════════ */}
+  <Section
+    id="faq"
+    eyebrow="Preguntas frecuentes"
+    title="Dudas comunes sobre la plantilla integrada"
+    subtitle="Las preguntas que los comités administrativos hacen con más frecuencia al evaluar el modelo de personal SEPRICO frente al de proveedores separados."
+    desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un asesor especializado en seguridad residencial te responde en menos de 15 minutos."
+    bg="darker"
+  >
+    <div class="grid gap-8 lg:grid-cols-3">
+      <div class="lg:col-span-2 space-y-3">
+        {clusterFaqs.map((f, i) => (
+          <details
+            class="group rounded-lg border border-white/5 bg-ink-800 transition-colors open:border-brand-500/40"
+            open={i === 0}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-base font-semibold text-white">
+              <span>{f.q}</span>
+              <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-500 text-white transition-transform group-open:rotate-45">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-3.5 w-3.5">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </span>
+            </summary>
+            <div class="border-t border-white/5 px-5 py-4 text-sm leading-relaxed text-white/70">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <aside class="card self-start">
+        <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500 text-white shadow-brand">
+          <Icon name="phone" class="h-6 w-6" />
+        </span>
+        <h3 class="mt-5 text-xl font-bold text-white">¿Más preguntas?</h3>
+        <p class="mt-2 text-sm text-white/65">
+          Resolvemos cualquier duda sobre la plantilla en minutos. WhatsApp 24/7.
+        </p>
+        <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-brand mt-5 w-full">
+          Chatear por WhatsApp
+        </a>
+        <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="btn-ghost mt-3 w-full">
+          {SITE.contact.phoneDisplay}
+        </a>
+      </aside>
+    </div>
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: clusterFaqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      })}
+    />
+  </Section>
+
+  {/* ══════════ 9. ACERCA DE SEPRICO ══════════ */}
+  <AboutSeprico serviceContext="el ecosistema de personal de seguridad" />
+
+  {/* ══════════ 10. QUICKNAV BOTTOM ══════════ */}
+  <QuickNavBottom chips={quickNavBottomChips} />
+</BaseLayout>

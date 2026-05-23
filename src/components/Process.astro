@@ -1,0 +1,27 @@
+---
+import Icon from '@/components/Icon.astro';
+
+interface Step {
+  icon: 'shield' | 'cctv' | 'patrol' | 'access' | 'alert' | 'check' | 'phone' | 'mail' | 'pin' | 'clock' | 'star' | 'arrow';
+  title: string;
+  desc: string;
+}
+interface Props { items: Step[]; }
+const { items } = Astro.props;
+---
+
+<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+  {items.map((s, i) => (
+    <div class="relative card">
+      <!-- Número del paso -->
+      <span class="absolute -top-3 -left-3 grid h-10 w-10 place-items-center rounded-full bg-brand-500 text-sm font-extrabold text-white shadow-brand">
+        {String(i + 1).padStart(2, '0')}
+      </span>
+      <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500/15 text-brand-400 ring-1 ring-brand-500/30">
+        <Icon name={s.icon} class="h-6 w-6" />
+      </span>
+      <h3 class="mt-5 text-base font-bold text-white">{s.title}</h3>
+      <p class="mt-2 text-sm text-white/65">{s.desc}</p>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,334 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNav from '@/components/QuickNav.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Process from '@/components/Process.astro';
+import Faq from '@/components/Faq.astro';
+import { SITE } from '@/config/site';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('servicios');
+const rrhh = all
+  .filter((s) => s.data.kind === 'rrhh')
+  .sort((a, b) => a.data.order - b.data.order);
+
+const procesoSeleccion = [
+  {
+    icon: 'pin' as const,
+    title: 'Registro y expediente inicial',
+    desc: 'El candidato envía solicitud con identificación oficial, CURP, RFC y comprobante de domicilio. Se asigna número de expediente desde el primer contacto — cada paso queda documentado.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Filtro documental riguroso',
+    desc: 'Verificación de documentación completa y vigente. Validación de antecedentes penales ante el RNSP, certificado de no antecedentes y referencias laborales comprobadas con empleadores anteriores.',
+  },
+  {
+    icon: 'star' as const,
+    title: 'Evaluación psicométrica y toxicológica',
+    desc: 'Batería psicométrica estandarizada para detección de perfiles de riesgo, seguida de examen toxicológico en laboratorio certificado. Resultado en 48 horas hábiles. Sin excepción.',
+  },
+  {
+    icon: 'phone' as const,
+    title: 'Entrevista técnica con supervisor regional',
+    desc: 'Entrevista estructurada que evalúa criterio operativo, habilidades de comunicación con residentes y aptitud para el manejo de situaciones de tensión en entorno residencial.',
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Capacitación SETEC y briefing del condominio',
+    desc: 'Validación o tramitación de certificación SETEC vigente. Sesión de briefing específica para el condominio asignado: protocolos internos, rutas de rondín, control de acceso y cadena de reporte.',
+  },
+  {
+    icon: 'cctv' as const,
+    title: 'Asignación supervisada con retroalimentación',
+    desc: 'Primer turno acompañado por supervisor regional. Retroalimentación documentada al cierre de la primera semana. Expediente activo y consultable por el comité administrativo en todo momento.',
+  },
+];
+
+const perfilRequisitos = [
+  {
+    icon: 'check' as const,
+    titulo: 'Documentación completa vigente',
+    detalle: 'INE o Pasaporte vigente, CURP, RFC, comprobante de domicilio no mayor a 3 meses y acta de nacimiento. Sin excepción ni sustitutos.',
+  },
+  {
+    icon: 'shield' as const,
+    titulo: 'Sin antecedentes penales',
+    detalle: 'Carta de no antecedentes expedida por el RNSP o equivalente estatal con antigüedad máxima de 90 días al momento de ingreso. Se cruza con bases estatales y federales.',
+  },
+  {
+    icon: 'star' as const,
+    titulo: 'Escolaridad y comunicación',
+    detalle: 'Bachillerato concluido o equivalente. Capacidad para comunicarse con claridad y cordialidad con residentes, visitas y administración. El trato al residente es parte del desempeño.',
+  },
+  {
+    icon: 'patrol' as const,
+    titulo: 'Condición física operativa',
+    detalle: 'Aptitud para rondines a pie, turnos de 12 horas y respuesta rápida ante alertas. Verificada mediante revisión médica básica documentada al ingreso.',
+  },
+];
+
+const garantiasComite = [
+  {
+    icon: 'check' as const,
+    titulo: 'Expediente completo disponible para el comité',
+    detalle: 'El comité puede solicitar copia del expediente de cualquier elemento asignado: identificación, antecedentes penales, certificación SETEC y evaluaciones psicométricas. Sin burocracia.',
+  },
+  {
+    icon: 'shield' as const,
+    titulo: 'Reemplazo en menos de 30 días, por contrato',
+    detalle: 'Ante renuncia, incapacidad o baja disciplinaria, SEPRICO garantiza sustitución en menos de 30 días sin costo adicional y sin reducción en el nivel de cobertura. SLA incorporado al contrato.',
+  },
+  {
+    icon: 'cctv' as const,
+    titulo: 'Supervisión activa en campo, no remota',
+    detalle: 'Supervisores regionales realizan visitas físicas en horarios no programados. Cada visita queda registrada en bitácora digital consultable por el comité en tiempo real.',
+  },
+  {
+    icon: 'alert' as const,
+    titulo: 'Cobertura ante ausencias imprevistas',
+    detalle: 'Cuando un elemento no puede presentarse a turno, se activa el banco de personal de respaldo. El comité recibe notificación proactiva — no se entera al llegar a la caseta.',
+  },
+];
+
+const beneficiosCandidatos = [
+  {
+    icon: 'check' as const,
+    titulo: 'Empleo 100% formal desde el primer día',
+    detalle: 'Alta en IMSS, INFONAVIT, vacaciones y aguinaldo conforme a la LFT. No operamos bajo honorarios ni subcontratación encubierta. Tu trabajo es formal o no empieza.',
+  },
+  {
+    icon: 'star' as const,
+    titulo: 'Capacitación SETEC sin costo para ti',
+    detalle: 'SEPRICO tramita o complementa la certificación SETEC sin cargo al candidato. Incluye briefing operativo del condominio asignado y actualización anual de protocolos de emergencia.',
+  },
+  {
+    icon: 'shield' as const,
+    titulo: 'Plan de carrera basado en desempeño',
+    detalle: 'Supervisores, jefes de turno y coordinadores de zona son promovidos desde el personal operativo. El desempeño documentado es el único criterio — sin favoritismos ni discrecionalidad.',
+  },
+];
+---
+
+<BaseLayout
+  title="Reclutamiento de Personal de Seguridad Privada | SEPRICO"
+  description="Proceso de selección de guardias de seguridad en SEPRICO: 6 filtros documentados, evaluación RNSP, psicométrico, certificación SETEC y garantías contractuales al comité administrativo."
+>
+  <Breadcrumb items={[{ label: 'Recursos Humanos' }]} />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       1. HERO
+  ══════════════════════════════════════════════════════════════ -->
+  <Hero
+    eyebrow="Recursos Humanos · CDMX y Edomex"
+    label="SEPRICO · Proceso de selección de"
+    headline="Personal de Seguridad"
+    subheadline="riguroso, documentado y auditable"
+    body={`<strong class="text-white">Seis filtros obligatorios</strong> antes de que cualquier guardia pise tu condominio: verificación documental, antecedentes RNSP, psicométrico, toxicológico, entrevista técnica y capacitación SETEC. Cero excepciones, cero atajos.`}
+    asideP1={`En <strong class="text-white">SEPRICO</strong> el proceso de selección no es un trámite administrativo: es la primera línea de defensa del condominio. Cada elemento que asignamos pasó por el mismo proceso de seis etapas, independientemente de su experiencia previa o referencias.`}
+    asideP2={`El comité administrativo recibe acceso al expediente completo de cada elemento asignado y garantías contractuales de <strong class="text-white">reemplazo en menos de 30 días</strong> ante cualquier baja, sin costo adicional ni reducción en cobertura.`}
+    isH1={true}
+  />
+  <QuickNav />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       2. SERVICIOS RRHH — 4 cards
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Servicios de Recursos Humanos"
+    title="Gestión integral del factor humano en seguridad"
+    subtitle="Los cuatro servicios de RRHH de SEPRICO cubren el ciclo completo: selección del perfil correcto, formación operativa continua, verificación documental rigurosa y acceso a la bolsa de trabajo para candidatos que quieren incorporarse al equipo."
+    desc="Cada servicio puede solicitarse de forma independiente o como parte del paquete integral. El nivel de involucramiento del comité en la gestión del personal se define contractualmente."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      {rrhh.map((r) => (
+        <a href={`/${r.slug}/`} class="service-card group flex flex-col">
+
+          {/* ── Imagen con overlays ── */}
+          <div class="service-card-image">
+            {r.data.image ? (
+              <img
+                src={r.data.image}
+                alt={r.data.title}
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              <div class="absolute inset-0 bg-gradient-to-br from-ink-700 via-ink-800 to-ink-900"></div>
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
+
+            {/* Icono */}
+            <span class="absolute top-3 left-3 grid h-10 w-10 place-items-center rounded-md bg-brand-500/90 text-white backdrop-blur-sm">
+              <Icon name={r.data.icon} class="h-5 w-5" />
+            </span>
+
+            {/* Badge RRHH */}
+            <span class="absolute top-3 right-3 rounded-md bg-ink-950/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-brand-300 backdrop-blur-sm">
+              RRHH
+            </span>
+
+            {/* Título sobre la imagen */}
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <h2 class="text-xl font-bold leading-tight text-white">{r.data.title}</h2>
+            </div>
+          </div>
+
+          {/* ── Body ── */}
+          <div class="service-card-body flex flex-1 flex-col">
+            <p class="text-sm leading-relaxed text-white/75">{r.data.description}</p>
+
+            {/* Chips de features */}
+            {r.data.features && r.data.features.length > 0 && (
+              <div class="mt-5 border-t border-white/5 pt-4">
+                <p class="mb-3 text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Incluye</p>
+                <div class="grid grid-cols-2 gap-1.5">
+                  {r.data.features.slice(0, 4).map((feat: string) => (
+                    <div class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-medium text-white/80 transition-colors hover:border-brand-500/50 hover:bg-brand-500/15 hover:text-brand-300">
+                      <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>
+                      <span class="leading-tight">{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* CTA */}
+            <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+              Ver detalle
+              <Icon name="arrow" class="h-3.5 w-3.5" />
+            </span>
+          </div>
+
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       3. PROCESO DE SELECCIÓN — 6 etapas
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Proceso de selección"
+    title="Seis etapas antes de asignar un elemento a tu condominio"
+    subtitle="Cada candidato recorre el mismo proceso estandarizado y documentado, sin atajos ni excepciones. Las seis etapas son obligatorias para cualquier perfil — independientemente de experiencia previa o referencias."
+    desc="El comité puede solicitar el estado del proceso de cualquier elemento asignado en cualquier momento. La transparencia en selección es parte del contrato de servicio, no una cortesía."
+  >
+    <Process items={procesoSeleccion} />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       4. PERFIL DEL CANDIDATO — 4 requisitos
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Perfil del candidato"
+    title="Requisitos de ingreso: mínimos no negociables"
+    subtitle="Un candidato que no cumpla cualquiera de estos cuatro bloques no avanza al siguiente filtro, sin excepción. La claridad en los requisitos protege al condominio, al candidato y a la operación del servicio."
+    desc="La alta rotación en seguridad privada casi siempre tiene el mismo origen: contrataciones apresuradas que omitieron alguno de estos filtros. Aquí no ocurre."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      {perfilRequisitos.map((r) => (
+        <article class="card flex flex-col">
+          <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500/15 text-brand-400 ring-1 ring-brand-500/30">
+            <Icon name={r.icon} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-5 text-base font-bold text-white">{r.titulo}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-white/70">{r.detalle}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       5. GARANTÍAS PARA EL COMITÉ — 4 cards
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Garantías operativas"
+    title="Lo que el comité recibe con cada elemento asignado"
+    subtitle="El comité no contrata un guardia: contrata un sistema de gestión de personal con respaldo contractual. Estas garantías están en el contrato y son exigibles desde el primer mes de operación."
+    desc="Si en algún momento el comité siente que una garantía no se está cumpliendo, el ejecutivo de cuenta responde en menos de 24 horas con evidencia documentada o acción correctiva inmediata."
+  >
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      {garantiasComite.map((g) => (
+        <article class="card flex flex-col">
+          <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500 text-white shadow-brand">
+            <Icon name={g.icon} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-5 text-base font-bold text-white">{g.titulo}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-white/70">{g.detalle}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       6. ¿POR QUÉ TRABAJAR EN SEPRICO? — candidatos
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Únete al equipo"
+    title="¿Buscas empleo en seguridad privada? Aquí el trabajo es formal"
+    subtitle="SEPRICO es una de las pocas empresas de seguridad en la ZMVM que opera con alta en IMSS desde el primer día, capacitación SETEC sin costo y ascensos documentados por desempeño — sin esquemas de honorarios ni subcontratación encubierta."
+    desc="Si cumples los requisitos de ingreso, tu solicitud será procesada en menos de 5 días hábiles. El proceso es transparente desde el primer contacto."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-3">
+      {beneficiosCandidatos.map((b) => (
+        <article class="card flex flex-col">
+          <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500/15 text-brand-400 ring-1 ring-brand-500/30">
+            <Icon name={b.icon} class="h-6 w-6" />
+          </span>
+          <h3 class="mt-5 text-lg font-bold text-white">{b.titulo}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-white/70">{b.detalle}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a href="/bolsa-de-trabajo/" class="btn-brand inline-flex items-center gap-2">
+        <Icon name="patrol" class="h-4 w-4" />
+        Ver bolsa de trabajo
+      </a>
+      <a
+        href={`https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Hola, me interesa aplicar a una vacante en SEPRICO')}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-ghost inline-flex items-center gap-2"
+      >
+        <Icon name="phone" class="h-4 w-4" />
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       7. PREGUNTAS FRECUENTES + CONTACTO WHATSAPP
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Preguntas frecuentes"
+    title="Resolvemos tus dudas antes de contactarnos"
+    subtitle="Las preguntas más comunes de comités administrativos y candidatos sobre el proceso de selección, requisitos, tiempos de respuesta y garantías operativas del personal SEPRICO."
+    desc="Si tu duda no aparece aquí, escríbenos por WhatsApp — respondemos en menos de 15 minutos durante horario hábil."
+  >
+    <Faq />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       8. QUICK NAV BOTTOM
+  ══════════════════════════════════════════════════════════════ -->
+  <QuickNavBottom chips={[
+    { label: 'Personal SETEC',      sub: 'Guardias certificados y supervisados',     href: '/personal-de-seguridad/',                   icon: 'shield' },
+    { label: 'Entrenamiento',       sub: 'Capacitación continua certificada',        href: '/entrenamiento-continuo/',                  icon: 'star' },
+    { label: 'Antecedentes',        sub: 'Verificación RNSP y psicométrico',         href: '/investigacion-de-antecedentes/',           icon: 'check' },
+    { label: 'Bolsa de Trabajo',    sub: 'Vacantes disponibles en CDMX y Edomex',   href: '/bolsa-de-trabajo/',                        icon: 'patrol' },
+    { label: 'Servicios',           sub: 'Catálogo completo SEPRICO',                href: '/servicios-de-seguridad-privada/',           icon: 'cctv' },
+    { label: 'WhatsApp 24/7',       sub: 'Respuesta en menos de 15 min',             href: `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`, icon: 'phone', external: true },
+  ]} />
+
+</BaseLayout>

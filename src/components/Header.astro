@@ -1,0 +1,280 @@
+---
+import { SITE, NAV_LINKS } from '@/config/site';
+import UtilityBar from '@/components/UtilityBar.astro';
+import Icon from '@/components/Icon.astro';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header id="site-header" class="relative z-50">
+  <UtilityBar />
+
+  <div id="header-shell" class="border-b border-ink-950/10 bg-white shadow-sm">
+    <div class="container-pro flex h-24 items-center justify-between gap-6">
+      <!-- Logo -->
+      <a href="/" class="flex shrink-0 items-center" aria-label="SEPRICO — Seguridad Privada para Condominios">
+        <img
+          src="/images/brand/logo.webp"
+          alt="SEPRICO — Seguridad Privada para Condominios"
+          width="286"
+          height="77"
+          class="h-16 w-auto"
+        />
+      </a>
+
+      <!-- Navegación principal -->
+      <nav class="hidden flex-1 items-center justify-center lg:flex" aria-label="Principal">
+        <ul class="flex items-center gap-1">
+          {
+            NAV_LINKS.map((link: any) => {
+              const active = path === link.href || (link.href !== '/' && path.startsWith(link.href));
+              const isMega = link.mega === true;
+              const hasChildren = isMega || (Array.isArray(link.children) && link.children.length > 0);
+              return (
+                <li class="group/nav relative" data-nav-item>
+                  <a
+                    href={link.href}
+                    class:list={[
+                      'relative inline-flex items-center gap-1.5 px-4 py-9 text-[14px] font-semibold uppercase tracking-wider transition-colors',
+                      active ? 'text-brand-600' : 'text-ink-900 hover:text-brand-600',
+                    ]}
+                  >
+                    {link.label}
+                    {hasChildren && (
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-3 w-3 transition-transform duration-200 group-hover/nav:rotate-180">
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    )}
+                    <span class:list={[
+                      'absolute inset-x-4 -bottom-px h-0.5 origin-left scale-x-0 bg-brand-500 transition-transform duration-200 group-hover/nav:scale-x-100',
+                      active && 'scale-x-100',
+                    ]} />
+                  </a>
+
+                  {/* MEGA-MENU */}
+                  {isMega && (
+                    <div
+                      class="invisible absolute left-1/2 top-full z-40 w-[min(1180px,95vw)] -translate-x-1/2 translate-y-1 opacity-0 transition-all duration-200 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100"
+                      data-mega-panel
+                    >
+                      <div class="overflow-hidden rounded-2xl border border-ink-950/10 bg-white shadow-2xl shadow-ink-950/10 ring-1 ring-black/5">
+                        <div class="grid grid-cols-12 gap-0">
+                          {/* Columnas pilares */}
+                          <div class="col-span-12 grid grid-cols-4 gap-0">
+                            {link.columns.map((col: any) => (
+                              <div class="border-r border-ink-950/5 p-6 last:border-r-0">
+                                {/* Encabezado columna */}
+                                <a href={col.href} class="group/col mb-4 block">
+                                  <div class="flex items-start gap-3">
+                                    <div class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-brand-500/10 text-brand-600 transition-colors group-hover/col:bg-brand-500 group-hover/col:text-white">
+                                      <Icon name={col.icon} class="h-5 w-5" />
+                                    </div>
+                                    <div class="min-w-0">
+                                      <div class="text-[10px] font-bold uppercase tracking-widest text-brand-600">
+                                        Pilar {col.pilar}
+                                      </div>
+                                      <h3 class="mt-0.5 text-[14px] font-bold leading-tight text-ink-900 group-hover/col:text-brand-600">
+                                        {col.title}
+                                      </h3>
+                                    </div>
+                                  </div>
+                                  <p class="mt-2.5 text-[12px] leading-relaxed text-ink-500">
+                                    {col.desc}
+                                  </p>
+                                </a>
+
+                                {/* Hairline */}
+                                <div class="my-3 h-px w-full bg-ink-950/5" />
+
+                                {/* Sub-items */}
+                                <ul class="space-y-0.5">
+                                  {col.items.map((it: any) => (
+                                    <li>
+                                      <a
+                                        href={it.href}
+                                        class="group/item flex items-center gap-2.5 rounded-md px-2 py-1.5 text-[12.5px] text-ink-700 transition-colors hover:bg-brand-500/5 hover:text-brand-600"
+                                      >
+                                        <span class="grid h-5 w-5 shrink-0 place-items-center text-ink-400 group-hover/item:text-brand-600">
+                                          <Icon name={it.icon} class="h-3.5 w-3.5" />
+                                        </span>
+                                        <span class="truncate">{it.label}</span>
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* DROPDOWN SIMPLE (no mega) */}
+                  {!isMega && hasChildren && (
+                    <div class="invisible absolute left-1/2 top-full z-40 w-72 -translate-x-1/2 translate-y-1 opacity-0 transition-all duration-200 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100">
+                      <div class="overflow-hidden rounded-xl border border-ink-950/10 bg-white p-2 shadow-2xl ring-1 ring-black/5">
+                        {link.children.map((c: any) => (
+                          <a
+                            href={c.href}
+                            class="flex items-center gap-3 rounded-md px-3 py-2.5 text-[13px] font-semibold text-ink-800 transition-colors hover:bg-brand-500/5 hover:text-brand-600"
+                          >
+                            <span class="h-1.5 w-1.5 rounded-full bg-brand-500/40" />
+                            {c.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+
+      <!-- CTAs derecha -->
+      <div class="flex shrink-0 items-center gap-3">
+        <!-- Teléfono inline -->
+        <a
+          href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`}
+          class="hidden items-center gap-3 text-[15px] font-bold text-ink-900 hover:text-brand-600 xl:inline-flex"
+          aria-label={`Llamar a ${SITE.contact.phoneDisplay}`}
+        >
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-brand-500/10 text-brand-600">
+            <Icon name="phone" class="h-5 w-5" />
+          </span>
+          <span class="flex flex-col leading-none">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-ink-500">Llámanos</span>
+            <span class="mt-1">{SITE.contact.phoneDisplay}</span>
+          </span>
+        </a>
+
+        <!-- Separador -->
+        <span class="hidden h-12 w-px bg-ink-950/10 xl:block"></span>
+
+        <!-- Cotiza Gratis -->
+        <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand hidden px-6 py-3.5 text-[14px] lg:inline-flex">
+          Cotiza Gratis
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-3.5 w-3.5">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </a>
+
+        <!-- Hamburguesa móvil -->
+        <button
+          id="menu-toggle"
+          class="grid h-12 w-12 place-items-center rounded-md border border-ink-950/15 text-ink-800 lg:hidden"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5" data-icon="open">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden h-5 w-5" data-icon="close">
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="6" y1="18" x2="18" y2="6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="hidden border-b border-ink-950/10 bg-white lg:hidden">
+    <div class="container-pro flex max-h-[85vh] flex-col overflow-y-auto py-4">
+      {
+        NAV_LINKS.map((link: any) => {
+          const isMega = link.mega === true;
+          const hasChildren = isMega || (Array.isArray(link.children) && link.children.length > 0);
+          return (
+            <div class="border-b border-ink-950/5 last:border-b-0">
+              {hasChildren ? (
+                <details class="group/m">
+                  <summary class="flex cursor-pointer list-none items-center justify-between px-2 py-3.5 text-[14px] font-bold uppercase tracking-wider text-ink-900">
+                    <span>{link.label}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 transition-transform group-open/m:rotate-180">
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </summary>
+                  <div class="pb-3">
+                    <a href={link.href} class="block px-3 py-2 text-[13px] font-semibold text-brand-600">
+                      Ver {link.label.toLowerCase()} →
+                    </a>
+                    {isMega ? (
+                      link.columns.map((col: any) => (
+                        <div class="mt-3">
+                          <a href={col.href} class="flex items-center gap-2 rounded-md bg-ink-950/5 px-3 py-2.5">
+                            <span class="grid h-8 w-8 place-items-center rounded-md bg-brand-500/10 text-brand-600">
+                              <Icon name={col.icon} class="h-4 w-4" />
+                            </span>
+                            <div>
+                              <div class="text-[10px] font-bold uppercase tracking-widest text-brand-600">Pilar {col.pilar}</div>
+                              <div class="text-[13px] font-bold text-ink-900">{col.title}</div>
+                            </div>
+                          </a>
+                          <ul class="mt-1 ml-3 border-l border-ink-950/10 pl-3">
+                            {col.items.map((it: any) => (
+                              <li>
+                                <a href={it.href} class="block py-1.5 text-[12.5px] text-ink-700 hover:text-brand-600">
+                                  {it.label}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))
+                    ) : (
+                      <ul class="ml-3 border-l border-ink-950/10 pl-3">
+                        {link.children.map((c: any) => (
+                          <li>
+                            <a href={c.href} class="block py-2 text-[13px] text-ink-700 hover:text-brand-600">
+                              {c.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </details>
+              ) : (
+                <a href={link.href} class="block px-2 py-3.5 text-[14px] font-bold uppercase tracking-wider text-ink-900 hover:text-brand-600">
+                  {link.label}
+                </a>
+              )}
+            </div>
+          );
+        })
+      }
+      <a
+        href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`}
+        class="mt-4 inline-flex items-center justify-center gap-2 rounded-md border-2 border-brand-500 px-4 py-3 text-[14px] font-bold text-brand-600"
+      >
+        <Icon name="phone" class="h-4 w-4" />
+        {SITE.contact.phoneDisplay}
+      </a>
+      <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand mt-2 w-full justify-center py-3.5">
+        Cotiza Gratis
+      </a>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = toggle?.querySelector('[data-icon="open"]');
+    const iconClose = toggle?.querySelector('[data-icon="close"]');
+    toggle?.addEventListener('click', () => {
+      if (!menu) return;
+      const open = menu.classList.toggle('hidden') === false;
+      toggle.setAttribute('aria-expanded', String(open));
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+  })();
+</script>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+---
+
+<BaseLayout title="Gracias" description="Hemos recibido tu solicitud." noindex>
+  <section class="section">
+    <div class="container-pro max-w-2xl text-center">
+      <span class="mx-auto grid h-20 w-20 place-items-center rounded-full bg-brand-500 text-white shadow-brand">
+        <Icon name="check" class="h-10 w-10" />
+      </span>
+      <h1 class="mt-8 text-4xl md:text-5xl">Solicitud recibida</h1>
+      <p class="mt-5 text-white/75">
+        Un ejecutivo de cuenta te contactará en menos de 24 horas hábiles.
+        Mientras tanto, puedes escribirnos por WhatsApp para respuesta inmediata.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn-ghost">Volver al inicio</a>
+        <a href="/servicios-de-seguridad-privada/" class="btn-brand">Explorar servicios</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

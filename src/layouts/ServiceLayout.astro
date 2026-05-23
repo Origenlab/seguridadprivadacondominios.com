@@ -1,0 +1,491 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import StatsRow from '@/components/StatsRow.astro';
+import Process from '@/components/Process.astro';
+import Sectors from '@/components/Sectors.astro';
+import RelatedServices from '@/components/RelatedServices.astro';
+import ServiceFaq from '@/components/ServiceFaq.astro';
+import BadgeCard from '@/components/BadgeCard.astro';
+import AboutSeprico from '@/components/AboutSeprico.astro';
+import SchemaService from '@/components/SchemaService.astro';
+import SchemaBreadcrumb from '@/components/SchemaBreadcrumb.astro';
+import SchemaFaq from '@/components/SchemaFaq.astro';
+import SchemaHowTo from '@/components/SchemaHowTo.astro';
+import SchemaItemList from '@/components/SchemaItemList.astro';
+import SchemaSpeakable from '@/components/SchemaSpeakable.astro';
+import { SITE, resolveServiceMeta, getRelatedServiceSlugs } from '@/config/site';
+import { getEntry, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  slug: string;
+  /** 'servicios' | 'rrhh' — controla breadcrumb y hub */
+  type?: 'servicios' | 'rrhh';
+}
+
+const { slug, type = 'servicios' } = Astro.props;
+const entry = (await getEntry('servicios', slug)) as CollectionEntry<'servicios'> | undefined;
+
+if (!entry) {
+  throw new Error(`Servicio no encontrado: ${slug}`);
+}
+
+const { Content, headings } = await entry.render();
+const data = entry.data;
+
+// TOC: solo H2 (los H3 serían demasiado ruido en sidebar)
+const toc = headings.filter((h) => h.depth === 2);
+
+// Sub-hub por categoría (cuando exista una L2 dedicada al pilar)
+const subHubByCategory: Record<string, { label: string; href: string } | undefined> = {
+  tecnologia: { label: 'Tecnología y Monitoreo', href: '/tecnologia-y-monitoreo/' },
+  personal: { label: 'Personal de Seguridad', href: '/personal-de-seguridad-residencial/' },
+  // protocolos: { label: 'Protocolos y Consultoría', href: '/protocolos-y-consultoria/' }, // futuro
+};
+
+// Aplica también a RRHH cuya categoría sea 'personal' (vigilancia-y-patrullaje, personal-de-seguridad, entrenamiento-continuo, investigacion-de-antecedentes)
+const subHub = subHubByCategory[data.category];
+
+const hubLabel = subHub?.label ?? (type === 'rrhh' ? 'Recursos Humanos' : 'Servicios');
+const hubHref = subHub?.href ?? (type === 'rrhh'
+  ? '/reclutamiento-para-seguridad-privada/'
+  : '/servicios-de-seguridad-privada/');
+
+// ---- SEO ----
+const canonicalPath = `/${slug}/`;
+const canonicalUrl = new URL(canonicalPath, SITE.url).toString();
+const seoTitle = data.seoTitle ?? `${data.title} para Condominios y Residenciales`;
+const seoDescription = data.seoDescription ?? data.description;
+const ogImage = data.image ?? '/images/og/og-image.webp';
+
+const baseKeywords = [
+  data.title.toLowerCase(),
+  `${data.title.toLowerCase()} para condominios`,
+  'seguridad privada CDMX',
+  'seguridad para residenciales',
+];
+const keywords = [...new Set([...(data.keywords ?? []), ...baseKeywords])];
+
+const breadcrumbItems = [
+  { label: hubLabel, href: hubHref },
+  { label: data.title },
+];
+
+const lastReviewedText = data.lastReviewed
+  ? data.lastReviewed.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
+  : null;
+
+const categoryLabelMap: Record<string, string> = {
+  personal: 'Personal de seguridad',
+  tecnologia: 'Tecnología y monitoreo',
+  protocolos: 'Protocolos y consultoría',
+};
+const categoryLabel = categoryLabelMap[data.category] ?? hubLabel;
+
+// ---- Hero contextual (con defaults razonables si no hay overrides en MDX) ----
+const heroEyebrow    = data.heroEyebrow    ?? `${categoryLabel} · CDMX y Edomex`;
+const heroLabel      = data.heroLabel      ?? `SEPRICO · Servicio de`;
+const heroHeadline   = data.heroHeadline   ?? data.title;
+const heroSubheadline = data.heroSubheadline ?? 'para Condominios y Residenciales';
+const heroBody       = data.heroBody       ?? data.description;
+const heroAsideP1    = data.heroAsideP1    ?? `En <strong class="text-white">SEPRICO</strong> diseñamos cada implementación de <strong class="text-white">${data.title.toLowerCase()}</strong> a partir de un levantamiento técnico en sitio, sin costo ni compromiso. Cada propuesta se construye sobre el reglamento interno, el perfil de riesgo y el presupuesto del condominio.`;
+const heroAsideP2    = data.heroAsideP2    ?? `Recibirás una <strong class="text-white">cotización documentada y desglosada en menos de 48 horas hábiles</strong> con plan operativo, tiempos de implementación y SLAs contractuales. Sin letras chiquitas ni compromisos de contratación previos.`;
+
+// ---- QuickNav contextual (chips relacionados al servicio) ----
+const relatedSlugs = getRelatedServiceSlugs(slug, data.related, 4);
+const relatedItems = resolveServiceMeta(relatedSlugs);
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(`Hola SEPRICO, requiero información sobre ${data.title}`)}`;
+
+const quickNavTopChips = [
+  ...relatedItems.slice(0, 4).map((r) => ({
+    label: r.title,
+    sub: 'Servicio complementario',
+    href: r.href,
+    icon: r.icon as any,
+  })),
+  { label: hubLabel, sub: 'Catálogo completo', href: hubHref, icon: 'check' as any },
+  { label: 'WhatsApp', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as any, external: true },
+];
+
+const quickNavBottomChips = [
+  { label: 'Nosotros', sub: 'Empresa desde el año 2000', href: '/nosotros/', icon: 'shield' as any },
+  { label: 'Catálogo Servicios', sub: 'Modelo de 4 pilares', href: hubHref, icon: 'check' as any },
+  { label: 'Comunidades', sub: 'Tipos atendidos', href: '/comunidades/', icon: 'patrol' as any },
+  { label: 'Zonas CDMX', sub: 'Alcaldías metropolitanas', href: '/zonas/', icon: 'pin' as any },
+  { label: 'Contacto', sub: 'Cotización sin costo', href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' as any },
+  { label: 'WhatsApp 24/7', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as any, external: true },
+];
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  image={ogImage}
+  canonical={canonicalPath}
+  type="article"
+  keywords={keywords}
+  articleSection={categoryLabel}
+  lastReviewed={data.lastReviewed}
+>
+  <Fragment slot="schemas">
+    <SchemaService
+      name={data.title}
+      description={data.description}
+      url={canonicalUrl}
+      image={data.image}
+      category={data.category}
+      features={data.features}
+      keywords={data.keywords}
+      lastReviewed={data.lastReviewed}
+    />
+    <SchemaBreadcrumb items={breadcrumbItems} />
+    {data.faqs.length > 0 && <SchemaFaq items={data.faqs} />}
+    {data.process.length > 0 && (
+      <SchemaHowTo
+        name={`Cómo implementamos ${data.title.toLowerCase()} en condominios`}
+        description={`Proceso paso a paso de ${SITE.name} para implementar ${data.title.toLowerCase()}.`}
+        steps={data.process}
+        image={data.image}
+      />
+    )}
+    {data.techStack.length > 0 && (
+      <SchemaItemList
+        name={`Stack tecnológico de ${data.title}`}
+        groups={data.techStack}
+      />
+    )}
+    <SchemaSpeakable url={canonicalUrl} />
+  </Fragment>
+
+  <Breadcrumb items={breadcrumbItems} />
+
+  <article itemscope itemtype="https://schema.org/Service" lang="es-MX">
+    <meta itemprop="name" content={data.title} />
+    <meta itemprop="description" content={data.description} />
+    <meta itemprop="provider" content={SITE.name} />
+
+    {/* ══════════ 1. HERO ══════════ */}
+    <Hero
+      eyebrow={heroEyebrow}
+      label={heroLabel}
+      headline={heroHeadline}
+      subheadline={heroSubheadline}
+      body={heroBody}
+      asideP1={heroAsideP1}
+      asideP2={heroAsideP2}
+      isH1={true}
+    />
+
+    {/* ══════════ 2. QUICKNAV chips contextuales ══════════ */}
+    <QuickNavBottom chips={quickNavTopChips} />
+
+    {/* ══════════ 3. STATS (si están declaradas) ══════════ */}
+    {data.stats.length > 0 && (
+      <section class="section">
+        <div class="container-pro">
+          <StatsRow items={data.stats} variant="dark" />
+        </div>
+      </section>
+    )}
+
+    {/* ══════════ 4. ¿QUÉ INCLUYE? — featureCards (rich) o features (fallback) ══════════ */}
+    {(data.featureCards.length > 0 || data.features.length > 0) && (
+      <Section
+        id="que-incluye"
+        eyebrow="Alcance del servicio"
+        title={`¿Qué incluye nuestro servicio de ${data.title.toLowerCase()}?`}
+        subtitle={`Cada implementación de ${data.title.toLowerCase()} en SEPRICO se compone de elementos operativos, técnicos y administrativos diseñados específicamente para condominios y residenciales en CDMX y Estado de México.`}
+        desc="Combinamos tecnología, personal capacitado y protocolos auditables bajo un solo proveedor responsable para que el comité reciba un servicio integrado y trazable."
+        bg="darker"
+      >
+        {data.featureCards.length > 0 ? (
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {data.featureCards.map((card, i) => {
+              const Wrapper = card.href ? 'a' : 'div';
+              return (
+                <Wrapper
+                  href={card.href}
+                  class:list={[
+                    'service-card group flex flex-col',
+                    card.href && 'cursor-pointer',
+                  ]}
+                >
+                  <div class="service-card-image">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      loading="lazy"
+                      decoding="async"
+                      class="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/10"></div>
+                    <span class="absolute top-3 left-3 rounded-md bg-brand-500/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest2 text-white shadow-brand backdrop-blur-sm">
+                      0{i + 1}
+                    </span>
+                    <div class="absolute bottom-0 left-0 right-0 p-5">
+                      <h3 class="text-lg font-bold leading-tight text-white">{card.title}</h3>
+                    </div>
+                  </div>
+                  {card.desc && (
+                    <div class="service-card-body">
+                      <p class="text-sm leading-relaxed text-white/70">{card.desc}</p>
+                      {card.href && (
+                        <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+                          Ver detalle
+                          <Icon name="arrow" class="h-3.5 w-3.5" />
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </Wrapper>
+              );
+            })}
+          </div>
+        ) : (
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {data.features.map((f, i) => (
+              <div class="group flex items-start gap-4 rounded-xl border border-white/5 bg-ink-800 p-5 transition-colors hover:border-brand-500/30">
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-brand-500/10 text-brand-400 ring-1 ring-brand-500/25">
+                  <Icon name={data.icon} class="h-5 w-5" />
+                </span>
+                <div class="min-w-0">
+                  <p class="text-[10px] font-bold uppercase tracking-widest2 text-brand-400">Componente {String(i + 1).padStart(2, '0')}</p>
+                  <p class="mt-1 text-sm font-semibold leading-snug text-white">{f}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Section>
+    )}
+
+    {/* ══════════ 5. DETALLE DEL SERVICIO con navegación lateral ══════════ */}
+    <section id="detalle-servicio" class="section">
+      <div class="container-pro">
+        {/* Header homologado con Section.astro variant left */}
+        <header class="mb-12 grid gap-10 md:mb-16 md:grid-cols-2 md:items-stretch md:gap-12 lg:gap-16">
+          {/* Col izquierda — eyebrow + title + bar */}
+          <div class="flex flex-col justify-center">
+            <span class="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-widest2 text-brand-400">
+              <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+              Detalle del servicio
+              <span class="h-px w-12 bg-brand-500/40"></span>
+            </span>
+
+            <h2 class="mt-5 section-title bg-gradient-to-br from-white to-white/75 bg-clip-text text-transparent">
+              {`Cómo opera nuestro ${data.title.toLowerCase()}`}
+            </h2>
+
+            <div class="mt-6 flex items-center gap-3">
+              <span class="h-[3px] w-20 bg-gradient-to-r from-brand-500 to-brand-500/0"></span>
+              <span class="h-1.5 w-1.5 rounded-full bg-brand-500/40"></span>
+            </div>
+          </div>
+
+          {/* Col derecha — subtitle + desc con border-l y acento vertical */}
+          <div class="relative flex flex-col justify-center border-l border-white/5 pl-6 md:pl-10">
+            <span class="absolute left-0 top-1/2 h-16 w-[2px] -translate-y-1/2 bg-brand-500"></span>
+
+            <p class="text-lg leading-relaxed text-white/90 text-pretty md:text-xl">
+              {SITE.name} integra el {data.title.toLowerCase()} dentro de un modelo operativo
+              que combina personal capacitado, tecnología profesional y protocolos auditables
+              bajo un solo proveedor responsable.
+            </p>
+            <p class="mt-5 text-sm leading-relaxed text-white/55 text-pretty">
+              A continuación detallamos qué incluye nuestro servicio, cómo lo implementamos
+              y qué resultados entregamos al comité administrativo de tu condominio.
+            </p>
+          </div>
+        </header>
+
+        {/* Layout 2-col: nav lateral + contenido */}
+        <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* Navegación lateral — sticky en desktop */}
+          {toc.length > 0 && (
+            <aside class="lg:col-span-4 xl:col-span-3">
+              <div class="lg:sticky lg:top-24">
+                <div class="rounded-2xl border border-white/5 bg-ink-900 p-6">
+                  <p class="text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+                    Contenido del servicio
+                  </p>
+                  <p class="mt-1 text-sm font-semibold text-white">
+                    {toc.length} apartados
+                  </p>
+                  <div class="my-5 h-px w-full bg-white/5"></div>
+                  <ol class="space-y-3">
+                    {toc.map((h, i) => (
+                      <li>
+                        <a
+                          href={`#${h.slug}`}
+                          class="group flex items-start gap-3 text-sm leading-snug text-white/65 transition-colors hover:text-white"
+                        >
+                          <span class="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-brand-500/10 text-[10px] font-bold text-brand-400 ring-1 ring-brand-500/20 group-hover:bg-brand-500 group-hover:text-white">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <span class="pt-0.5">{h.text}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                  <div class="my-5 h-px w-full bg-white/5"></div>
+                  <a
+                    href={wa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-brand inline-flex w-full items-center justify-center gap-2 text-xs"
+                  >
+                    <Icon name="phone" class="h-3.5 w-3.5" />
+                    Solicitar cotización
+                  </a>
+                  {lastReviewedText && (
+                    <p class="mt-4 text-center text-[10px] uppercase tracking-widest2 text-white/35">
+                      Actualizado: <time datetime={data.lastReviewed!.toISOString()}>{lastReviewedText}</time>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </aside>
+          )}
+
+          {/* Contenido del servicio */}
+          <div class={toc.length > 0 ? 'lg:col-span-8 xl:col-span-9' : 'mx-auto max-w-4xl lg:col-span-12'}>
+            <article class="prose-service">
+              <Content />
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ══════════ 6. BENEFICIOS ══════════ */}
+    {data.benefits.length > 0 && (
+      <Section
+        id="beneficios"
+        eyebrow="Ventajas clave"
+        title={`Beneficios del servicio de ${data.title.toLowerCase()}`}
+        subtitle={`Los comités que contratan ${data.title.toLowerCase()} con SEPRICO obtienen resultados verificables y trazables desde el primer mes de operación.`}
+        desc="Cada beneficio se respalda con métricas mensuales entregadas formalmente al comité administrativo."
+        bg="darker"
+      >
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {data.benefits.map((b, i) => (
+            <BadgeCard title={b.title} desc={b.desc} number={String(i + 1).padStart(2, '0')} />
+          ))}
+        </div>
+      </Section>
+    )}
+
+    {/* ══════════ 7. TECNOLOGÍA QUE INTEGRAMOS (si techStack[] definido) ══════════ */}
+    {data.techStack.length > 0 && (
+      <Section
+        id="tecnologia"
+        eyebrow="Stack tecnológico"
+        title="Tecnología que integramos"
+        subtitle={`Trabajamos con marcas líderes del mercado y configuraciones probadas operativamente. Cada componente cuenta con disponibilidad de refacciones en México y soporte técnico documentado.`}
+        desc={`Nuestros aliados tecnológicos incluyen ${SITE.brands.slice(0, 4).join(', ')} y otras marcas con respaldo internacional.`}
+      >
+        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {data.techStack.map((g) => (
+            <div class="card">
+              <h3 class="text-base font-bold text-white">{g.title}</h3>
+              <ul class="mt-4 space-y-2">
+                {g.items.map((it) => (
+                  <li class="flex items-start gap-2 text-sm text-white/75">
+                    <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+    )}
+
+    {/* ══════════ 8. PROCESO DE IMPLEMENTACIÓN ══════════ */}
+    {data.process.length > 0 && (
+      <Section
+        id="proceso"
+        eyebrow="Cómo lo implementamos"
+        title={`Del diagnóstico a la operación 24/7 de ${data.title.toLowerCase()}`}
+        subtitle="Cada etapa documentada, supervisada y comunicada al comité administrativo en tiempo real. Sin sorpresas, sin tiempos muertos y con un ejecutivo de cuenta acompañando cada paso."
+        desc="Arranque estándar entre 7 y 10 días hábiles. En emergencias activamos plan acelerado en 48 a 72 horas."
+        bg="darker"
+      >
+        <Process items={data.process} />
+
+        <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand inline-flex items-center gap-2">
+            <Icon name="phone" class="h-4 w-4" />
+            Iniciar diagnóstico gratuito
+          </a>
+          <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-ghost inline-flex items-center gap-2">
+            <Icon name="check" class="h-4 w-4" />
+            WhatsApp 24/7
+          </a>
+        </div>
+      </Section>
+    )}
+
+    {/* ══════════ 9. DIFERENCIADORES (valueProps) ══════════ */}
+    {data.valueProps.length > 0 && (
+      <Section
+        id="diferenciadores"
+        eyebrow={`Por qué elegir SEPRICO para ${data.title.toLowerCase()}`}
+        title={`¿Qué nos diferencia en ${data.title.toLowerCase()}?`}
+        subtitle={`No es solo tecnología o personal — es la combinación de experiencia operativa, supervisión activa y atención al comité lo que hace que el ${Math.round(94)}% de los condominios renueven con SEPRICO al primer año.`}
+        desc="Cada diferenciador es una decisión operativa concreta, no un eslogan de marketing."
+      >
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {data.valueProps.map((v) => (
+            <BadgeCard title={v.title} desc={v.desc} icon={v.icon} />
+          ))}
+        </div>
+      </Section>
+    )}
+
+    {/* ══════════ 10. SECTORES ══════════ */}
+    {data.showSectors && (
+      <Section
+        id="sectores"
+        eyebrow="Sectores que atendemos"
+        title={`¿Para qué tipo de comunidad aplica ${data.title.toLowerCase()}?`}
+        subtitle="SEPRICO opera en todos los formatos residenciales del Valle de México. Cada implementación se adapta al tamaño, reglamento interno y perfil de riesgo de la comunidad."
+        align="center"
+        bg="darker"
+      >
+        <Sectors />
+      </Section>
+    )}
+
+    {/* ══════════ 11. FAQ ══════════ */}
+    {data.faqs.length > 0 && (
+      <Section
+        id="faq"
+        eyebrow="Preguntas frecuentes"
+        title={`Dudas comunes sobre ${data.title.toLowerCase()}`}
+        subtitle={`Respondemos las preguntas que los comités administrativos hacen con más frecuencia al evaluar un proveedor de ${data.title.toLowerCase()} para su condominio o residencial.`}
+        desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un asesor especializado te responde en menos de 15 minutos durante horario hábil."
+      >
+        <ServiceFaq items={data.faqs} serviceName={data.title} />
+      </Section>
+    )}
+  </article>
+
+  {/* ══════════ 12. ACERCA DE SEPRICO (refuerzo entidad GEM) ══════════ */}
+  <AboutSeprico serviceContext={`nuestro servicio de ${data.title.toLowerCase()}`} />
+
+  {/* ══════════ 13. SERVICIOS RELACIONADOS ══════════ */}
+  <RelatedServices
+    currentSlug={slug}
+    declared={data.related}
+    count={4}
+  />
+
+  {/* ══════════ 13. QUICKNAV BOTTOM ══════════ */}
+  <QuickNavBottom chips={quickNavBottomChips} />
+</BaseLayout>

@@ -1,0 +1,99 @@
+---
+title: 'Especificaciones Técnicas de Cámaras de Vigilancia que el Comité Necesita Entender Antes de Firmar'
+description: 'Análisis técnico de las especificaciones que realmente determinan el desempeño de una cámara de vigilancia: sensor, óptica, compresión, WDR, IR y comportamiento en baja luminosidad. Cómo leer una ficha técnica con criterio independiente y qué preguntas hacerle al proveedor antes de aprobar el proyecto.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'tecnologia-y-monitoreo'
+tags: ['camaras-vigilancia', 'cctv', 'videovigilancia', 'especificaciones-tecnicas', 'condominios']
+---
+
+La resolución de la cámara —expresada en megapíxeles o en siglas como HD, Full HD o 4K— es el parámetro que aparece más prominentemente en cualquier propuesta comercial de videovigilancia, y es también el parámetro con menor valor predictivo del desempeño real del sistema en las condiciones de operación de un condominio residencial. Esta desproporción entre la visibilidad comercial del parámetro y su relevancia técnica real explica una parte significativa de la brecha entre lo que los comités esperan del sistema que contratan y lo que el sistema produce cuando hay un incidente real que requiere las grabaciones.
+
+Este artículo desagrega los parámetros técnicos que realmente determinan el desempeño de una cámara de vigilancia en condiciones de operación real, explica las relaciones entre ellos, y proporciona el vocabulario técnico necesario para leer una ficha de especificaciones con criterio independiente.
+
+## Por Qué la Resolución es una Condición Necesaria pero No Suficiente
+
+Una cámara de 4K (8MP) con sensor de imagen pequeño, óptica de baja calidad y sin procesamiento WDR producirá imágenes de menor utilidad forense en condiciones de operación real que una cámara de 2MP con sensor más grande, buena óptica y WDR activo. Esta afirmación contraintuitiva tiene fundamento técnico directo y consecuencias prácticas importantes para la evaluación de propuestas.
+
+La resolución determina el nivel de detalle disponible en la imagen: cuántos píxeles capturan la escena y, por lo tanto, cuánto detalle puede recuperarse de la grabación al hacer zoom digital en post-procesamiento. Pero ese detalle solo es recuperable si la imagen fue capturada con suficiente luz y con enfoque correcto. Un sensor pequeño en condiciones de baja luminosidad produce una imagen de 8 millones de píxeles borrosos o con ruido digital elevado; una imagen técnicamente de alta resolución con contenido visualmente irrecuperable.
+
+El principio aplicable es: **la resolución fija el límite superior de detalle posible; el sensor, la óptica y el procesamiento de imagen determinan qué porcentaje de ese límite se alcanza en las condiciones reales de operación.**
+
+## El Sensor de Imagen: El Componente que Más se Omite en las Propuestas
+
+El sensor de imagen es el componente físico que captura la luz y la convierte en señal eléctrica procesable. Sus características determinan el rendimiento de la cámara en condiciones de iluminación variable —que son las condiciones en que más frecuentemente ocurren los incidentes de seguridad.
+
+**Tamaño del sensor.** El tamaño del sensor se expresa en notación fraccionaria de pulgadas: 1/3", 1/2.8", 1/2", 1/1.8". Un sensor 1/2" tiene un área de captura de luz aproximadamente 78% mayor que un sensor 1/3"; esa diferencia en área equivale directamente a mayor sensibilidad en condiciones de baja luminosidad. En términos prácticos: en un estacionamiento con 5 lux de iluminación (equivalente a una luminaria de sodio alejada), la cámara con sensor más grande produce una imagen con rostros identificables; la cámara con sensor más pequeño produce una imagen en la que el movimiento es visible pero la identidad del individuo no puede establecerse con certeza.
+
+La mayoría de las propuestas comerciales de seguridad para condominios especifican la resolución de la cámara pero no el tamaño del sensor. Esta omisión no suele ser accidental: las cámaras de mayor resolución con sensor pequeño son más económicas que las de resolución equivalente con sensor mayor, y el comité que no pregunta por el sensor no puede establecer la diferencia.
+
+**Sensibilidad mínima operativa.** La sensibilidad mínima de una cámara se expresa en lux: el nivel mínimo de iluminación con el que la cámara produce una imagen de calidad aceptable. Una especificación típica podría indicar "sensibilidad mínima: 0.001 lux (F1.2, AGC ON)". Las condiciones indicadas entre paréntesis son determinantes: F1.2 es la apertura máxima del lente (mayor apertura = más luz), y AGC ON indica que la ganancia automática está al máximo, lo que incrementa la sensibilidad pero también el ruido de imagen. La sensibilidad en condiciones más restrictivas —F2.0, AGC reducido— puede ser 5 a 10 veces menor.
+
+Al comparar cámaras por sensibilidad mínima, verificar que las condiciones de medición sean idénticas. Una comparación entre una cámara especificada a "0.001 lux F1.2 AGC ON" y otra especificada a "0.01 lux F2.0 AGC OFF" no es directamente comparable; la segunda cámara puede tener mejor rendimiento efectivo en condiciones de operación típica a pesar de tener un valor numérico de lux mínimo más alto.
+
+## WDR (Wide Dynamic Range): El Parámetro Crítico para Accesos y Estacionamientos
+
+El Wide Dynamic Range (WDR) es la capacidad de la cámara para producir una imagen equilibrada cuando la escena incluye simultáneamente zonas de alta luminosidad y zonas de sombra profunda —exactamente las condiciones en que opera una cámara de acceso vehicular durante el día, con la luz solar entrante y el interior del vehículo en sombra.
+
+**Cómo funciona.** Las cámaras con WDR capturan múltiples exposiciones de la misma escena en fracciones de segundo y las combinan procesando las zonas brillantes con la exposición corta y las zonas oscuras con la exposición larga, produciendo una imagen compuesta donde todos los elementos de la escena son visibles. Una cámara sin WDR produce una imagen expuesta para la zona brillante —el fondo exterior— dejando el interior del vehículo y el rostro del conductor en silueta oscura, o expuesta para el interior del vehículo, resultando en un fondo quemado sin información.
+
+**Niveles de WDR.** El WDR se especifica en decibelios (dB) de rango dinámico. Los valores típicos van desde 80 dB (WDR básico) hasta 130 dB o superior (WDR de alto rendimiento). Para una cámara de acceso vehicular en condiciones de contra-luz solar directa —que es el escenario más exigente— un WDR mínimo de 100 dB es el umbral por debajo del cual el desempeño en las horas críticas de mayor incidencia solar puede ser insuficiente para identificar al conductor.
+
+Una propuesta que especifica cámaras con WDR sin indicar el valor en dB no proporciona información verificable sobre el nivel de WDR que se está instalando.
+
+## Compresión de Video: H.264 vs. H.265 y Sus Implicaciones de Almacenamiento
+
+El estándar de compresión de video es el algoritmo mediante el cual la cámara codifica el flujo de video antes de transmitirlo al servidor de almacenamiento. La elección del estándar tiene implicaciones directas en el consumo de ancho de banda de la red y en el almacenamiento requerido para un período dado de retención.
+
+**H.264 (MPEG-4 AVC).** El estándar de compresión más extendido, compatible con prácticamente todo el hardware de almacenamiento y los sistemas VMS del mercado. Bien comprendido y con tooling maduro de decodificación.
+
+**H.265 (HEVC, High Efficiency Video Coding).** El sucesor de H.264, con eficiencia de compresión aproximadamente el doble que H.264 para la misma calidad de imagen. Una cámara que transmite a 4 Mbps con H.264 puede transmitir la misma calidad visual a aproximadamente 2 Mbps con H.265. La implicación para el almacenamiento es directa: un sistema de 16 cámaras grabando en H.265 requiere aproximadamente la mitad del almacenamiento que el mismo sistema grabando en H.264, para retener el mismo número de días de grabación con la misma calidad de imagen.
+
+**H.265+ y Smart Codec.** Varios fabricantes (Hikvision, Dahua, Hanwha) ofrecen variantes propietarias de H.265 —denominadas H.265+, H.265 Pro o Smart H.265— que implementan optimizaciones adicionales de compresión para escenas con baja actividad, reduciendo el bitrate en escenas estáticas (un estacionamiento vacío a las 3 AM) sin sacrificar calidad cuando hay movimiento. Estas variantes pueden reducir el bitrate promedio a 30–50% del H.265 estándar para escenas típicas de vigilancia residencial, con los correspondientes ahorros en almacenamiento.
+
+**Implicación para la evaluación de propuestas.** Si el proveedor cotiza un NVR de 8 TB para 30 días de retención con 16 cámaras Full HD, la coherencia del cálculo depende críticamente de si las cámaras están especificadas en H.264 o H.265. Con H.264 a 4 Mbps, 16 cámaras generan aproximadamente 691 GB/día, lo que requeriría más de 20 TB para 30 días. Con H.265 a 2 Mbps, el mismo sistema genera aproximadamente 345 GB/día, lo que hace que 8 TB alcancen para aproximadamente 23 días —no 30—. El cálculo correcto depende de los parámetros exactos de las cámaras especificadas, y el comité puede verificarlo independientemente con la fórmula: **(Bitrate Mbps × 3,600 × Horas/día × Número de cámaras) / 8,000 = GB/día**.
+
+## Iluminación Infrarroja (IR): Lo que Funciona y lo que No en Espacios Abiertos
+
+La mayoría de las cámaras de vigilancia para exteriores incluyen iluminación infrarroja (IR) para capturar imágenes en condiciones de oscuridad total o semi-oscuridad. La cámara activa automáticamente los LEDs IR cuando la luminosidad cae por debajo del umbral configurado, produciendo imágenes en blanco y negro iluminadas por la radiación IR que el ojo humano no puede ver pero el sensor de la cámara sí.
+
+**El problema del alcance declarado vs. real.** Los fabricantes especifican el "alcance IR" de la cámara —normalmente expresado en metros: "alcance IR: 30 metros"— en condiciones ideales: superficie reflectante limpia, temperatura ambiente moderada, sensor nuevo. En condiciones de operación real —superficies de concreto o vegetación con menor reflectividad, acumulación de polvo en los LEDs IR, variación de temperatura— el alcance efectivo puede ser 40–60% del declarado.
+
+La segunda limitación del IR convencional es el fenómeno de overexposure cercana: cuando el objeto de interés está a muy corta distancia del lente (menos de 1–2 metros), la intensidad del IR puede saturar el sensor, produciendo una imagen sobreexpuesta en la que el detalle del objeto cercano —el rostro de una persona en la caseta de acceso— se pierde. Los sistemas que manejan este problema tienen control automático de intensidad IR (IRAC, Infrared Radiance Auto Control) que ajusta la potencia de los LEDs en función de la distancia al objeto.
+
+**Iluminación IR de doble longitud de onda.** Algunos sistemas avanzados utilizan LEDs IR de dos longitudes de onda diferentes —850nm (más eficiente pero con leve brillo rojo visible) y 940nm (completamente invisible, menos eficiente)— permitiendo que el sistema seleccione la longitud de onda según el contexto de operación. Para una caseta de acceso donde la discreción de la vigilancia importa, los LEDs de 940nm son preferibles aunque requieran una cámara con mayor sensibilidad de sensor para compensar la menor eficiencia.
+
+**Alternativa: iluminación blanca complementaria.** Para aplicaciones donde la imagen en color es importante en condiciones nocturnas —identificación de vestimenta, color de vehículos— las cámaras con iluminación blanca complementaria (White Light LEDs activos en condiciones de baja luminosidad) producen imágenes en color de mayor utilidad forense que el blanco y negro del IR, a expensas de mayor consumo energético y menor discreción de la vigilancia.
+
+## Óptica: La Variable que Define el Uso Correcto de Cada Cámara
+
+La focal del lente determina el ángulo de campo visual de la cámara y, en consecuencia, su aplicación correcta. Una cámara instalada con la focal incorrecta para su posición y objetivo puede tener la mejor especificación de sensor y resolución del mercado y seguir siendo inútil para los propósitos del desarrollo.
+
+**Lentes de focal fija.** Los lentes de focal fija más comunes en vigilancia residencial son 2.8mm (campo visual amplio, aproximadamente 100–110°), 4mm (campo visual medio, aproximadamente 85°), 6mm (campo visual reducido, aproximadamente 55°) y 8mm o superior (campo visual estrecho, alta magnificación a distancia).
+
+- **2.8mm y 4mm:** Apropiados para vigilancia de áreas amplias (salones de usos múltiples, jardines, estacionamientos con visión de conjunto). No producen detalle identificable de rostros o placas vehiculares a distancias superiores a 5–8 metros.
+- **6mm y 8mm:** Apropiados para puntos de control específicos (acceso peatonal, caseta de entrada) donde el objetivo es capturar detalle de una zona estrecha a mayor distancia. Producen detalle identificable de rostros a 8–15 metros.
+- **12mm y superior:** Para accesos vehiculares donde la captura de placas es el objetivo principal. Con un lente de 12mm y resolución de 4MP, una placa vehicular es legible a 15–25 metros.
+
+**Lentes varifocales.** Los lentes varifocales permiten ajustar la focal durante la instalación o post-instalación dentro de un rango (típicamente 2.8–12mm o 3–9mm) sin cambiar el lente físico. Son más flexibles para instalaciones donde el ángulo exacto de cobertura necesario no es conocido con certeza antes de la instalación. La desventaja respecto a los lentes fijos es que suelen tener menor apertura máxima (menor sensibilidad en baja luminosidad) y mayor complejidad mecánica.
+
+**La consecuencia de la focal incorrecta.** Si una cámara está instalada con un lente de 2.8mm en una posición donde el objetivo es capturar el rostro de las personas que acceden por la puerta peatonal, el resultado operativo es que el rostro de la persona ocupa menos del 10% de la imagen total: está presente pero no tiene suficiente tamaño en píxeles para identificación confiable. La cámara está técnicamente funcionando; la grabación no cumple su función.
+
+## El Documento que el Comité Debería Exigir Antes de Aprobar el Proyecto
+
+Antes de aprobar un proyecto de instalación de cámaras, el comité puede exigir al proveedor un documento de especificación técnica por punto de instalación que incluya, para cada cámara:
+
+- Modelo exacto de la cámara y ficha técnica del fabricante
+- Resolución y tamaño del sensor
+- Focal del lente (o rango si es varifocal) y ángulo de campo visual resultante
+- Nivel de WDR en dB
+- Sensibilidad mínima en lux con condiciones de medición especificadas
+- Estándar de compresión (H.264 / H.265 / H.265+)
+- Bitrate objetivo de grabación
+- Alcance IR especificado por el fabricante y estimación del alcance efectivo en las condiciones del punto de instalación
+
+Con este documento, el comité puede calcular de forma independiente el almacenamiento total necesario para los días de retención comprometidos y verificar que el NVR propuesto tiene capacidad suficiente. Si el proveedor no puede entregar este documento o se opone a su elaboración, el proyecto no tiene especificación técnica real: tiene una lista de materiales que no puede verificarse sin este nivel de detalle.
+
+---
+
+*En SEPRICO cada proyecto de videovigilancia comienza con un levantamiento técnico del desarrollo que define, punto por punto, el objetivo de cobertura y el tipo de imagen requerido. La propuesta técnica incluye la ficha completa de cada cámara seleccionada y el cálculo verificable de almacenamiento para los días de retención comprometidos. Esta documentación está disponible para revisión del comité antes de la firma del contrato.*

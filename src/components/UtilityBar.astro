@@ -1,0 +1,35 @@
+---
+import { SITE } from '@/config/site';
+import Icon from '@/components/Icon.astro';
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+---
+
+<div class="hidden border-b border-white/5 bg-ink-950 text-white/70 md:block">
+  <div class="container-pro flex h-10 items-center justify-between text-[12px]">
+    <div class="flex items-center gap-2 text-white/85">
+      <span class="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse"></span>
+      <span>Seguridad Privada para Condominios — CDMX y Edomex</span>
+    </div>
+
+    <div class="flex items-center gap-5">
+      <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="flex items-center gap-1.5 hover:text-white">
+        <Icon name="phone" class="h-3.5 w-3.5" />
+        <span>{SITE.contact.phoneDisplay}</span>
+      </a>
+      <span class="hidden items-center gap-1.5 lg:flex">
+        <Icon name="clock" class="h-3.5 w-3.5" />
+        <span>{SITE.contact.hours}</span>
+      </span>
+      <span class="hidden items-center gap-1.5 text-white/85 xl:flex">
+        <Icon name="check" class="h-3.5 w-3.5 text-brand-400" />
+        <span>Auditoría sin costo</span>
+      </span>
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-full bg-[#25D366] px-3 py-0.5 text-white hover:brightness-110">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-3 w-3">
+          <path d="M19.05 4.91A10 10 0 0 0 12 2C6.5 2 2 6.48 2 12c0 1.76.46 3.45 1.34 4.95L2 22l5.27-1.31A10 10 0 0 0 12 22c5.5 0 10-4.48 10-10 0-2.67-1.05-5.18-2.95-7.09Z"/>
+        </svg>
+        Chat
+      </a>
+    </div>
+  </div>
+</div>

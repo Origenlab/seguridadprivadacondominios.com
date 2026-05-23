@@ -1,0 +1,46 @@
+---
+import Icon from '@/components/Icon.astro';
+import { SITE } from '@/config/site';
+
+type ChipIcon = 'shield' | 'cctv' | 'patrol' | 'access' | 'alert' | 'check' | 'phone' | 'mail' | 'pin' | 'clock' | 'star' | 'arrow';
+interface Chip { label: string; sub: string; href: string; icon: ChipIcon; external?: boolean; }
+interface Props { chips?: Chip[]; }
+
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+
+const defaultChips: Chip[] = [
+  { label: 'Nosotros',         sub: 'Empresa desde el año 2000',       href: '/nosotros/',                          icon: 'shield' },
+  { label: 'Recursos Humanos', sub: 'Personal, capacitación, bolsa',    href: '/reclutamiento-para-seguridad-privada/', icon: 'check' },
+  { label: 'Catálogo',         sub: 'Equipo de seguridad profesional',  href: '/equipo-de-seguridad/',               icon: 'cctv' },
+  { label: 'Zonas CDMX',       sub: 'Alcaldías metropolitanas',         href: '/zonas/#cdmx',                        icon: 'pin' },
+  { label: 'Zonas Edomex',     sub: 'Municipios atendidos',             href: '/zonas/#edomex',                      icon: 'pin' },
+  { label: 'WhatsApp 24/7',    sub: 'Respuesta en <15 min',             href: wa,                                    icon: 'phone', external: true },
+];
+
+const { chips = defaultChips } = Astro.props;
+---
+
+<nav aria-label="Enlaces complementarios" class="bg-brand-500">
+  <div class="container-pro grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+    {chips.map((c, i) => (
+      <a
+        href={c.href}
+        target={c.external ? '_blank' : undefined}
+        rel={c.external ? 'noopener noreferrer' : undefined}
+        class:list={[
+          'group flex items-center gap-3 px-5 py-5 text-white hover:bg-brand-600',
+          i > 0 && 'border-l border-white/10',
+        ]}
+      >
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-white/15">
+          <Icon name={c.icon as any} class="h-5 w-5" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-sm font-bold leading-tight">{c.label}</p>
+          <p class="truncate text-[11px] text-white/80">{c.sub}</p>
+        </div>
+        <Icon name="arrow" class="h-4 w-4 text-white/70" />
+      </a>
+    ))}
+  </div>
+</nav>

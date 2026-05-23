@@ -1,0 +1,12 @@
+{
+  "name": "Seguridad Privada Condominios",
+  "short_name": "SPC",
+  "description": "Seguridad privada para condominios y residenciales en CDMX y Estado de México.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

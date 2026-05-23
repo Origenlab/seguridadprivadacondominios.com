@@ -1,0 +1,86 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import CtaBanner from '@/components/CtaBanner.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('comunidades');
+  return items.map((e) => ({ params: { slug: e.slug }, props: { entry: e } }));
+}
+
+interface Props { entry: CollectionEntry<'comunidades'>; }
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const allServicios = await getCollection('servicios');
+const recommended = entry.data.recommended
+  .map((slug) => allServicios.find((s) => s.slug === slug))
+  .filter(Boolean) as CollectionEntry<'servicios'>[];
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <Breadcrumb items={[
+    { label: 'Comunidades', href: '/comunidades' },
+    { label: entry.data.title },
+  ]} />
+
+  <Section>
+    <div class="mx-auto max-w-4xl">
+      <div class="flex items-start gap-5">
+        <span class="text-6xl">{entry.data.emoji}</span>
+        <div>
+          <span class="eyebrow">Comunidad atendida</span>
+          <h1 class="mt-3 text-4xl font-bold leading-tight md:text-5xl">
+            Seguridad Privada para {entry.data.title}
+          </h1>
+          <p class="mt-3 text-lg text-white/75">{entry.data.description}</p>
+        </div>
+      </div>
+
+      {entry.data.challenges.length > 0 && (
+        <div class="mt-10 rounded-2xl border border-white/5 bg-ink-900/40 p-6">
+          <h2 class="text-lg text-brand-500">Retos típicos en este formato</h2>
+          <ul class="mt-4 grid gap-2 text-white/85 md:grid-cols-2">
+            {entry.data.challenges.map((ch) => (
+              <li class="flex items-start gap-2">
+                <Icon name="alert" class="mt-1 h-4 w-4 shrink-0 text-brand-500" />
+                <span class="text-sm">{ch}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <article class="prose prose-invert prose-headings:prose-a:text-brand-500 mt-10 max-w-none">
+        <Content />
+      </article>
+
+      {recommended.length > 0 && (
+        <div class="mt-12">
+          <h2 class="text-2xl text-white">Servicios recomendados</h2>
+          <div class="mt-6 grid gap-4 md:grid-cols-2">
+            {recommended.map((s) => (
+              <a href={`/servicios/${s.slug}`} class="card-premium group">
+                <div class="flex items-center gap-4">
+                  <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-500/15 text-brand-500">
+                    <Icon name={s.data.icon} class="h-5 w-5" />
+                  </span>
+                  <div class="flex-1">
+                    <h3 class="text-base">{s.data.title}</h3>
+                    <p class="mt-1 text-xs text-white/65">{s.data.description}</p>
+                  </div>
+                  <Icon name="arrow" class="h-5 w-5 text-white/30 group-hover:text-brand-500" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </Section>
+
+  <CtaBanner />
+</BaseLayout>

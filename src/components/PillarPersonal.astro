@@ -1,0 +1,109 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const subcategories = [
+  {
+    title: 'Vigilancia y Patrullaje',
+    href: '/vigilancia-y-patrullaje/',
+    icon: 'patrol',
+    prose: 'Un guardia parado en la caseta no es vigilancia: es presencia decorativa. Por eso diseñamos un plan de rondas específico para cada condominio antes del primer turno: rutas, frecuencias, puntos críticos y horarios variables que impiden que cualquier observador externo detecte un patrón. Los elementos patrullan accesos vehiculares y peatonales, estacionamientos, azoteas y perímetros conforme al plano real de la comunidad. Cada ronda queda registrada con hora y ubicación, y el comité puede consultarla desde cualquier dispositivo.',
+  },
+  {
+    title: 'Personal de Seguridad',
+    href: '/personal-de-seguridad/',
+    icon: 'shield',
+    prose: 'El guardia que llega a tu condominio no es el primero disponible: es el que pasó nuestro proceso de cinco filtros. Verificamos identidad, revisamos antecedentes penales y laborales, validamos referencias y aplicamos análisis psicométrico antes de dar cualquier alta. Con capacitación SETEC certificada, cada elemento domina control de accesos, manejo de situaciones de riesgo y protocolos de comunicación con supervisores y residentes. El perfil se asigna según el tipo de comunidad — no es lo mismo operar un residencial premium que un fraccionamiento con perímetro extenso.',
+  },
+  {
+    title: 'Entrenamiento Continuo',
+    href: '/entrenamiento-continuo/',
+    icon: 'clock',
+    prose: 'La seguridad se deteriora cuando el personal deja de entrenarse. La capacitación no es un evento de bienvenida: es un ciclo trimestral que cubre protocolos de emergencia actualizados, uso correcto de nueva tecnología y simulacros documentados con participación del comité. Cuando ocurre un incidente real, se analiza internamente y se ajustan los procedimientos antes del siguiente turno. El objetivo no es reaccionar mejor la próxima vez — es que la próxima vez no ocurra.',
+  },
+  {
+    title: 'Investigación de Antecedentes',
+    href: '/investigacion-de-antecedentes/',
+    icon: 'access',
+    prose: 'Detrás de cada elemento asignado hay un expediente completo: cruce con bases penales estatales y federales, verificación directa con empleadores anteriores, validación de referencias personales y análisis psicométrico diseñado para detectar perfiles de riesgo. Todo documentado, todo disponible para el comité en cualquier momento. La investigación no termina en el alta — se repite cada vez que un elemento cambia de asignación o es promovido a supervisor.',
+  },
+];
+---
+
+<div class="grid gap-10 lg:grid-cols-5 lg:items-stretch">
+
+  <!-- Columna izquierda: overview del pilar -->
+  <div class="lg:col-span-2 flex flex-col">
+    <div class="overflow-hidden rounded-2xl flex flex-col flex-1">
+      <div class="relative aspect-[4/3] w-full">
+        <img
+          src="/images/rrhh/personal-de-seguridad.jpg"
+          alt="Personal de seguridad SEPRICO"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/40 to-transparent"></div>
+
+        <!-- Badge pilar -->
+        <span class="absolute top-4 left-4 rounded-lg bg-brand-500/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+          Pilar 1
+        </span>
+
+        <!-- Título sobre imagen -->
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="text-2xl font-bold leading-tight text-white">
+            Personal de<br/>Seguridad
+          </h3>
+          <p class="mt-1 text-sm text-white/60">4 servicios especializados</p>
+        </div>
+      </div>
+
+      <!-- Panel de descripción -->
+      <div class="bg-ink-900 p-6 flex flex-col flex-1">
+        <p class="text-sm leading-relaxed text-white/70">
+          Guardias certificados SETEC, supervisores rotativos y servicio intramuros. Cada elemento pasa por selección rigurosa: investigación de antecedentes, exámenes psicométricos y entrenamiento continuo antes de ser asignado a tu condominio.
+        </p>
+
+        <!-- Stats rápidos -->
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          {[
+            { value: '100%', label: 'Certificados SETEC' },
+            { value: '24/7', label: 'Operación continua' },
+            { value: '+25', label: 'Años de experiencia' },
+            { value: '0', label: 'Tolerancia a omisiones' },
+          ].map((stat) => (
+            <div class="rounded-lg border border-white/8 bg-white/4 px-3 py-2.5 text-center">
+              <span class="block text-lg font-bold text-brand-400">{stat.value}</span>
+              <span class="text-[10px] leading-tight text-white/50">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="/personal-de-seguridad-residencial/"
+          class="mt-auto pt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+        >
+          Ver pilar completo
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: párrafos apilados -->
+  <div class="lg:col-span-3 flex flex-col justify-between gap-0 divide-y divide-white/8">
+    {subcategories.map((sub) => (
+      <div class="py-6 first:pt-0 last:pb-0">
+        <h4 class="text-sm font-bold text-white mb-2">{sub.title}</h4>
+        <p class="text-sm leading-relaxed text-white/60">{sub.prose}</p>
+        <a
+          href={sub.href}
+          class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-500 hover:text-brand-400 transition-colors"
+        >
+          Ver más <Icon name="arrow" class="h-3 w-3" />
+        </a>
+      </div>
+    ))}
+  </div>
+
+</div>

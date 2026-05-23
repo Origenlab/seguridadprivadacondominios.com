@@ -1,0 +1,120 @@
+---
+import { SITE } from '@/config/site';
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+  eyebrow?: string;
+  label?: string;
+  headline?: string;
+  subheadline?: string;
+  body?: string;
+  asideP1?: string;
+  asideP2?: string;
+  /** Eyebrow opcional para la columna derecha (default "Acerca de SEPRICO"). */
+  asideEyebrow?: string;
+  /** Si es true, renderiza headline como <h1>. Si es false, como <p> dentro de un H1 externo. Default: true */
+  isH1?: boolean;
+}
+
+const {
+  eyebrow    = 'Seguridad Privada Profesional · CDMX y Edomex',
+  label      = 'SEPRICO · Seguridad Privada para',
+  headline   = 'Condominios',
+  subheadline = 'en CDMX y Estado de México',
+  body       = 'Soluciones integrales que garantizan tranquilidad: <strong class="text-white">vigilancia 24/7</strong>, control de accesos, monitoreo electrónico y protocolos de emergencia adaptados a las necesidades específicas de cada residencial.',
+  asideP1    = 'En <strong class="text-white">SEPRICO</strong> somos una empresa mexicana especializada en <strong class="text-white">seguridad privada para condominios, fraccionamientos y residenciales</strong> en la Ciudad de México y el Estado de México. Desde el año 2000 diseñamos soluciones integrales que combinan personal altamente capacitado, tecnología de vanguardia y protocolos auditables.',
+  asideP2    = 'Nuestro portafolio cubre <strong class="text-white">vigilancia y patrullaje 24/7</strong>, <strong class="text-white">control de acceso</strong> biométrico, <strong class="text-white">monitoreo electrónico</strong> con CCTV de alta definición, alarmas, intercomunicación e iluminación inteligente. Cada servicio se diseña a la medida tras una auditoría sin costo, alineada con el reglamento interno de tu condominio.',
+  asideEyebrow = 'Acerca de la empresa',
+  isH1       = true,
+} = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden bg-ink-950">
+  <div class="container-pro relative">
+    <div class="grid gap-12 py-16 md:py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24 xl:gap-20">
+
+      {/* ══════════ COLUMNA IZQUIERDA — Hero principal ══════════ */}
+      <div class="flex flex-col justify-center">
+        <span class="inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-widest2 text-brand-400">
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+          {eyebrow}
+          <span class="h-px w-12 bg-brand-500/40"></span>
+        </span>
+
+        <p class="mt-7 text-sm font-medium uppercase tracking-widest2 text-white/55">
+          {label}
+        </p>
+
+        {isH1 ? (
+          <h1 class="mt-3 font-extrabold leading-[0.92] tracking-tight">
+            <span class="block bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700 bg-clip-text text-transparent" style="font-size: clamp(3rem, 7vw, 6rem);">
+              {headline}
+            </span>
+            <span class="mt-3 block font-bold text-white" style="font-size: clamp(1.375rem, 2.4vw, 2.25rem);">
+              {subheadline}
+            </span>
+          </h1>
+        ) : (
+          <p class="mt-3 font-extrabold leading-[0.92] tracking-tight">
+            <span class="block bg-gradient-to-br from-brand-400 via-brand-500 to-brand-700 bg-clip-text text-transparent" style="font-size: clamp(3rem, 7vw, 6rem);">
+              {headline}
+            </span>
+            <span class="mt-3 block font-bold text-white" style="font-size: clamp(1.375rem, 2.4vw, 2.25rem);">
+              {subheadline}
+            </span>
+          </p>
+        )}
+
+        {/* Barra decorativa con dot terminal */}
+        <div class="mt-7 flex items-center gap-3">
+          <span class="h-[3px] w-24 bg-gradient-to-r from-brand-500 to-brand-500/0"></span>
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-500/40"></span>
+        </div>
+
+        <p class="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg" set:html={body} />
+      </div>
+
+      {/* ══════════ COLUMNA DERECHA — Aside con identidad ══════════ */}
+      <div class="relative flex flex-col justify-center border-l border-white/5 pl-6 md:pl-10">
+        {/* Acento vertical brand centrado */}
+        <span class="absolute left-0 top-1/2 h-20 w-[2px] -translate-y-1/2 bg-brand-500"></span>
+
+        {/* Mini eyebrow del aside */}
+        <span class="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest2 text-white/55">
+          <span class="h-px w-8 bg-brand-500/60"></span>
+          {asideEyebrow}
+        </span>
+
+        {/* Párrafos */}
+        <p class="mt-5 text-base leading-relaxed text-white/90 md:text-[17px]" set:html={asideP1} />
+
+        {/* Hairline separator */}
+        <div class="my-6 h-px w-full bg-white/5"></div>
+
+        <p class="text-base leading-relaxed text-white/70 md:text-[15px]" set:html={asideP2} />
+
+        {/* Footer con datos clave */}
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/5 pt-6">
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-extrabold text-brand-500">{SITE.stats.anios}</span>
+            <span class="text-[11px] uppercase tracking-widest2 text-white/55">años</span>
+          </div>
+          <span class="h-4 w-px bg-white/10"></span>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-extrabold text-brand-500">{SITE.stats.eventos}</span>
+            <span class="text-[11px] uppercase tracking-widest2 text-white/55">comunidades</span>
+          </div>
+          <span class="h-4 w-px bg-white/10"></span>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-extrabold text-brand-500">{SITE.stats.cobertura}</span>
+            <span class="text-[11px] uppercase tracking-widest2 text-white/55">cobertura</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {/* Línea decorativa inferior */}
+  <div class="h-[3px] bg-gradient-to-r from-transparent via-brand-500/60 to-transparent"></div>
+</section>

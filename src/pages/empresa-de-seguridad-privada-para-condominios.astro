@@ -1,0 +1,362 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNav from '@/components/QuickNav.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Process from '@/components/Process.astro';
+import Faq from '@/components/Faq.astro';
+import { SITE } from '@/config/site';
+
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+
+const GARANTIAS = [
+  {
+    icon: 'shield',
+    title: 'Contrato formal con SLAs',
+    desc: 'Cada servicio se formaliza con contrato que especifica tiempos de respuesta, indicadores de desempeño y condiciones de rescisión. Sin ambigüedades ni letra pequeña.',
+  },
+  {
+    icon: 'check',
+    title: 'Póliza de Responsabilidad Civil',
+    desc: 'SEPRICO opera con póliza RC vigente que protege a tu comunidad frente a incidentes durante la prestación del servicio. Documentación disponible antes de firmar.',
+  },
+  {
+    icon: 'patrol',
+    title: 'Personal SETEC certificado',
+    desc: 'Cada elemento supera cinco filtros: verificación de identidad, antecedentes penales, historial laboral, análisis psicométrico y capacitación SETEC obligatoria.',
+  },
+  {
+    icon: 'star',
+    title: 'Permiso SSPC vigente',
+    desc: 'Empresa con permiso federal ante la Secretaría de Seguridad y Protección Ciudadana. Requisito mínimo que muchos proveedores del mercado no cumplen.',
+  },
+  {
+    icon: 'phone',
+    title: 'Ejecutivo de cuenta dedicado',
+    desc: 'Tu comité tiene un interlocutor con nombre propio. No una línea de soporte genérica. Disponible por WhatsApp, con respuesta garantizada en horario operativo.',
+  },
+  {
+    icon: 'clock',
+    title: 'Supervisor en sitio en 30 min',
+    desc: 'Ante cualquier incidente activo, un supervisor de SEPRICO se presenta físicamente en tu condominio en un máximo de 30 minutos dentro de la zona de cobertura.',
+  },
+] as const;
+
+const PROCESO = [
+  {
+    icon: 'phone' as const,
+    title: 'Solicitud inicial',
+    desc: 'Llena el formulario o escríbenos por WhatsApp. Un ejecutivo te responde el mismo día hábil.',
+  },
+  {
+    icon: 'pin' as const,
+    title: 'Visita técnica sin costo',
+    desc: 'Recorremos el perímetro de tu condominio, identificamos riesgos y validamos infraestructura existente.',
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Propuesta en 48 h',
+    desc: 'Entregamos propuesta económica documentada con plantilla, turnos, equipo y costos desglosados.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Firma de contrato',
+    desc: 'Revisamos juntos las cláusulas de SLA, entregamos póliza RC y establecemos los KPIs del servicio.',
+  },
+  {
+    icon: 'patrol' as const,
+    title: 'Arranque supervisado',
+    desc: 'Primer turno con supervisor presente. Entrega de credenciales, protocolos y acceso a la bitácora digital.',
+  },
+];
+
+---
+
+<BaseLayout
+  title="Empresa de Seguridad Privada para Condominios en CDMX | SEPRICO"
+  description="SEPRICO — empresa de seguridad privada para condominios en CDMX y Estado de México. 25+ años, permiso SSPC, personal SETEC certificado. Cotización gratuita en 48 horas."
+>
+  <Breadcrumb items={[{ label: 'Contacto' }]} />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       1. HERO
+  ══════════════════════════════════════════════════════════════ -->
+  <Hero
+    eyebrow="Contacto · CDMX y Estado de México"
+    label="SEPRICO ·"
+    headline="Empresa de Seguridad"
+    subheadline="Privada para Condominios"
+    body={`Más de <strong class="text-white">25 años</strong> protegiendo comunidades residenciales en la ZMVM. Contrato formal, personal SETEC certificado, permiso SSPC vigente y ejecutivo de cuenta con nombre propio — desde el primer turno hasta la renovación anual.`}
+    asideP1={`<strong class="text-white">SEPRICO</strong> nació en el año 2000 con un enfoque específico: seguridad privada diseñada para el modelo de condominio, no adaptada de él. Cada servicio que ofrecemos fue construido para operar bajo las reglas internas de una comunidad residencial: reglamentos de acceso, asambleas de comité, actas de incidentes y comunicación directa con la administración.`}
+    asideP2={`Solicita tu cotización sin compromiso. Un ejecutivo de cuenta visita tu condominio, realiza el levantamiento técnico y entrega una propuesta económica documentada en menos de 48 horas hábiles. Sin formularios interminables ni presupuestos genéricos.`}
+    isH1={true}
+  />
+  <QuickNav />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       2. FORMULARIO DE CONTACTO
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Solicita tu cotización"
+    title="Contacta a un ejecutivo SEPRICO"
+    subtitle="Atendemos comités administrativos, presidentes vecinales y administradores profesionales en CDMX y Estado de México. Cada solicitud es revisada por un especialista en seguridad residencial."
+  >
+    <div class="grid gap-10 lg:grid-cols-5">
+
+      <!-- ── INFO DE CONTACTO ── -->
+      <div class="space-y-3 lg:col-span-2">
+
+        <a
+          href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`}
+          class="group flex items-center gap-4 rounded-xl border border-white/5 bg-ink-800 p-5 transition-colors hover:border-brand-500/30"
+        >
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-brand-500 text-white">
+            <Icon name="phone" class="h-6 w-6" />
+          </span>
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Teléfono directo</p>
+            <p class="mt-0.5 text-lg font-bold text-white group-hover:text-brand-400 transition-colors">{SITE.contact.phoneDisplay}</p>
+          </div>
+        </a>
+
+        <a
+          href={wa}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex items-center gap-4 rounded-xl border border-[#25D366]/20 bg-ink-800 p-5 transition-colors hover:border-[#25D366]/40 hover:bg-[#25D366]/5"
+        >
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-[#25D366] text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+              <path d="M19.05 4.91A10 10 0 0 0 12 2C6.5 2 2 6.48 2 12c0 1.76.46 3.45 1.34 4.95L2 22l5.27-1.31A10 10 0 0 0 12 22c5.5 0 10-4.48 10-10 0-2.67-1.05-5.18-2.95-7.09Z"/>
+            </svg>
+          </span>
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-widest2 text-[#25D366]">WhatsApp 24/7</p>
+            <p class="mt-0.5 text-lg font-bold text-white group-hover:text-[#25D366] transition-colors">Respuesta en 15 min</p>
+          </div>
+        </a>
+
+        <a
+          href={`mailto:${SITE.contact.email}`}
+          class="group flex items-center gap-4 rounded-xl border border-white/5 bg-ink-800 p-5 transition-colors hover:border-brand-500/30"
+        >
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
+            <Icon name="mail" class="h-6 w-6" />
+          </span>
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Correo electrónico</p>
+            <p class="mt-0.5 text-sm font-semibold text-white group-hover:text-brand-400 transition-colors break-all">{SITE.contact.email}</p>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-4 rounded-xl border border-white/5 bg-ink-800 p-5">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
+            <Icon name="pin" class="h-6 w-6" />
+          </span>
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Cobertura</p>
+            <p class="mt-0.5 text-sm font-semibold text-white">{SITE.contact.address}</p>
+            <p class="mt-0.5 text-xs text-white/50">Alcaldías CDMX · Municipios Edomex</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 rounded-xl border border-white/5 bg-ink-800 p-5">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
+            <Icon name="clock" class="h-6 w-6" />
+          </span>
+          <div>
+            <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Atención</p>
+            <p class="mt-0.5 text-sm font-semibold text-white">{SITE.contact.hours}</p>
+            <p class="mt-0.5 text-xs text-white/50">Emergencias: línea directa 24/7</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── FORMULARIO ── -->
+      <form
+        class="overflow-hidden rounded-xl border border-white/5 bg-ink-800 p-7 lg:col-span-3"
+        name="contacto"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/gracias/"
+      >
+        <input type="hidden" name="form-name" value="contacto" />
+        <p class="hidden">
+          <label>Si eres humano deja vacío: <input name="bot-field" /></label>
+        </p>
+
+        <!-- Header del form -->
+        <div class="mb-6 border-b border-white/5 pb-6">
+          <div class="flex items-center gap-3">
+            <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500 text-white">
+              <Icon name="shield" class="h-5 w-5" />
+            </span>
+            <div>
+              <h2 class="text-xl font-bold text-white">Solicita tu cotización</h2>
+              <p class="text-xs text-white/50">Propuesta económica en menos de 48 horas hábiles</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Tu nombre *</span>
+            <input
+              type="text" name="nombre" required
+              class="mt-2 w-full rounded-lg border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder-white/25 transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              placeholder="Nombre completo"
+            />
+          </label>
+
+          <label class="block">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Teléfono *</span>
+            <input
+              type="tel" name="telefono" required
+              class="mt-2 w-full rounded-lg border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder-white/25 transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              placeholder="55 1234 5678"
+            />
+          </label>
+
+          <label class="block">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Correo electrónico *</span>
+            <input
+              type="email" name="email" required
+              class="mt-2 w-full rounded-lg border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder-white/25 transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              placeholder="tu@correo.com"
+            />
+          </label>
+
+          <label class="block">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Rol en el comité</span>
+            <select
+              name="rol"
+              class="mt-2 w-full rounded-lg border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+            >
+              <option value="" class="bg-ink-900">Selecciona...</option>
+              <option value="presidente" class="bg-ink-900">Presidente de comité</option>
+              <option value="administrador" class="bg-ink-900">Administrador profesional</option>
+              <option value="tesorero" class="bg-ink-900">Tesorero / vocal</option>
+              <option value="residente" class="bg-ink-900">Residente interesado</option>
+              <option value="otro" class="bg-ink-900">Otro</option>
+            </select>
+          </label>
+
+          <label class="block md:col-span-2">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">Nombre del condominio y colonia</span>
+            <input
+              type="text" name="condominio"
+              class="mt-2 w-full rounded-lg border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder-white/25 transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              placeholder="Ej. Condominio Las Palmas, Del Valle, CDMX"
+            />
+          </label>
+
+          <label class="block md:col-span-2">
+            <span class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">¿Qué necesitan? (opcional)</span>
+            <textarea
+              name="mensaje" rows="4"
+              class="mt-2 w-full rounded-lg border border-white/10 bg-ink-900 px-4 py-3 text-sm text-white placeholder-white/25 transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              placeholder="Número de departamentos, torres, servicio actual, urgencia, etc."
+            ></textarea>
+          </label>
+        </div>
+
+        <label class="mt-5 flex items-start gap-3 text-xs text-white/60">
+          <input type="checkbox" required class="mt-0.5 accent-brand-500 shrink-0" />
+          <span>
+            Acepto el
+            <a href="/aviso-de-privacidad/" class="text-brand-500 hover:underline">Aviso de Privacidad</a>
+            y autorizo a SEPRICO a contactarme sobre esta solicitud.
+          </span>
+        </label>
+
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <button type="submit" class="btn-brand w-full sm:w-auto">
+            Enviar solicitud
+            <Icon name="arrow" class="h-4 w-4" />
+          </button>
+          <p class="text-center text-xs text-white/40 sm:text-right">
+            O escríbenos por
+            <a href={wa} target="_blank" rel="noopener noreferrer" class="text-[#25D366] hover:underline">WhatsApp</a>
+            ahora mismo
+          </p>
+        </div>
+      </form>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       4. GARANTÍAS OPERATIVAS
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Por qué SEPRICO"
+    title="Seis garantías que todo comité debe exigir a su proveedor"
+    subtitle="El mercado de seguridad privada en México opera con estándares muy dispares. Aquí están los seis compromisos mínimos que SEPRICO garantiza en cada contrato — y que deberías pedirle a cualquier empresa antes de firmar."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {GARANTIAS.map((g) => (
+        <div class="flex flex-col gap-4 rounded-xl border border-white/5 bg-ink-800 p-6 transition-colors hover:border-brand-500/20">
+          <span class="grid h-12 w-12 place-items-center rounded-lg bg-brand-500/15 text-brand-500 ring-1 ring-brand-500/20">
+            <Icon name={g.icon as any} class="h-6 w-6" />
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-white">{g.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/65">{g.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       5. PROCESO DE INICIO
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Cómo empezamos"
+    title="Del primer contacto a la operación 24/7: cinco pasos"
+    subtitle="Arranque estándar 7–10 días hábiles desde la firma del contrato. Para emergencias o cambios urgentes de proveedor: operamos en 48–72 horas con elementos de respaldo."
+  >
+    <Process items={PROCESO} />
+
+    <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-brand">
+        Iniciar proceso por WhatsApp
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+      <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="btn-ghost">
+        <Icon name="phone" class="h-4 w-4" />
+        {SITE.contact.phoneDisplay}
+      </a>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       6. FAQ
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Preguntas frecuentes"
+    title="Resolvemos tus dudas antes de la primera llamada"
+    subtitle="Preguntas que hacen los comités al evaluar cambio de proveedor: alcance del servicio, certificaciones, tiempos de arranque y costos. Si tu duda no aparece aquí, escríbenos por WhatsApp."
+    bg="darker"
+  >
+    <Faq />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       7. QUICK NAV BOTTOM
+  ══════════════════════════════════════════════════════════════ -->
+  <QuickNavBottom chips={[
+    { label: 'Servicios',       sub: 'Catálogo completo SEPRICO',          href: '/servicios-de-seguridad-privada/',  icon: 'shield'  },
+    { label: 'Vigilancia 24/7', sub: 'Personal certificado SETEC',         href: '/vigilancia-y-patrullaje/',         icon: 'patrol'  },
+    { label: 'Monitoreo CCTV',  sub: 'Centro de monitoreo propio',         href: '/monitoreo-electronico/',           icon: 'cctv'    },
+    { label: 'Consultoría',     sub: 'Auditorías y protocolos',            href: '/consultoria-en-seguridad/',        icon: 'check'   },
+    { label: 'Nosotros',        sub: 'Empresa fundada en el año 2000',     href: '/nosotros/',                        icon: 'star'    },
+    { label: 'WhatsApp 24/7',   sub: 'Respuesta en menos de 15 min',      href: wa, icon: 'phone', external: true },
+  ]} />
+
+</BaseLayout>

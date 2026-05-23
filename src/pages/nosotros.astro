@@ -1,0 +1,534 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNav from '@/components/QuickNav.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Timeline from '@/components/Timeline.astro';
+import Process from '@/components/Process.astro';
+import Certifications from '@/components/Certifications.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import { SITE } from '@/config/site';
+// ── HISTORIA TIMELINE ──────────────────────────────────────────────────────
+const historia = [
+  {
+    year: '2000',
+    title: 'Fundación con una hipótesis clara',
+    desc: 'Primer contrato en Polanco. La hipótesis: la seguridad residencial exige un perfil operativo distinto al corporativo. No lo hemos abandonado en 25 años.',
+  },
+  {
+    year: '2005',
+    title: 'Decisión estratégica: especialización total',
+    desc: 'Rechazamos contratos industriales y corporativos para concentrar toda la capacidad en condominios. Nos costó ingresos a corto plazo y definió nuestra identidad a largo plazo.',
+  },
+  {
+    year: '2010',
+    title: 'Centro de monitoreo propio',
+    desc: 'Construimos nuestra central 24/7 con redundancia energética y de conectividad. Control total sobre tiempos de respuesta, sin depender de terceros.',
+  },
+  {
+    year: '2015',
+    title: 'Expansión al Estado de México',
+    desc: 'Tras consolidar 9 alcaldías en CDMX, extendimos operaciones a Naucalpan, Huixquilucan, Atizapán, Tlalnepantla y Metepec.',
+  },
+  {
+    year: '2020',
+    title: 'Plataforma digital de gestión',
+    desc: 'Bitácora digital, control biométrico y reportes mensuales documentados. El comité pasó de depender de promesas verbales a tener datos medibles cada período.',
+  },
+  {
+    year: '2025',
+    title: 'Referente residencial ZMVM',
+    desc: 'Supervisores regionales por zona, ejecutivo de cuenta dedicado por condominio y KPIs trimestrales que el comité puede presentar en asamblea.',
+  },
+];
+
+// ── DIFERENCIADORES (service-card con imágenes) ────────────────────────────
+const diferenciadores = [
+  {
+    icon: 'shield' as const,
+    titulo: 'Solo condominios',
+    sub: 'Especialización total',
+    desc: 'No atendemos industria ni corporativo. Toda nuestra operación, tecnología y formación de personal está diseñada para el entorno residencial. Esto se nota en cada turno.',
+    href: '/servicios-de-seguridad-privada/',
+    cta: 'Ver servicios',
+    image: '/images/rrhh/personal-de-seguridad.jpg',
+  },
+  {
+    icon: 'cctv' as const,
+    titulo: 'Monitoreo propio',
+    sub: 'Sin terceros',
+    desc: 'Operamos nuestro propio centro de monitoreo 24/7 con analistas especializados y respaldo de energía. No subcontratamos la supervisión remota.',
+    href: '/monitoreo-electronico/',
+    cta: 'Ver monitoreo',
+    image: '/images/servicios/monitoreo-electronico.jpg',
+  },
+  {
+    icon: 'check' as const,
+    titulo: 'Operación auditable',
+    sub: 'Datos, no promesas',
+    desc: 'Bitácora digital, reportes mensuales y revisión trimestral de KPIs con el comité. Cada compromiso tiene un indicador medible que se puede exigir contractualmente.',
+    href: '/nosotros/#slas',
+    cta: 'Ver SLAs',
+    image: '/images/servicios/consultoria-en-seguridad.jpg',
+  },
+  {
+    icon: 'phone' as const,
+    titulo: 'Ejecutivo dedicado',
+    sub: 'Un contacto real',
+    desc: 'Cada comunidad tiene un ejecutivo de cuenta con nombre y número directo. No call centers, no robots, no pasar al comité entre interlocutores anónimos.',
+    href: '/empresa-de-seguridad-privada-para-condominios/',
+    cta: 'Contactar',
+    image: '/images/general/seguridad-privada-cdmx.jpg',
+  },
+];
+
+// ── SLAs ───────────────────────────────────────────────────────────────────
+const slas = [
+  {
+    icon: 'clock' as const,
+    metrica: '≤ 3 min',
+    titulo: 'Detección de eventos',
+    desc: 'Tiempo máximo desde que ocurre un evento Nivel 2–4 hasta que el operador lo registra en bitácora.',
+  },
+  {
+    icon: 'alert' as const,
+    metrica: '≤ 5 min',
+    titulo: 'Respuesta coordinada',
+    desc: 'Tiempo máximo de respuesta para eventos Nivel 2. Para Nivel 3–4 el estándar es ≤ 2 minutos.',
+  },
+  {
+    icon: 'check' as const,
+    metrica: '48 hrs',
+    titulo: 'Propuesta documentada',
+    desc: 'Desde la visita técnica hasta la entrega de cotización desglosada con plan operativo y KPIs.',
+  },
+  {
+    icon: 'phone' as const,
+    metrica: '< 10 min',
+    titulo: 'Respuesta WhatsApp',
+    desc: 'Tiempo de respuesta del ejecutivo de cuenta al comité administrativo en horario hábil y de guardia.',
+  },
+  {
+    icon: 'shield' as const,
+    metrica: '< 30 días',
+    titulo: 'Reemplazo de personal',
+    desc: 'Ante baja por cualquier causa, sustitución garantizada sin reducción de cobertura ni costo adicional.',
+  },
+  {
+    icon: 'star' as const,
+    metrica: '10 días',
+    titulo: 'Entrega del reporte',
+    desc: 'Reporte mensual al comité dentro de los primeros 10 días hábiles del mes siguiente al período reportado.',
+  },
+];
+
+// ── PROCESO ────────────────────────────────────────────────────────────────
+const proceso = [
+  {
+    icon: 'phone' as const,
+    title: 'Diagnóstico inicial',
+    desc: 'Llamada de 30 minutos con el comité. Entendemos prioridades, historial de incidentes y restricciones presupuestales antes de proponer cualquier solución.',
+  },
+  {
+    icon: 'pin' as const,
+    title: 'Visita técnica sin costo',
+    desc: 'Levantamiento físico del condominio: accesos, perímetro, puntos ciegos y vulnerabilidades. Sin costo ni compromiso.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Propuesta en 48 horas',
+    desc: 'Cotización desglosada con plan operativo, KPIs y cronograma. Sin letras chiquitas ni cláusulas ambiguas.',
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Implementación supervisada',
+    desc: 'Selección y briefing del personal, instalación tecnológica y arranque con supervisor regional presente los primeros 7 días.',
+  },
+  {
+    icon: 'star' as const,
+    title: 'Operación y mejora continua',
+    desc: 'Servicio 24/7 con reporte mensual y revisión trimestral de KPIs. El comité tiene visibilidad completa en todo momento.',
+  },
+];
+
+// ── COBERTURA ──────────────────────────────────────────────────────────────
+const cdmx = [
+  'Miguel Hidalgo','Benito Juárez','Cuauhtémoc','Álvaro Obregón',
+  'Coyoacán','Tlalpan','Xochimilco','Cuajimalpa',
+  'Azcapotzalco','Gustavo A. Madero','Iztapalapa','Magdalena Contreras',
+];
+const edomex = [
+  'Naucalpan','Huixquilucan','Atizapán de Zaragoza','Tlalnepantla',
+  'Metepec','Toluca','Lerma','Ocoyoacac',
+];
+---
+
+<BaseLayout
+  title="Nosotros | SEPRICO — 25 años en seguridad privada para condominios"
+  description="SEPRICO es una empresa mexicana especializada exclusivamente en seguridad privada para condominios desde el año 2000. Más de 120 comunidades en CDMX y Estado de México con operación auditable y SLAs verificables."
+>
+  <Breadcrumb items={[{ label: 'Nosotros' }]} />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       1. HERO — mismo layout que index
+  ══════════════════════════════════════════════════════════════ -->
+  <Hero
+    eyebrow="Quiénes somos · CDMX y Edomex"
+    label="SEPRICO · Empresa especializada en"
+    headline="Nosotros"
+    subheadline="25 años en seguridad residencial"
+    body={`La empresa que <strong class="text-white">solo trabaja para condominios</strong>. No atendemos industria ni corporativo: toda nuestra capacidad operativa, tecnológica y de formación de personal está diseñada para el entorno donde viven familias.`}
+    asideP1={`En <strong class="text-white">SEPRICO</strong> somos una empresa mexicana fundada en el año 2000, especializada exclusivamente en <strong class="text-white">seguridad privada para condominios, fraccionamientos y residenciales</strong> en la Zona Metropolitana del Valle de México. No somos un proveedor genérico: somos especialistas en un solo entorno.`}
+    asideP2={`Nuestra operación integra <strong class="text-white">personal seleccionado bajo seis filtros</strong>, tecnología de marcas líderes, protocolos documentados y <strong class="text-white">SLAs verificables</strong> que el comité administrativo puede exigir contractualmente. El 94% de los condominios que empiezan con nosotros renuevan contrato al año siguiente.`}
+    isH1={true}
+  />
+  <QuickNav />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       2. DIFERENCIADORES — service-card con imágenes
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Por qué elegir SEPRICO"
+    title="Cuatro razones que los comités validan al renovar contrato"
+    subtitle="El 94% de los condominios que empiezan con SEPRICO renuevan su contrato al año siguiente. Estas son las razones operativas concretas, no argumentos de venta."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      {diferenciadores.map((d) => (
+        <a href={d.href} class="service-card group flex flex-col">
+          <div class="service-card-image">
+            <img
+              src={d.image}
+              alt={d.titulo}
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-ink-950/10"></div>
+            <span class="absolute top-3 left-3 grid h-10 w-10 place-items-center rounded-md bg-brand-500/90 text-white backdrop-blur-sm">
+              <Icon name={d.icon} class="h-5 w-5" />
+            </span>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-400">{d.sub}</p>
+              <h3 class="mt-1 text-lg font-bold leading-tight text-white">{d.titulo}</h3>
+            </div>
+          </div>
+          <div class="service-card-body">
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{d.desc}</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+              {d.cta}
+              <Icon name="arrow" class="h-3.5 w-3.5" />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       3. HISTORIA — layout pillar (imagen izq + timeline der)
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Trayectoria"
+    title="25 años de decisiones que definen quiénes somos"
+    subtitle="Una empresa no se define solo por lo que hace, sino por las decisiones que tomó cuando implicaban un costo. Estos son los hitos que explican por qué SEPRICO opera como opera hoy."
+  >
+    <div class="grid gap-10 lg:grid-cols-5 lg:items-start">
+
+      <!-- Columna izquierda: imagen + stats -->
+      <div class="lg:col-span-2 flex flex-col gap-0 overflow-hidden rounded-2xl">
+        <div class="relative aspect-[4/3] w-full">
+          <img
+            src="/images/general/equipo-de-seguridad.jpg"
+            alt="Equipo SEPRICO"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/40 to-transparent"></div>
+          <span class="absolute top-4 left-4 rounded-lg bg-brand-500/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+            Desde 2000
+          </span>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h3 class="text-2xl font-bold leading-tight text-white">25 años<br/>en residencial</h3>
+            <p class="mt-1 text-sm text-white/60">Solo condominios, desde el primer día</p>
+          </div>
+        </div>
+        <div class="bg-ink-900 p-6">
+          <div class="grid grid-cols-2 gap-3">
+            {[
+              { value: '+120', label: 'Comunidades' },
+              { value: '94%',  label: 'Renuevan contrato' },
+              { value: '24/7', label: 'Centro propio' },
+              { value: '25+',  label: 'Años de operación' },
+            ].map((s) => (
+              <div class="rounded-lg border border-white/8 bg-white/4 px-3 py-2.5 text-center">
+                <span class="block text-lg font-bold text-brand-400">{s.value}</span>
+                <span class="text-[10px] leading-tight text-white/50">{s.label}</span>
+              </div>
+            ))}
+          </div>
+          <a
+            href="/empresa-de-seguridad-privada-para-condominios/"
+            class="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+          >
+            Solicitar visita técnica
+            <Icon name="arrow" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha: timeline -->
+      <div class="lg:col-span-3">
+        <Timeline items={historia} />
+      </div>
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       4. MISIÓN Y VISIÓN
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Filosofía corporativa"
+    title="Misión y visión institucional"
+    subtitle="La misión de SEPRICO es garantizar la tranquilidad operativa de cada comunidad atendida con un servicio profesional, proactivo y auditable. La visión es ser el referente de seguridad residencial en la ZMVM por calidad medible."
+    bg="darker"
+  >
+    <div class="grid gap-5 md:grid-cols-2">
+
+      <!-- MISIÓN -->
+      <article class="relative overflow-hidden rounded-2xl border border-brand-500/20 bg-ink-800 p-8 md:p-10">
+        <!-- Número decorativo de fondo -->
+        <span class="pointer-events-none absolute -right-4 -top-6 select-none text-[10rem] font-black leading-none text-white/[0.03]">01</span>
+        <!-- Barra de acento -->
+        <div class="h-1 w-12 rounded-full bg-brand-500"></div>
+        <!-- Header -->
+        <div class="mt-6 flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-500 text-white shadow-brand">
+            <Icon name="shield" class="h-5 w-5" />
+          </span>
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest2 text-brand-400">Misión</p>
+            <h3 class="text-lg font-bold text-white">Por qué existimos</h3>
+          </div>
+        </div>
+        <!-- Divider -->
+        <div class="mt-6 h-px w-full bg-white/5"></div>
+        <!-- Texto -->
+        <p class="mt-6 text-base leading-relaxed text-white/80">
+          Garantizar la tranquilidad de cada residente en las comunidades que servimos.
+          Creamos y mantenemos entornos donde los niños puedan vivir con libertad,
+          los vecinos convivan con confianza y cada persona tenga la certeza de que
+          su hogar es un refugio seguro y bien protegido.
+        </p>
+        <p class="mt-4 text-sm leading-relaxed text-brand-300/70 italic">
+          "Esta misión no es marketing. Es el criterio con el que evaluamos cada
+          decisión operativa: si no contribuye a esa tranquilidad, no lo hacemos."
+        </p>
+      </article>
+
+      <!-- VISIÓN -->
+      <article class="relative overflow-hidden rounded-2xl border border-white/5 bg-ink-800 p-8 md:p-10">
+        <!-- Número decorativo de fondo -->
+        <span class="pointer-events-none absolute -right-4 -top-6 select-none text-[10rem] font-black leading-none text-white/[0.03]">02</span>
+        <!-- Barra de acento -->
+        <div class="h-1 w-12 rounded-full bg-white/15"></div>
+        <!-- Header -->
+        <div class="mt-6 flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-ink-700 text-brand-400 ring-1 ring-brand-500/30">
+            <Icon name="star" class="h-5 w-5" />
+          </span>
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-widest2 text-white/40">Visión</p>
+            <h3 class="text-lg font-bold text-white">A dónde vamos</h3>
+          </div>
+        </div>
+        <!-- Divider -->
+        <div class="mt-6 h-px w-full bg-white/5"></div>
+        <!-- Texto -->
+        <p class="mt-6 text-base leading-relaxed text-white/80">
+          Consolidarnos como el referente de seguridad residencial en la ZMVM,
+          no por volumen de contratos, sino por la calidad medible y verificable
+          de nuestra operación. Queremos que la comparación con SEPRICO sea el
+          estándar que los comités usen para evaluar a cualquier otro proveedor.
+        </p>
+        <p class="mt-4 text-sm leading-relaxed text-white/45 italic">
+          "Ese estándar se construye con datos, no con promesas. Por eso operamos
+          con SLAs publicados y revisión trimestral de indicadores con cada comité."
+        </p>
+      </article>
+
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       5. SLAs VERIFICABLES
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    id="slas"
+    eyebrow="Compromisos con el comité"
+    title="Seis SLAs que el comité puede exigir contractualmente"
+    subtitle="Los SLAs son compromisos operativos específicos que SEPRICO asume por contrato. No son aspiracionales: se revisan trimestralmente con el comité y tienen consecuencias si no se cumplen."
+    desc="Antes de contratar cualquier empresa de seguridad, solicita sus SLAs documentados. Si no pueden responder con métricas específicas, no tienen forma de rendirte cuentas."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {slas.map((s) => (
+        <article class="card group relative overflow-hidden">
+          <div class="flex items-start gap-4">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-400 ring-1 ring-brand-500/25">
+              <Icon name={s.icon} class="h-6 w-6" />
+            </span>
+            <div>
+              <p class="text-3xl font-black text-brand-400">{s.metrica}</p>
+              <p class="mt-0.5 text-sm font-bold text-white">{s.titulo}</p>
+            </div>
+          </div>
+          <p class="mt-4 text-sm leading-relaxed text-white/65">{s.desc}</p>
+        </article>
+      ))}
+    </div>
+    <p class="mt-8 text-center text-xs text-white/35">
+      Todos los SLAs están incorporados en el contrato de servicio y se revisan trimestralmente con el comité administrativo.
+    </p>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       6. PROCESO DE TRABAJO
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Cómo trabajamos"
+    title="Cinco etapas desde el primer contacto hasta la operación 24/7"
+    subtitle="Desde el primer contacto hasta el inicio de operación estándar: 7 a 10 días hábiles. Para emergencias o transición urgente de proveedor: 48 a 72 horas con personal de respaldo."
+    bg="darker"
+  >
+    <Process items={proceso} />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       7. CERTIFICACIONES
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Marco legal"
+    title="Certificaciones que el comité puede verificar"
+    subtitle="SEPRICO cumple con la regulación federal aplicable a empresas de seguridad privada. El comité tiene derecho a solicitar copia de cualquier documento antes de firmar contrato y durante toda la relación de servicio."
+    desc="Una empresa de seguridad que no puede mostrar su permiso SSPC vigente no puede operar legalmente. Exígelo siempre."
+  >
+    <Certifications />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       8. TESTIMONIALES
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Aliados del sector"
+    title="Lo que dicen quienes trabajan con nosotros"
+    subtitle="Empresas aliadas en seguridad industrial, construcción y tecnología que refieren a SEPRICO cuando sus clientes requieren seguridad privada para condominios en CDMX y Estado de México."
+    bg="darker"
+  >
+    <Testimonials />
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       9. COBERTURA
+  ══════════════════════════════════════════════════════════════ -->
+  <Section
+    eyebrow="Cobertura operativa"
+    title="Zona Metropolitana del Valle de México"
+    subtitle="Supervisores regionales asignados a zonas específicas con tiempos de llegada en sitio menores a 30 minutos. La cobertura cercana no es argumento comercial: es condición operativa."
+  >
+    <!-- Stats rápidos de cobertura -->
+    <div class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {[
+        { value: '2',    label: 'Estados' },
+        { value: '20+',  label: 'Zonas cubiertas' },
+        { value: '<30',  label: 'Min. llegada en sitio' },
+        { value: '24/7', label: 'Supervisión regional' },
+      ].map((s) => (
+        <div class="rounded-xl border border-white/5 bg-ink-800 px-5 py-4 text-center">
+          <p class="text-3xl font-black text-brand-500">{s.value}</p>
+          <p class="mt-1 text-[11px] font-semibold uppercase tracking-widest2 text-white/50">{s.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Dos zonas -->
+    <div class="grid gap-5 md:grid-cols-2">
+
+      <!-- CDMX -->
+      <div class="rounded-2xl border border-brand-500/15 bg-ink-800 overflow-hidden">
+        <!-- Header con acento rojo -->
+        <div class="flex items-center gap-4 border-b border-white/5 bg-brand-500/5 px-7 py-5">
+          <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500 text-white">
+            <Icon name="pin" class="h-5 w-5" />
+          </span>
+          <div class="flex-1">
+            <p class="text-[10px] font-bold uppercase tracking-widest2 text-brand-400">CDMX</p>
+            <h3 class="text-lg font-bold text-white">Ciudad de México</h3>
+          </div>
+          <span class="rounded-full bg-brand-500/10 px-3 py-1 text-xs font-bold text-brand-400 ring-1 ring-brand-500/25">
+            12 alcaldías
+          </span>
+        </div>
+        <!-- Pills -->
+        <div class="p-7">
+          <div class="flex flex-wrap gap-2">
+            {cdmx.map((z) => (
+              <span class="rounded-lg border border-white/8 bg-ink-900 px-3 py-1.5 text-xs font-medium text-white/70 hover:border-brand-500/30 hover:text-white/90 transition-colors">
+                {z}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- EDOMEX -->
+      <div class="rounded-2xl border border-white/5 bg-ink-800 overflow-hidden">
+        <!-- Header neutro -->
+        <div class="flex items-center gap-4 border-b border-white/5 bg-white/[0.02] px-7 py-5">
+          <span class="grid h-10 w-10 place-items-center rounded-lg bg-ink-700 text-brand-400 ring-1 ring-white/10">
+            <Icon name="pin" class="h-5 w-5" />
+          </span>
+          <div class="flex-1">
+            <p class="text-[10px] font-bold uppercase tracking-widest2 text-white/40">Edomex</p>
+            <h3 class="text-lg font-bold text-white">Estado de México</h3>
+          </div>
+          <span class="rounded-full bg-white/5 px-3 py-1 text-xs font-bold text-white/50 ring-1 ring-white/10">
+            8 municipios
+          </span>
+        </div>
+        <!-- Pills -->
+        <div class="p-7">
+          <div class="flex flex-wrap gap-2">
+            {edomex.map((z) => (
+              <span class="rounded-lg border border-white/8 bg-ink-900 px-3 py-1.5 text-xs font-medium text-white/70 hover:border-brand-500/30 hover:text-white/90 transition-colors">
+                {z}
+              </span>
+            ))}
+          </div>
+          <div class="mt-6 flex items-start gap-3 rounded-xl border border-white/5 bg-white/[0.03] p-4">
+            <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-brand-400" />
+            <p class="text-xs leading-relaxed text-white/50">
+              ¿Tu municipio no aparece? Contáctanos — evaluamos extensión de cobertura para condominios con perfil operativo compatible.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </Section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       CTA FINAL
+  ══════════════════════════════════════════════════════════════ -->
+  <QuickNavBottom chips={[
+    { label: 'Servicios',        sub: 'Catálogo completo SEPRICO',        href: '/servicios-de-seguridad-privada/',      icon: 'shield' },
+    { label: 'Recursos Humanos', sub: 'Personal, capacitación, bolsa',    href: '/reclutamiento-para-seguridad-privada/', icon: 'check' },
+    { label: 'Comunidades',      sub: 'Torres, fraccionamientos, cotos',  href: '/comunidades/',                         icon: 'patrol' },
+    { label: 'Zonas CDMX',       sub: 'Alcaldías metropolitanas',         href: '/zonas/#cdmx',                          icon: 'pin' },
+    { label: 'Contacto',         sub: 'Visita técnica sin costo',         href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' },
+    { label: 'WhatsApp 24/7',    sub: 'Respuesta en <15 min',             href: `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`, icon: 'phone', external: true },
+  ]} />
+</BaseLayout>

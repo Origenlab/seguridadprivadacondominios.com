@@ -1,0 +1,52 @@
+---
+/**
+ * HowTo JSON-LD — para process[] (5 pasos).
+ * Mejora elegibilidad para rich results "How to" en Google y AI Overviews.
+ */
+import { SITE } from '@/config/site';
+
+interface Step {
+  icon: string;
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  steps: readonly Step[];
+  image?: string;
+}
+
+const { name, description, steps, image } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name,
+  description,
+  ...(image && { image: new URL(image, SITE.url).toString() }),
+  totalTime: 'P10D',
+  estimatedCost: {
+    '@type': 'MonetaryAmount',
+    currency: 'MXN',
+    value: '0',
+  },
+  step: steps.map((s, i) => ({
+    '@type': 'HowToStep',
+    position: i + 1,
+    name: s.title,
+    text: s.desc,
+  })),
+  tool: [
+    { '@type': 'HowToTool', name: 'Levantamiento técnico SEPRICO' },
+    { '@type': 'HowToTool', name: 'Propuesta documentada con SLAs' },
+  ],
+  supply: [
+    { '@type': 'HowToSupply', name: 'Equipo certificado' },
+    { '@type': 'HowToSupply', name: 'Personal capacitado SETEC' },
+  ],
+};
+---
+
+{steps.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

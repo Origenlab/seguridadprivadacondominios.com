@@ -1,0 +1,166 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import BlogSidebar from '@/components/BlogSidebar.astro';
+import { getCollection } from 'astro:content';
+
+const PER_PAGE = 9;
+
+export async function getStaticPaths() {
+  const all = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  const totalPages = Math.ceil(all.length / PER_PAGE);
+  // Empezamos en page 2 (la 1 es /blog/)
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => {
+    const pageNum = i + 2;
+    const start = (pageNum - 1) * PER_PAGE;
+    return {
+      params: { page: String(pageNum) },
+      props: { posts: all.slice(start, start + PER_PAGE), pageNum, totalPages, total: all.length },
+    };
+  });
+}
+
+const { posts, pageNum, totalPages, total } = Astro.props;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const CAT_META: Record<string, { label: string; icon: string }> = {
+  'seguridad-privada':        { label: 'Seguridad Privada',        icon: 'shield' },
+  'tecnologia-y-monitoreo':   { label: 'Tecnología y Monitoreo',   icon: 'cctv'   },
+  'personal-de-seguridad':    { label: 'Personal de Seguridad',    icon: 'patrol' },
+  'protocolos-y-consultoria': { label: 'Protocolos y Consultoría', icon: 'check'  },
+  'atencion-al-comite':       { label: 'Atención al Comité',       icon: 'phone'  },
+  'vigilancia':               { label: 'Vigilancia',               icon: 'patrol' },
+  'uncategorized':            { label: 'General',                  icon: 'star'   },
+};
+---
+
+<BaseLayout
+  title={`Blog de Seguridad Privada · Página ${pageNum} | SEPRICO`}
+  description={`Artículos sobre seguridad privada para condominios — página ${pageNum}. Guías operativas, protocolos de acceso e integración tecnológica para comités administrativos en CDMX y Edomex.`}
+>
+  <Breadcrumb items={[{ label: 'Blog', href: '/blog/' }, { label: `Página ${pageNum}` }]} />
+
+  <Section
+    eyebrow={`Publicaciones · Página ${pageNum} de ${totalPages}`}
+    title="Blog de Seguridad Privada"
+    subtitle="Artículos técnicos y guías operativas para comités administrativos, presidentes vecinales y administradores de condominios en CDMX y Estado de México."
+    bg="darker"
+  >
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+
+      <!-- ══ COLUMNA PRINCIPAL ══ -->
+      <main class="lg:col-span-8 min-w-0">
+
+        <!-- ── Grid de artículos ── -->
+        <div class="grid gap-6 sm:grid-cols-2">
+          {posts.map((p) => {
+            const meta = CAT_META[p.data.category];
+            return (
+              <a
+                href={`/${p.data.category}/${p.slug}/`}
+                class="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-800 hover:border-brand-500/40"
+              >
+                {/* Visual header */}
+                <div class="relative aspect-[16/8] overflow-hidden bg-gradient-to-br from-ink-700 via-ink-800 to-ink-900">
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(244,63,63,0.25),transparent_55%)]"></div>
+                  <span class="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-lg bg-brand-500 text-white shadow-md shadow-brand-500/30">
+                    <Icon name={(meta?.icon ?? 'shield') as any} class="h-5 w-5" />
+                  </span>
+                  {meta && (
+                    <span class="absolute right-4 top-4 rounded-md border border-white/15 bg-black/35 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest2 text-white backdrop-blur-sm">
+                      {meta.label}
+                    </span>
+                  )}
+                </div>
+
+                {/* Body */}
+                <div class="flex flex-1 flex-col p-6">
+                  <span class="flex items-center gap-1.5 text-[11px] font-semibold text-white/45">
+                    <Icon name="clock" class="h-3 w-3" />
+                    {fmt(p.data.pubDate)}
+                  </span>
+                  <h2 class="mt-3 text-base font-bold leading-snug text-white line-clamp-3 group-hover:text-brand-400">
+                    {p.data.title}
+                  </h2>
+                  <p class="mt-3 flex-1 text-sm leading-relaxed text-white/65 line-clamp-3">
+                    {p.data.description}
+                  </p>
+                  <span class="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest2 text-brand-500 group-hover:text-brand-400">
+                    Leer artículo
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+
+        <!-- ── Paginación ── -->
+        <nav class="mt-12 flex flex-col items-center justify-between gap-5 border-t border-white/10 pt-8 sm:flex-row">
+          <span class="text-xs text-white/50">
+            Página <strong class="text-white">{pageNum}</strong> de {totalPages} · {total} artículos en total
+          </span>
+          <div class="flex items-center gap-1.5">
+            <a
+              href={pageNum === 2 ? '/blog/' : `/blog/page/${pageNum - 1}/`}
+              class="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-ink-800 text-base text-white/70 hover:border-brand-500/50 hover:text-white"
+              aria-label="Página anterior"
+            >
+              ‹
+            </a>
+            <a
+              href="/blog/"
+              class:list={[
+                'grid h-10 w-10 place-items-center rounded-lg text-sm font-semibold',
+                pageNum === 1
+                  ? 'bg-brand-500 font-bold text-white shadow-md shadow-brand-500/30'
+                  : 'border border-white/10 bg-ink-800 text-white/70 hover:border-brand-500/50 hover:text-white',
+              ]}
+            >
+              1
+            </a>
+            {Array.from({ length: Math.min(totalPages - 1, 5) }, (_, i) => i + 2).map((n) => (
+              <a
+                href={`/blog/page/${n}/`}
+                class:list={[
+                  'grid h-10 w-10 place-items-center rounded-lg text-sm font-semibold',
+                  n === pageNum
+                    ? 'bg-brand-500 font-bold text-white shadow-md shadow-brand-500/30'
+                    : 'border border-white/10 bg-ink-800 text-white/70 hover:border-brand-500/50 hover:text-white',
+                ]}
+              >
+                {n}
+              </a>
+            ))}
+            {totalPages > 6 && (
+              <span class="px-1 text-white/30">…</span>
+            )}
+            {pageNum < totalPages && (
+              <a
+                href={`/blog/page/${pageNum + 1}/`}
+                class="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-ink-800 text-base text-white/70 hover:border-brand-500/50 hover:text-white"
+                aria-label="Página siguiente"
+              >
+                ›
+              </a>
+            )}
+          </div>
+        </nav>
+
+      </main>
+
+      <!-- ══ SIDEBAR ══ -->
+      <div class="lg:col-span-4">
+        <BlogSidebar />
+      </div>
+
+    </div>
+  </Section>
+
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+// Redirect: /servicios/{slug}/ → /{slug}/
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('servicios');
+  return items.map((s) => ({ params: { slug: s.slug }, props: { slug: s.slug } }));
+}
+
+const { slug } = Astro.props;
+const target = `/${slug}/`;
+---
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirigiendo…</title>
+  <meta http-equiv="refresh" content={`0; url=${target}`} />
+  <link rel="canonical" href={target} />
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <p>Redirigiendo a <a href={target}>{target}</a>…</p>
+  <script is:inline define:vars={{ target }}>window.location.replace(target);</script>
+</body>
+</html>

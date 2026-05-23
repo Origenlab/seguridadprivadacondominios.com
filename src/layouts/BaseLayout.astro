@@ -1,0 +1,170 @@
+---
+import '@/styles/global.css';
+import '@/styles/mobile.css';
+import SEO from '@/components/SEO.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import WhatsAppFloat from '@/components/WhatsAppFloat.astro';
+import { SITE } from '@/config/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  keywords?: readonly string[];
+  articleSection?: string;
+  lastReviewed?: Date;
+}
+
+const props = Astro.props;
+
+const orgId = `${SITE.url}/#organization`;
+const websiteId = `${SITE.url}/#website`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'SecurityService', 'LocalBusiness'],
+  '@id': orgId,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  alternateName: SITE.shortName,
+  url: SITE.url,
+  logo: new URL('/images/logo.svg', SITE.url).toString(),
+  image: new URL('/images/og/og-image.webp', SITE.url).toString(),
+  description: SITE.description,
+  telephone: SITE.contact.phone,
+  email: SITE.contact.email,
+  foundingDate: String(SITE.founded),
+  slogan: SITE.tagline,
+  priceRange: '$$',
+  areaServed: SITE.coverage.map((c) => ({ '@type': 'AdministrativeArea', name: c })),
+  serviceArea: SITE.coverage.map((c) => ({ '@type': 'AdministrativeArea', name: c })),
+  address: {
+    '@type': 'PostalAddress',
+    addressRegion: 'CDMX',
+    addressLocality: 'Ciudad de México',
+    addressCountry: 'MX',
+  },
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: SITE.contact.phone,
+      contactType: 'customer service',
+      areaServed: ['MX'],
+      availableLanguage: ['Spanish'],
+      contactOption: 'TollFree',
+      hoursAvailable: 'Mo-Su 00:00-23:59',
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: `+${SITE.contact.whatsapp}`,
+      contactType: 'sales',
+      areaServed: ['MX'],
+      availableLanguage: ['Spanish'],
+    },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: String(SITE.rating.value),
+    reviewCount: String(SITE.rating.reviews),
+  },
+  knowsAbout: [
+    'Seguridad privada para condominios',
+    'Vigilancia y patrullaje',
+    'Control de acceso biométrico',
+    'Monitoreo CCTV',
+    'Consultoría en seguridad residencial',
+    'Protocolos de emergencia para residenciales',
+  ],
+  sameAs: Object.values(SITE.social).filter((u) => u && u !== 'https://facebook.com/' && u !== 'https://instagram.com/' && u !== 'https://linkedin.com/'),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': websiteId,
+  url: SITE.url,
+  name: SITE.name,
+  inLanguage: SITE.defaultLocale,
+  publisher: { '@id': orgId },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE.url}/blog/?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+// Brand entity para refuerzo en LLMs / Knowledge Graph
+const brandSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Brand',
+  '@id': `${SITE.url}/#brand`,
+  name: SITE.name,
+  alternateName: SITE.legalName,
+  url: SITE.url,
+  logo: new URL('/images/brand/logo.png', SITE.url).toString(),
+  description: SITE.description,
+  slogan: SITE.tagline,
+};
+
+// Limpiar undefined antes de serializar
+const cleanOrg = JSON.parse(JSON.stringify(orgSchema));
+const cleanWeb = JSON.parse(JSON.stringify(websiteSchema));
+const cleanBrand = JSON.parse(JSON.stringify(brandSchema));
+---
+
+<!doctype html>
+<html lang="es-MX" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <SEO {...props} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(cleanOrg)} />
+    <script type="application/ld+json" set:html={JSON.stringify(cleanWeb)} />
+    <script type="application/ld+json" set:html={JSON.stringify(cleanBrand)} />
+    <slot name="schemas" />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[60] focus:rounded focus:bg-brand-500 focus:px-3 focus:py-2 focus:text-white"
+    >
+      Saltar al contenido
+    </a>
+
+    <Header />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+    <WhatsAppFloat />
+  </body>
+</html>

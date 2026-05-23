@@ -1,0 +1,82 @@
+---
+title: 'Acceso Digital del Comité a la Información de Seguridad: Lo que Debe Estar Disponible en Tiempo Real'
+description: 'Definición técnica de los sistemas de información digital que el comité de un condominio debe tener acceso para gestionar el servicio de seguridad: portal del comité, monitoreo en tiempo real, bitácora online, alertas automáticas y herramientas de análisis que transforman los datos del sistema en decisiones verificables.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'atencion-al-comite'
+tags: ['portal-comite', 'monitoreo-digital', 'transparencia-seguridad', 'gestion-remota', 'condominios']
+---
+
+La gestión activa del servicio de seguridad requiere acceso a información en tiempo real —o quasi-real— sobre el estado del sistema y el desempeño del personal. Un comité que solo recibe información a través del reporte mensual tiene un retraso de hasta 40 días entre el momento en que ocurre un problema y el momento en que lo conoce con suficiente detalle para actuar. En ese período, el problema puede escalar, repetirse o producir daños que habrían sido prevenibles con información oportuna.
+
+Las tecnologías de gestión remota disponibles en 2026 permiten que el comité tenga acceso en tiempo real a prácticamente toda la información operativa relevante del sistema de seguridad de su desarrollo: estado del sistema, bitácora actualizada, métricas de desempeño, grabaciones de videovigilancia de eventos específicos y alertas automáticas ante condiciones que requieren su atención. El comité que no tiene este acceso no está tomando decisiones de gestión basadas en información completa.
+
+## Lo que el Portal del Comité Debe Incluir
+
+### Módulo 1: Estado del Sistema en Tiempo Real
+
+Un tablero (dashboard) que muestra en cualquier momento, desde cualquier dispositivo con acceso a internet:
+
+**Estado de cada cámara:** Operativa (con señal de video y grabando normalmente) / En mantenimiento (intencionalmente fuera de servicio) / En falla (pérdida de señal o error de grabación). El porcentaje de cámaras operativas es el indicador de disponibilidad del sistema en tiempo real.
+
+**Estado del almacenamiento:** Porcentaje de capacidad de almacenamiento utilizado y número estimado de días de retención disponibles con el almacenamiento actual. Una alerta automática debe activarse cuando la disponibilidad cae por debajo de los días de retención comprometidos.
+
+**Estado del sistema de alarma:** Zonas armadas / desarmadas / en falla. Último evento de cada zona con timestamp.
+
+**Estado del sistema de control de acceso:** Estado de cada punto de control (operativo / en mantenimiento / en falla), número de accesos procesados en las últimas 24 horas, ratio de accesos automáticos vs. manuales.
+
+**Estado del personal:** Guardia de turno activo con nombre, hora de inicio de turno y tiempo restante, estado del último rondín (hora de inicio, hora de finalización, resultado).
+
+### Módulo 2: Bitácora Online con Búsqueda y Filtros
+
+Acceso a la bitácora digital completa con capacidad de búsqueda por: fecha y hora, tipo de evento, zona del desarrollo, persona o vehículo involucrado, y guardia que realizó la entrada. Esta capacidad de búsqueda transforma la bitácora de un registro cronológico en una base de datos consultable que permite al comité investigar patrones: ¿con qué frecuencia ha habido intentos de acceso sin autorización en el acceso norte?, ¿hay un vehículo específico que aparece recurrentemente en el perímetro sin identificación?, ¿el tiempo promedio de respuesta del guardia ante activaciones de alarma ha cambiado en los últimos 30 días?
+
+El acceso a la bitácora online también permite al comité verificar que las entradas se están haciendo en tiempo real (lo que confirma que el guardia estaba activo y atento) sin necesidad de estar físicamente presente en el desarrollo.
+
+### Módulo 3: Grabaciones de Videovigilancia de Eventos Específicos
+
+Acceso al archivo de grabaciones del sistema de videovigilancia para las zonas donde el comité tiene derecho de supervisión. Este acceso debe estar diseñado con controles de privacidad que impidan que el comité acceda a grabaciones que no corresponden a eventos de seguridad relevantes (lo que podría generar invasión de privacidad de los residentes).
+
+La funcionalidad mínima: acceder a la grabación del período alrededor de cualquier evento registrado en la bitácora, con posibilidad de descargar la grabación para archivo si es relevante. Esta funcionalidad permite al comité verificar, por ejemplo, que el protocolo de acceso fue seguido correctamente durante un evento específico, o revisar la grabación de un incidente antes de la reunión con el proveedor para discutirlo con criterio técnico.
+
+### Módulo 4: Métricas de Desempeño con Histórico
+
+Visualización de las métricas clave del servicio en formato de serie temporal que permite observar tendencias:
+
+**Gráfica de MTTD y MTTR:** Evolución mensual versus el objetivo contractual. Una tendencia de deterioro progresivo de cualquiera de estas métricas es una señal de alerta que el comité puede detectar meses antes de que el problema sea crítico.
+
+**Tasa de alarmas válidas por zona:** Permite identificar qué zonas tienen problemas crónicos de falsas alarmas y cuánto tiempo ha tardado el proveedor en remediarlos.
+
+**Disponibilidad del sistema:** Porcentaje de tiempo con cobertura completa de todos los componentes, con desglose de las interrupciones (causa, duración, tiempo de resolución).
+
+**Tasa de rotación del personal:** Cuántos guardias diferentes han sido asignados al desarrollo en el período, y con qué frecuencia. Un incremento en la rotación es frecuentemente el primer indicador observable de problemas en la operación del proveedor antes de que se manifiesten en incidentes.
+
+### Módulo 5: Sistema de Alertas Automáticas
+
+Notificaciones push al teléfono o al correo del miembro del comité designado ante condiciones que requieren atención sin esperar al reporte mensual:
+
+**Alertas de emergencia (inmediatas):** Incidente de Nivel 3 o 4 detectado o reportado, activación de alarma no resuelta después de 15 minutos, pérdida de conectividad del sistema de monitoreo con el desarrollo.
+
+**Alertas de degradación de sistema (dentro de 4 horas):** Cámara en falla no resuelta después de 2 horas, almacenamiento por debajo del umbral de retención comprometida, sensor de alarma en falla.
+
+**Alertas de desempeño (diarias o semanales):** MTTD o MTTR del período que supera el objetivo contractual, tasa de falsas alarmas superior al 40% en cualquier zona, disponibilidad del sistema por debajo del 98% en los últimos 7 días.
+
+El sistema de alertas no debe diseñarse para que el comité reciba alertas de cada evento operativo del desarrollo —eso recrearía el *cry-wolf effect* en el comité mismo— sino para que el comité sea notificado solo de las condiciones que requieren su atención o decisión.
+
+## Las Implicaciones de Privacidad del Acceso Digital
+
+El acceso del comité al sistema de videovigilancia en tiempo real y al archivo de grabaciones tiene implicaciones de privacidad que deben gestionarse con cuidado. Los residentes del desarrollo tienen una expectativa razonable de privacidad en las áreas comunes, limitada por la necesidad de seguridad; esa expectativa no incluye que cualquier miembro del comité pueda revisar grabaciones arbitrariamente sin justificación de seguridad.
+
+Un sistema de acceso digital bien diseñado incluye: registro de todas las sesiones de acceso al sistema de videovigilancia (quién accedió, desde dónde, qué cámaras revisó y en qué período), restricciones sobre el uso de las grabaciones fuera del propósito de seguridad, y políticas claras sobre quién del comité tiene acceso a qué funcionalidades del portal.
+
+Estas políticas deben documentarse en el reglamento interno del condominio o en el aviso de privacidad del sistema de seguridad, y deben ser conocidas por todos los residentes como parte del marco de tratamiento de datos personales del desarrollo.
+
+## El Portal del Comité como Herramienta de Rendición de Cuentas
+
+El portal digital de información de seguridad no es solo una herramienta operativa para el comité: es también un mecanismo de rendición de cuentas del comité ante los residentes. Un comité que puede mostrar en la asamblea anual las métricas de desempeño del año, las tendencias de mejora o deterioro, y los incidentes con las respuestas documentadas, está demostrando su gestión activa del servicio con datos verificables en lugar de declaraciones.
+
+Los residentes que tienen acceso (limitado y apropiado) al portal de información de seguridad —por ejemplo, al estado del sistema en tiempo real y a la bitácora de eventos de los últimos 7 días— tienen una relación diferente con la seguridad del desarrollo que los que solo conocen el estado del servicio a través de los comunicados del comité. Esta transparencia activa, cuando está bien diseñada con los controles de privacidad apropiados, fortalece la confianza de los residentes en el sistema de seguridad y en la gestión del comité.
+
+---
+
+*El portal del comité de SEPRICO proporciona acceso en tiempo real a todas las funcionalidades descritas en este artículo. La configuración de alertas automáticas se personaliza para cada desarrollo en la reunión de kickoff con el comité. El acceso es por usuario individual con autenticación de dos factores, y cada sesión queda registrada en el audit trail del sistema.*

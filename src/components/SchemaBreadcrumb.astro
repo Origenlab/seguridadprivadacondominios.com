@@ -1,0 +1,32 @@
+---
+import { SITE } from '@/config/site';
+
+interface Item {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  /** Lista ORDENADA después de "Inicio" (que se prepende automáticamente). */
+  items: Item[];
+}
+
+const { items } = Astro.props;
+
+const all = [{ label: 'Inicio', href: '/' }, ...items];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: all.map((item, idx) => ({
+    '@type': 'ListItem',
+    position: idx + 1,
+    name: item.label,
+    ...(item.href
+      ? { item: new URL(item.href, SITE.url).toString() }
+      : {}),
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

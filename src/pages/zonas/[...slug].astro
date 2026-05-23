@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import CtaBanner from '@/components/CtaBanner.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('zonas');
+  return items.map((e) => ({ params: { slug: e.slug }, props: { entry: e } }));
+}
+
+interface Props { entry: CollectionEntry<'zonas'>; }
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const regionLabel = entry.data.region === 'cdmx' ? 'Ciudad de México' : 'Estado de México';
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <Breadcrumb items={[
+    { label: 'Zonas', href: '/zonas' },
+    { label: regionLabel, href: `/zonas#${entry.data.region}` },
+    { label: entry.data.title.replace('Seguridad para Condominios en ', '') },
+  ]} />
+
+  <Section>
+    <div class="mx-auto max-w-3xl">
+      <span class="eyebrow">{regionLabel}</span>
+      <h1 class="mt-4 text-4xl leading-tight md:text-5xl">{entry.data.title}</h1>
+      <p class="mt-4 text-lg text-white/75">{entry.data.description}</p>
+
+      {entry.data.neighborhoods.length > 0 && (
+        <div class="mt-10 rounded-2xl border border-white/5 bg-ink-900/40 p-6">
+          <h2 class="text-lg text-brand-500">Colonias y zonas que atendemos</h2>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {entry.data.neighborhoods.map((n) => (
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-ink-800/60 px-3 py-1.5 text-xs text-white/85">
+                <Icon name="pin" class="h-3 w-3 text-brand-500" />
+                {n}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <article class="prose prose-invert prose-headings:prose-a:text-brand-500 mt-10 max-w-none">
+        <Content />
+      </article>
+    </div>
+  </Section>
+
+  <CtaBanner />
+</BaseLayout>

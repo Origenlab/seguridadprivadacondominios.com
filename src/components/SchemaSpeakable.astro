@@ -1,0 +1,38 @@
+---
+/**
+ * Speakable JSON-LD — para AI Overviews, voice search y LLM citation.
+ * Marca los selectores CSS donde está la respuesta hablada/citable.
+ *
+ * Targets: H1, eyebrow lead, primer párrafo del intro y FAQs.
+ * Esto ayuda a que Google Assistant, ChatGPT-Browse, Perplexity y
+ * AI Overviews extraigan respuestas concisas de la página.
+ */
+import { SITE } from '@/config/site';
+
+interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+const absoluteUrl = url.startsWith('http') ? url : new URL(url, SITE.url).toString();
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${absoluteUrl}#webpage`,
+  url: absoluteUrl,
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: [
+      'h1',
+      '.prose-service > h2:first-child + p',
+      'article details summary',
+      '[itemprop="description"]',
+    ],
+  },
+  inLanguage: 'es-MX',
+  isPartOf: { '@id': `${SITE.url}/#website` },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

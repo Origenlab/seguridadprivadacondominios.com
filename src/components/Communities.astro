@@ -1,0 +1,60 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const items = [
+  {
+    title: 'Torres Verticales',
+    sub: 'Edificios y condominios',
+    desc: 'Lobby con alta rotación, amenidades y estacionamiento subterráneo.',
+    href: '/comunidades/torres-verticales/',
+    image: '/images/general/seguridad-condominios.jpg',
+  },
+  {
+    title: 'Fraccionamientos',
+    sub: 'Cotos privados',
+    desc: 'Perímetros amplios, calles internas y caseta de control vehicular.',
+    href: '/comunidades/fraccionamientos/',
+    image: '/images/general/seguridad-residenciales.jpg',
+  },
+  {
+    title: 'Residenciales Premium',
+    sub: 'Alta gama',
+    desc: 'Trato concierge, discreción VIP y tecnología integral.',
+    href: '/comunidades/residenciales-premium/',
+    image: '/images/general/seguridad-privada-mexico.jpg',
+  },
+  {
+    title: 'Cotos Cerrados',
+    sub: 'Acceso único',
+    desc: 'Un solo punto de control con vigilancia activa en áreas comunes.',
+    href: '/comunidades/cotos-cerrados/',
+    image: '/images/general/seguridad-privada.jpg',
+  },
+];
+---
+
+<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+  {items.map((c) => (
+    <a href={c.href} class="service-card group">
+      <div class="service-card-image">
+        <img
+          src={c.image}
+          alt={c.title}
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-ink-950/40 to-transparent"></div>
+      </div>
+      <div class="service-card-body">
+        <p class="text-[10px] font-semibold uppercase tracking-widest2 text-brand-500">{c.sub}</p>
+        <h3 class="mt-2 text-lg font-bold text-white">{c.title}</h3>
+        <p class="mt-2 flex-1 text-sm text-white/65">{c.desc}</p>
+        <span class="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+          Ver propuesta
+          <Icon name="arrow" class="h-3.5 w-3.5" />
+        </span>
+      </div>
+    </a>
+  ))}
+</div>

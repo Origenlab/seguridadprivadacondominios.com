@@ -1,0 +1,35 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const chips = [
+  { label: 'Guardias', sub: 'Personal capacitado SETEC', href: '/servicios#personal', icon: 'shield' },
+  { label: 'CCTV 24/7', sub: 'Cámaras + monitoreo profesional', href: '/servicios/monitoreo-cctv', icon: 'cctv' },
+  { label: 'Control de Acceso', sub: 'Plumas, biométricos, registro', href: '/servicios/control-de-acceso', icon: 'access' },
+  { label: 'Torres Verticales', sub: 'Edificios y condominios', href: '/comunidades/torres-verticales', icon: 'shield' },
+  { label: 'Fraccionamientos', sub: 'Cotos y residenciales', href: '/comunidades/fraccionamientos', icon: 'patrol' },
+  { label: 'Cotiza Gratis', sub: 'Respuesta en <15 min', href: '/contacto', icon: 'arrow' },
+];
+---
+
+<nav aria-label="Acceso rápido" class="bg-brand-500">
+  <div class="container-pro grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+    {chips.map((c, i) => (
+      <a
+        href={c.href}
+        class:list={[
+          'group flex items-center gap-3 px-5 py-5 text-white transition-colors hover:bg-brand-600',
+          i > 0 && 'border-l border-white/10',
+        ]}
+      >
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-white/15">
+          <Icon name={c.icon as any} class="h-5 w-5" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-sm font-bold leading-tight">{c.label}</p>
+          <p class="truncate text-[11px] text-white/80">{c.sub}</p>
+        </div>
+        <Icon name="arrow" class="h-4 w-4 text-white/70" />
+      </a>
+    ))}
+  </div>
+</nav>

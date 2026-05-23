@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import CtaBanner from '@/components/CtaBanner.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('zonas');
+const cdmx = all.filter((z) => z.data.region === 'cdmx').sort((a, b) => a.data.order - b.data.order);
+const edomex = all.filter((z) => z.data.region === 'edomex').sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Zonas de Cobertura"
+  description="Cobertura de seguridad privada para condominios en alcaldías de CDMX y municipios del Estado de México."
+>
+  <Breadcrumb items={[{ label: 'Zonas de cobertura' }]} />
+
+  <Section
+    eyebrow="Cobertura operativa"
+    title="Zonas de Cobertura · Seguridad Privada para Condominios"
+    subtitle="SEPRICO mantiene operación activa en todas las alcaldías de la Ciudad de México y los municipios principales del Estado de México que conforman la Zona Metropolitana del Valle de México. Cada zona cuenta con un supervisor regional asignado y rutas de respaldo logístico definidas."
+    desc="La estructura distribuida nos permite garantizar tiempos de respuesta menores a 30 minutos ante cualquier incidencia en sitio, sin importar si tu condominio se ubica en Polanco, Coyoacán, Interlomas o Metepec."
+    align="center"
+    as="h1"
+  >
+    <div id="cdmx" class="mb-14">
+      <h2 class="text-2xl text-brand-500">Ciudad de México</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {cdmx.map((z) => (
+          <a href={`/zonas/${z.slug}`} class="card-premium group">
+            <div class="flex items-center justify-between">
+              <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
+                <Icon name="pin" class="h-5 w-5" />
+              </span>
+              <Icon name="arrow" class="h-5 w-5 text-white/30 group-hover:text-brand-500" />
+            </div>
+            <h3 class="mt-4 text-lg">{z.data.title.replace('Seguridad para Condominios en ', '')}</h3>
+            <p class="mt-2 text-xs text-white/60 line-clamp-2">{z.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div id="edomex">
+      <h2 class="text-2xl text-brand-500">Estado de México</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {edomex.map((z) => (
+          <a href={`/zonas/${z.slug}`} class="card-premium group">
+            <div class="flex items-center justify-between">
+              <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
+                <Icon name="pin" class="h-5 w-5" />
+              </span>
+              <Icon name="arrow" class="h-5 w-5 text-white/30 group-hover:text-brand-500" />
+            </div>
+            <h3 class="mt-4 text-lg">{z.data.title.replace('Seguridad para Condominios en ', '')}</h3>
+            <p class="mt-2 text-xs text-white/60 line-clamp-2">{z.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <CtaBanner
+    title="¿Estás en otra zona?"
+    subtitle="Atendemos toda la ZMVM. Cuéntanos dónde se ubica tu condominio y revisamos disponibilidad inmediata."
+  />
+</BaseLayout>

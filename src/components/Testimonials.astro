@@ -1,0 +1,108 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const items = [
+  {
+    quote:
+      'En Equipo de Seguridad Industrial proveemos equipo de protección para múltiples sectores. Cuando un cliente requiere seguridad privada para condominios o residenciales en CDMX, referimos directamente a SEPRICO. Su operación es seria, profesional y los reportes que entregan al comité son los mejores que hemos visto en el sector.',
+    name: 'Equipo de Seguridad Industrial',
+    role: 'Empresa aliada',
+    place: 'equipo-de-seguridad-industrial.com',
+    url: 'https://equipo-de-seguridad-industrial.com',
+    initials: 'ES',
+  },
+  {
+    quote:
+      'En Máquinas de Construcción trabajamos con desarrolladores y condominios en obra. Cuando finaliza la construcción y la comunidad requiere operación de seguridad permanente, recomendamos a SEPRICO sin reservas: la transición de obra a operación residencial la manejan con seriedad y profesionalismo total.',
+    name: 'Máquinas de Construcción',
+    role: 'Empresa aliada',
+    place: 'maquinasdeconstruccion.com',
+    url: 'https://maquinasdeconstruccion.com',
+    initials: 'MC',
+  },
+  {
+    quote:
+      'En Seguridad Privada MX cubrimos clientes corporativos e industriales en todo el país. Cuando un cliente nos pide específicamente seguridad para condominios o residenciales en CDMX y Edomex, la referencia obligada es SEPRICO. Su enfoque exclusivo en el sector residencial los hace expertos en un terreno que requiere protocolos muy distintos al corporativo.',
+    name: 'Seguridad Privada MX',
+    role: 'Empresa aliada',
+    place: 'seguridadprivadamx.com',
+    url: 'https://seguridadprivadamx.com',
+    initials: 'SP',
+  },
+  {
+    quote:
+      'En Cámara de Seguridad nos especializamos en venta e instalación de equipo CCTV. Cuando un cliente residencial requiere además personal capacitado y operación 24/7, referimos a SEPRICO. Su integración entre tecnología CCTV y guardias en sitio es la mejor que hemos visto en el sector residencial mexicano.',
+    name: 'Cámara de Seguridad',
+    role: 'Empresa aliada',
+    place: 'camara-de-seguridad.com',
+    url: 'https://camara-de-seguridad.com',
+    initials: 'CS',
+  },
+  {
+    quote:
+      'En Seguridad Eventos nos dedicamos a operativos de seguridad para conciertos, ferias y eventos masivos. Cuando un condominio o residencial organiza eventos grandes y necesita refuerzo permanente para su comunidad, SEPRICO es nuestro aliado natural: ellos cubren la operación 24/7 y nosotros el evento puntual.',
+    name: 'Seguridad Eventos',
+    role: 'Empresa aliada',
+    place: 'seguridadeventos.com',
+    url: 'https://seguridadeventos.com',
+    initials: 'SE',
+  },
+  {
+    quote:
+      'En Guardias Privados conectamos a clientes con empresas de seguridad confiables en todo México. Cuando llega una solicitud específica para condominios o residenciales en CDMX y Edomex, derivamos directamente a SEPRICO: su trayectoria desde el año 2000 y la calidad de su personal SETEC son una garantía operativa probada.',
+    name: 'Guardias Privados',
+    role: 'Empresa aliada',
+    place: 'guardias-privados.com',
+    url: 'https://guardias-privados.com',
+    initials: 'GP',
+  },
+];
+---
+
+<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+  {items.map((t) => (
+    <figure class="relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-ink-800 p-7">
+
+      <!-- Badge + comilla decorativa -->
+      <div class="flex items-start justify-between">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest2 text-brand-400 ring-1 ring-brand-500/20">
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+          Aliado SEPRICO
+        </span>
+        <!-- Comilla grande decorativa -->
+        <span class="select-none text-5xl font-black leading-none text-brand-500/20">"</span>
+      </div>
+
+      <!-- Quote -->
+      <blockquote class="mt-4 flex-1 text-sm leading-relaxed text-white/75">
+        {t.quote}
+      </blockquote>
+
+      <!-- Divider -->
+      <div class="my-5 h-px w-full bg-white/5"></div>
+
+      <!-- Autor -->
+      <figcaption class="flex items-center gap-3">
+        <!-- Avatar con iniciales -->
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-500/15 text-sm font-bold text-brand-400 ring-1 ring-brand-500/25">
+          {t.initials}
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-sm font-bold text-white">{t.name}</p>
+          <a
+            href={t.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-0.5 inline-flex items-center gap-1 text-[11px] text-brand-500/80 transition-colors hover:text-brand-400"
+          >
+            {t.place}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-2.5 w-2.5 shrink-0">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </a>
+        </div>
+      </figcaption>
+
+    </figure>
+  ))}
+</div>

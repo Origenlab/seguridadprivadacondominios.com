@@ -1,0 +1,70 @@
+---
+title: 'Mantenimiento e Incidencias del Sistema de Intercomunicación: Lo que el Comité Necesita Controlar'
+description: 'Guía de gestión del sistema de intercomunicación para comités de condominios: causas de degradación de calidad de audio y video, protocolo de diagnóstico de fallas, mantenimiento preventivo verificable y cómo el sistema de intercomunicación puede convertirse en vector de vulnerabilidad cuando no se gestiona correctamente.'
+pubDate: 2026-05-20
+author: 'Equipo SEPRICO'
+category: 'tecnologia-y-monitoreo'
+tags: ['intercomunicacion', 'mantenimiento', 'seguridad-condominios', 'gestion-tecnica', 'condominios']
+---
+
+Los sistemas de intercomunicación tienen una característica de degradación operativa que los distingue de otros sistemas de seguridad: su deterioro es gradual y acumulativo, no súbito. Una cámara de vigilancia falla visiblemente cuando su imagen desaparece de la pantalla del operador; un sensor de alarma falla cuando deja de generar alertas verificables. El sistema de intercomunicación, en cambio, puede degradarse de forma que los residentes y el comité lo perciban como "funcionando con problemas" durante meses antes de que la degradación sea lo suficientemente severa como para considerarlo una falla. Esa percepción de funcionamiento degradado reduce la tasa de uso —los residentes dejan de confiar en el sistema y buscan alternativas— sin que exista un evento que desencadene una orden de trabajo de reparación.
+
+El resultado es que muchos sistemas de intercomunicación operan en un estado de degradación crónica donde ni el proveedor ni el comité tienen claridad sobre la causa ni sobre si las acciones de mantenimiento están produciendo mejora real. Este artículo proporciona el marco diagnóstico que permite identificar, categorizar y remediar las causas de degradación antes de que alcancen el nivel de falla completa.
+
+## El Diagnóstico de Calidad de Audio: Las Causas Específicas de Cada Tipo de Deterioro
+
+La calidad del audio es el parámetro que más directamente determina si el residente puede verificar la identidad del visitante. Un audio con ruido, eco o volumen insuficiente convierte la intercomunicación en un trámite inútil que el residente abandona después de uno o dos intentos fallidos de comunicación.
+
+**Ruido de fondo de alta frecuencia.** El ruido de alta frecuencia —un silbido o chirrido constante en el audio— en sistemas analógicos suele indicar inducción electromagnética de cables de señal que corren paralelos a cables de alimentación eléctrica, o interferencia de frecuencia de radio de equipos cercanos. La solución es reenrutar el cableado de señal separándolo al menos 15 cm de los cables de alimentación, o reemplazarlo por cable apantallado (shielded twisted pair) que bloquea la inducción.
+
+En sistemas IP, el ruido de alta frecuencia en el audio puede indicar una configuración de codec inadecuada —codecs con bitrate bajo producen artefactos de compresión que suenan como ruido de alta frecuencia—, o un hardware de audio de baja calidad en el panel de entrada.
+
+**Eco pronunciado.** El eco en la comunicación bidireccional —el residente escucha su propia voz con retardo— es uno de los problemas más disruptivos para la usabilidad del sistema y tiene causas diferentes en sistemas analógicos y digitales.
+
+En sistemas analógicos, el eco se genera cuando la señal de audio del altavoz del panel de entrada "se filtra" al micrófono del mismo panel, creando un lazo de retroalimentación. La solución técnica es la cancelación de eco por hardware (AEC, Acoustic Echo Cancellation), un componente estándar en los paneles de mayor calidad pero que frecuentemente se omite en equipos de bajo costo.
+
+En sistemas IP/VoIP, el eco es frecuentemente consecuencia del jitter de red: cuando los paquetes de audio llegan con variabilidad temporal alta, el buffer del dispositivo receptor los ordena con retardo variable que el oído percibe como eco. La solución es configurar correctamente la QoS (Quality of Service) en los switches de la red para priorizar el tráfico de voz.
+
+**Cortes intermitentes de audio.** Los cortes de audio durante la comunicación —períodos de silencio de 0.5 a 2 segundos— tienen causas diferentes por tipo de sistema:
+
+En sistemas analógicos: contacto eléctrico intermitente en conectores de cable, especialmente en conectores de tipo RJ11 o RJ45 que se oxidan o se aflojan con el tiempo en instalaciones exteriores expuestas a humedad. La verificación y apriete de todas las conexiones intermedias en el recorrido del cable es el primer paso diagnóstico.
+
+En sistemas IP: pérdida de paquetes de red superior al 1%, que corresponde al umbral de calidad de VoIP. La herramienta de diagnóstico es una prueba de calidad de red con instrumentos específicos (Fluke Networks, Ixia, o herramientas de software equivalentes) que miden latencia, jitter y pérdida de paquetes en el segmento de red entre el panel de entrada y el servidor de intercomunicación.
+
+## El Diagnóstico de Calidad de Video en Sistemas de Video-Portero
+
+En sistemas de video-portero, la calidad del video es tan importante como la del audio para la función de verificación de identidad. Un video de mala calidad que no permite identificar los rasgos del visitante anula el propósito de la cámara del panel.
+
+**Imagen oscura en condiciones de iluminación normal.** Una cámara que produce imagen oscura cuando la iluminación exterior es adecuada puede tener: el objetivo de la cámara cubierto parcialmente por suciedad, condensación o tela de araña (verificación visual obvia pero frecuentemente ignorada en revisiones superficiales), una configuración de exposición incorrecta que necesita reajuste, o deterioro del sensor de imagen por exposición prolongada a radiación UV directa. Los paneles de entrada con cámara expuesta directamente a la luz solar directa tienen vida útil del sensor significativamente menor que los paneles con cámara protegida por una visera o instalada bajo un alero.
+
+**Imagen sobreexpuesta (quemada) en condiciones de contra-luz.** Este problema fue descrito en el artículo de cámaras de vigilancia, y aplica igualmente a las cámaras de video-portero: si el panel de entrada está orientado hacia el sol en las horas de mayor incidencia, la imagen muestra el visitante en silueta oscura sobre un fondo quemado. La solución primaria es la reorientación del panel si el diseño del acceso lo permite; cuando no es posible, los paneles con sensor de imagen con WDR (Wide Dynamic Range) de alto rango mitigan el problema con procesamiento de imagen adaptativo.
+
+**Latencia de video excesiva.** En sistemas de video-portero IP, la latencia del video —el retardo entre lo que ocurre frente al panel y lo que aparece en la pantalla del residente— puede ser de 0.5 a 5 segundos dependiendo de la calidad del sistema y la carga de la red. Una latencia de video superior a 2 segundos produce desorientación en el residente durante la comunicación bidireccional (el residente ve al visitante con retardo y no sincroniza correctamente el audio con los movimientos de labios). La latencia del video debe verificarse durante la instalación y documentarse como parte del protocolo de aceptación del sistema.
+
+## Las Vulnerabilidades de Seguridad Específicas del Sistema de Intercomunicación
+
+El sistema de intercomunicación es, por diseño, un punto de contacto entre el exterior del desarrollo y los residentes. Si no se gestiona correctamente, puede convertirse en un vector de vulnerabilidad que facilita el acceso no autorizado.
+
+**La apertura remota sin verificación visual.** El escenario más frecuente: el residente recibe la llamada de intercomunicación desde su teléfono, escucha una voz que menciona el nombre de alguien esperado ("es el técnico que llamaste"), y autoriza el acceso sin haber visto la imagen del video-portero. Si el sistema de video-portero tiene latencia alta o la imagen es de mala calidad, el residente puede sentir que es más fácil autorizar basándose en el audio que esperar a que el video cargue con calidad suficiente para identificar al visitante. Este comportamiento anula la función de verificación del sistema.
+
+La mitigación técnica es garantizar que la aplicación móvil no presenta el botón de apertura hasta que el video ha cargado con calidad mínima aceptable —lo que requiere que la latencia del video sea inferior a 2 segundos y que la calidad de imagen sea verificable antes de mostrar la opción de autorización.
+
+**La ingeniería social a través del intercomunicador.** El intercomunicador proporciona al visitante un canal de comunicación directa con el residente que puede usarse para aplicar presión verbal para obtener acceso. Un visitante que argumenta urgencia, apela a una autoridad (empresa de servicios, vecino conocido por nombre), o crea presión temporal ("el camión de mudanzas está esperando en la calle y necesito entrar ya") puede obtener acceso de un residente que no tiene un protocolo claro para estos escenarios. El entrenamiento de los residentes en el protocolo correcto de verificación —imagen + audio + contacto de verificación con la fuente si hay duda— es el componente no técnico que completa la función de seguridad del sistema.
+
+**La desactivación del intercomunicador de unidades con conflictos de acceso.** En desarrollos con alta rotación de inquilinos o con conflictos entre residentes, no es infrecuente que residentes desconecten o dañen el dispositivo interior de su unidad para evitar comunicaciones no deseadas. Cada unidad con intercomunicador inoperativo es un punto de decisión de acceso que recae completamente en el guardia sin opción de verificación con el residente. El monitoreo del estado de los dispositivos interiores —que los sistemas IP permiten de forma remota— permite identificar estas unidades y gestionar el protocolo de acceso alternativo para sus visitantes.
+
+## El Mantenimiento Preventivo: Cadencia y Componentes Mínimos
+
+El programa de mantenimiento preventivo del sistema de intercomunicación debe especificarse en el contrato con el proveedor con la misma precisión que el mantenimiento de los sistemas de videovigilancia y alarma:
+
+**Mensualmente:** Limpieza de los objetivos de cámara en los paneles de entrada, verificación de calidad de audio con prueba de comunicación en todos los paneles activos, y revisión del log de errores del sistema para identificar eventos de falla intermitente que aún no han producido una falla completa visible.
+
+**Trimestralmente:** Verificación de la resistencia eléctrica de las conexiones en todos los puntos de empalme del cableado analógico, prueba de latencia de notificación push en condiciones de carga normal de red, y verificación de firmware actualizado en todos los paneles de entrada y en el servidor de intercomunicación.
+
+**Anualmente:** Inspección de la impermeabilización de los paneles exteriores, reemplazo preventivo de baterías en dispositivos de respaldo, y prueba de funcionamiento de todos los mecanismos de apertura integrados con el sistema de intercomunicación con el sistema de alimentación respaldado activo (UPS encendido, sin red eléctrica principal).
+
+El registro de cada intervención de mantenimiento —con fecha, técnico responsable, acciones realizadas y resultado— debe estar disponible para revisión del comité como parte del expediente técnico del sistema. Este registro es el insumo que permite verificar si el programa de mantenimiento preventivo se está ejecutando o si el proveedor solo responde ante fallas visibles.
+
+---
+
+*El sistema de intercomunicación de SEPRICO incluye monitoreo remoto del estado de cada dispositivo instalado, con alertas automáticas al técnico de mantenimiento cuando un panel registra errores de conectividad o cuando la calidad de audio cae por debajo del umbral configurado. El reporte mensual al comité incluye el estado de todos los dispositivos y las intervenciones de mantenimiento del período.*

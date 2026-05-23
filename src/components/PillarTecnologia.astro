@@ -1,0 +1,123 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const subcategories = [
+  {
+    title: 'Monitoreo Electrónico',
+    href: '/monitoreo-electronico/',
+    icon: 'cctv',
+    prose: 'Grabar no es monitorear. El centro de operaciones de SEPRICO funciona con analistas especializados que supervisan en tiempo real cada cámara, sensor y alarma conectada. Cuando se detecta una anomalía, el protocolo se activa de inmediato: el guardia en sitio recibe la alerta, el evento queda documentado y, si la situación lo requiere, se coordina con autoridades. La grabación sirve como respaldo; el monitoreo activo es lo que previene que el incidente ocurra.',
+  },
+  {
+    title: 'Control de Acceso',
+    href: '/control-de-acceso/',
+    icon: 'access',
+    prose: 'El primer filtro de seguridad no es el guardia: es el sistema que decide quién puede entrar antes de que llegue a la caseta. Combinamos tecnología biométrica, tarjetas de proximidad y tags vehiculares con registro fotográfico de cada visitante y bitácora digital con hora exacta de cada acceso. El historial es consultable por el comité en cualquier momento, desde cualquier dispositivo. Si alguien no debería estar adentro, el sistema lo detecta antes de que cruce la puerta.',
+  },
+  {
+    title: 'Cámaras de Vigilancia',
+    href: '/sistemas-de-camaras-de-vigilancia/',
+    icon: 'cctv',
+    prose: 'Las cámaras que instalamos no son decorativas. Antes de montar un solo equipo, hacemos un levantamiento físico del condominio para identificar ángulos muertos, zonas de sombra y puntos de alto riesgo. El resultado es una red de equipos IP HD y 4K con visión nocturna real y detección inteligente de movimiento, diseñada sin huecos. Las grabaciones se almacenan con respaldo y están disponibles para el comité, la administración o las autoridades cuando se necesiten.',
+  },
+  {
+    title: 'Control Biométrico',
+    href: '/control-biometrico-de-acceso/',
+    icon: 'shield',
+    prose: 'Las llaves se pierden, las tarjetas se prestan y los códigos se comparten. La biometría no. Instalamos lectores de huella dactilar y reconocimiento facial en accesos críticos, eliminando la posibilidad de que credenciales ajenas abran puertas restringidas. Cada entrada queda registrada con identidad verificada, hora y zona. Es especialmente valioso en condominios con personal doméstico frecuente, proveedores o áreas técnicas de acceso limitado.',
+  },
+  {
+    title: 'Alarmas de Seguridad',
+    href: '/alarmas-de-seguridad/',
+    icon: 'alert',
+    prose: 'Una alarma que solo suena es un inconveniente, no una respuesta. Los sistemas que instalamos están integrados con el centro de monitoreo: cuando un sensor perimetral, de movimiento o de apertura se activa, la alerta llega en segundos al operador y al guardia en sitio simultáneamente. Cubrimos bardas perimetrales, accesos vehiculares y peatonales, puertas de emergencia y áreas comunes. La respuesta está protocolizada — cada tipo de alerta tiene un procedimiento definido que el personal ejecuta sin improvisar.',
+  },
+  {
+    title: 'Intercomunicación',
+    href: '/intercomunicacion-avanzada/',
+    icon: 'phone',
+    prose: 'Cuando un residente necesita autorizar una visita o reportar algo, no debería tener que bajar al lobby ni llamar a un número que nadie contesta. Los sistemas de intercomunicación IP que instalamos permiten videollamada directa entre la unidad y la caseta, verificación visual del visitante antes del acceso y coordinación instantánea entre guardias y supervisores. En una emergencia el canal ya está operando — no se buscan teléfonos, no se improvisa.',
+  },
+  {
+    title: 'Iluminación Segura',
+    href: '/sistemas-de-iluminacion-segura/',
+    icon: 'patrol',
+    prose: 'La oscuridad es el mejor aliado de quien quiere entrar sin ser visto. Integramos iluminación con sensores de movimiento, LED de alta eficiencia y automatización por zonas — accesos, estacionamientos, perímetros — sin depender de que alguien encienda un interruptor. Al conectar la iluminación con las cámaras y el monitoreo, cada metro iluminado es un metro vigilado. Cuando la luz se activa, la cámara ya está grabando.',
+  },
+];
+---
+
+<div class="grid gap-10 lg:grid-cols-5 lg:items-stretch">
+
+  <!-- Columna izquierda -->
+  <div class="lg:col-span-2 flex flex-col">
+    <div class="overflow-hidden rounded-2xl flex flex-col flex-1">
+      <div class="relative aspect-[4/3] w-full">
+        <img
+          src="/images/servicios/monitoreo-electronico.jpg"
+          alt="Tecnología y monitoreo SEPRICO"
+          loading="lazy"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/40 to-transparent"></div>
+
+        <span class="absolute top-4 left-4 rounded-lg bg-brand-500/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+          Pilar 2
+        </span>
+
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="text-2xl font-bold leading-tight text-white">
+            Tecnología y<br/>Monitoreo
+          </h3>
+          <p class="mt-1 text-sm text-white/60">7 sistemas integrados</p>
+        </div>
+      </div>
+
+      <div class="bg-ink-900 p-6 flex flex-col flex-1">
+        <p class="text-sm leading-relaxed text-white/70">
+          CCTV HD, control de acceso biométrico, alarmas perimetrales, intercomunicación IP e iluminación inteligente operando como un ecosistema unificado. Nuestro centro de monitoreo 24/7 conecta cada dispositivo con analistas en tiempo real.
+        </p>
+
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          {[
+            { value: 'HD/4K', label: 'Resolución de cámaras' },
+            { value: '<30s', label: 'Tiempo de respuesta' },
+            { value: '7', label: 'Sistemas integrados' },
+            { value: '0', label: 'Puntos ciegos' },
+          ].map((stat) => (
+            <div class="rounded-lg border border-white/8 bg-white/4 px-3 py-2.5 text-center">
+              <span class="block text-lg font-bold text-brand-400">{stat.value}</span>
+              <span class="text-[10px] leading-tight text-white/50">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="/tecnologia-y-monitoreo/"
+          class="mt-auto pt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+        >
+          Ver pilar completo
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: párrafos apilados -->
+  <div class="lg:col-span-3 flex flex-col justify-between gap-0 divide-y divide-white/8">
+    {subcategories.map((sub) => (
+      <div class="py-6 first:pt-0 last:pb-0">
+        <h4 class="text-sm font-bold text-white mb-2">{sub.title}</h4>
+        <p class="text-sm leading-relaxed text-white/60">{sub.prose}</p>
+        <a
+          href={sub.href}
+          class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-500 hover:text-brand-400 transition-colors"
+        >
+          Ver más <Icon name="arrow" class="h-3 w-3" />
+        </a>
+      </div>
+    ))}
+  </div>
+
+</div>
