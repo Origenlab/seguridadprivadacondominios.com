@@ -1,0 +1,126 @@
+---
+/**
+ * ImageGallery.astro — Galería visual reusable con alt SEO.
+ *
+ * Renderiza N imágenes del banco (`/images/banco/*.avif`) en un grid responsive.
+ * Cada `<img>` lleva width/height para evitar CLS, loading lazy, decoding async
+ * y un alt descriptivo independiente.
+ *
+ * Uso típico:
+ *   <ImageGallery
+ *     eyebrow="Operación SEPRICO en condominios"
+ *     title="Lo que hacemos en campo"
+ *     subtitle="Imágenes reales de la operación..."
+ *     items={[
+ *       { src: '/images/banco/caseta-seguridad-condominio-moderna-03.avif', alt: 'Caseta de seguridad moderna en condominio' },
+ *       { src: '/images/banco/guardias-seguridad-patrullaje-condominio-02.avif', alt: 'Guardias patrullando perímetro del condominio' },
+ *     ]}
+ *   />
+ */
+export interface GalleryItem {
+  /** Ruta absoluta (ej. `/images/banco/...avif`) */
+  src: string;
+  /** Alt SEO descriptivo. Obligatorio. */
+  alt: string;
+  /** Caption visible opcional (overlay inferior). */
+  caption?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  /** Imágenes a renderizar (4-8 recomendado). */
+  items: GalleryItem[];
+  /** Columnas en md+ (2-4). Default 3. */
+  columns?: 2 | 3 | 4;
+  /** Padding vertical de la sección. Default 'normal' (py-16). */
+  spacing?: 'tight' | 'normal' | 'loose';
+  /** Bg de la sección. */
+  bg?: 'ink-900' | 'ink-800' | 'black';
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  items,
+  columns = 3,
+  spacing = 'normal',
+  bg = 'ink-900',
+} = Astro.props as Props;
+
+const colsCls =
+  columns === 2 ? 'sm:grid-cols-2' :
+  columns === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' :
+  'sm:grid-cols-2 lg:grid-cols-3';
+
+const spaceCls =
+  spacing === 'tight' ? 'py-10' :
+  spacing === 'loose' ? 'py-20' :
+  'py-14';
+
+const bgCls =
+  bg === 'ink-800' ? 'bg-ink-800' :
+  bg === 'black'   ? 'bg-black'   :
+  'bg-ink-900';
+---
+
+{items && items.length > 0 && (
+  <section class={`${bgCls} ${spaceCls}`}>
+    <div class="container-pro">
+      {(eyebrow || title || subtitle) && (
+        <header class="mb-10 max-w-3xl">
+          {eyebrow && (
+            <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+              <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+              {eyebrow}
+            </span>
+          )}
+          {title && (
+            <h2 class="mt-3 text-2xl font-bold leading-tight text-white md:text-3xl">
+              {title}
+            </h2>
+          )}
+          {subtitle && (
+            <p class="mt-3 text-sm leading-relaxed text-white/70 md:text-base">
+              {subtitle}
+            </p>
+          )}
+        </header>
+      )}
+
+      <div class={`grid gap-4 ${colsCls}`}>
+        {items.map((it) => {
+          // Si la imagen vive en /images/banco/, hay una variante -card.avif (800x600)
+          // que sirve perfecto para esta galería 4:3. Generamos srcset responsive.
+          const isBanco = it.src.startsWith('/images/banco/') && it.src.endsWith('.avif');
+          const cardSrc = isBanco ? it.src.replace(/\.avif$/, '-card.avif') : null;
+          const srcset = cardSrc
+            ? `${cardSrc} 800w, ${it.src} 1600w`
+            : undefined;
+          return (
+          <figure class="group relative overflow-hidden rounded-xl border border-white/10 bg-ink-800">
+            <img
+              src={cardSrc ?? it.src}
+              srcset={srcset}
+              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              alt={it.alt}
+              width="800"
+              height="600"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            />
+            {it.caption && (
+              <figcaption class="absolute inset-x-0 bottom-0 flex items-center gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 py-3 text-[11px] font-semibold uppercase tracking-widest2 text-white">
+                <span class="inline-flex h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                <span class="line-clamp-1">{it.caption}</span>
+              </figcaption>
+            )}
+          </figure>
+        );})}
+      </div>
+    </div>
+  </section>
+)}

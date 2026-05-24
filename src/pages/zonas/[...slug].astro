@@ -4,6 +4,7 @@ import Section from '@/components/Section.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import Icon from '@/components/Icon.astro';
 import CtaBanner from '@/components/CtaBanner.astro';
+import ImageGallery from '@/components/ImageGallery.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -16,6 +17,82 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 
 const regionLabel = entry.data.region === 'cdmx' ? 'Ciudad de México' : 'Estado de México';
+const zoneShort = entry.data.title.replace('Seguridad para Condominios en ', '');
+
+// Banner + galería específica por zona (1 banner + 2 fotos cada una)
+const ZONE_VISUALS: Record<string, { banner: { src: string; alt: string }; items: { src: string; alt: string; caption: string }[] }> = {
+  'miguel-hidalgo':       { banner: { src: '/images/banco/guardias-seguridad-rondines-condominio-07.avif',         alt: `Seguridad privada en condominios de Miguel Hidalgo` },
+                            items: [
+                              { src: '/images/banco/seguridad-privada-estacionamiento-condominio-02.avif', alt: 'Estacionamiento controlado en condominio de Miguel Hidalgo',  caption: 'Estacionamiento controlado' },
+                              { src: '/images/banco/patrullaje-interior-condominio-05.avif',                alt: 'Patrullaje interior en condominio de Miguel Hidalgo',          caption: 'Patrullaje 24/7' },
+                            ] },
+  'cuauhtemoc':           { banner: { src: '/images/banco/guardias-seguridad-patrullaje-condominio-01.avif',       alt: `Patrullaje de seguridad en Cuauhtémoc` },
+                            items: [
+                              { src: '/images/banco/seguridad-privada-estacionamiento-condominio-03.avif', alt: 'Acceso vehicular vigilado en Cuauhtémoc',                       caption: 'Acceso vehicular' },
+                              { src: '/images/banco/vigilancia-nocturna-condominios-06.avif',              alt: 'Vigilancia nocturna en colonias de Cuauhtémoc',                 caption: 'Cobertura nocturna' },
+                            ] },
+  'benito-juarez':        { banner: { src: '/images/banco/guardias-seguridad-patrullaje-condominio-02.avif',       alt: `Vigilancia de condominios en Benito Juárez` },
+                            items: [
+                              { src: '/images/banco/seguridad-privada-estacionamiento-condominio-04.avif', alt: 'Control de estacionamiento en Benito Juárez',                  caption: 'Acceso vehicular' },
+                              { src: '/images/banco/patrullaje-interior-condominio-06.avif',                alt: 'Patrullaje interior en torres de Benito Juárez',               caption: 'Patrullaje interior' },
+                            ] },
+  'coyoacan':             { banner: { src: '/images/banco/guardias-seguridad-rondines-condominio-08.avif',         alt: `Seguridad privada para residenciales en Coyoacán` },
+                            items: [
+                              { src: '/images/banco/seguridad-privada-estacionamiento-condominio-06.avif', alt: 'Caseta y acceso vigilado en Coyoacán',                          caption: 'Caseta de acceso' },
+                              { src: '/images/banco/patrullaje-interior-condominio-07.avif',                alt: 'Patrullaje interior residencial Coyoacán',                     caption: 'Rondines documentados' },
+                            ] },
+  'tlalpan':              { banner: { src: '/images/banco/guardias-seguridad-patrullaje-condominio-05.avif',       alt: `Vigilancia residencial en Tlalpan` },
+                            items: [
+                              { src: '/images/banco/vigilancia-nocturna-condominios-07.avif',              alt: 'Vigilancia nocturna en Tlalpan',                                caption: 'Cobertura nocturna' },
+                              { src: '/images/banco/seguridad-privada-estacionamiento-condominio-07.avif', alt: 'Acceso vehicular vigilado en Tlalpan',                          caption: 'Estacionamiento' },
+                            ] },
+  'alvaro-obregon':       { banner: { src: '/images/banco/guardias-seguridad-patrullaje-condominio-07.avif',       alt: `Seguridad privada en Álvaro Obregón` },
+                            items: [
+                              { src: '/images/banco/patrullaje-interior-condominio-01.avif',                alt: 'Patrullaje interior residencial Álvaro Obregón',                caption: 'Patrullaje interior' },
+                              { src: '/images/banco/seguridad-privada-estacionamiento-condominio-08.avif', alt: 'Acceso vigilado en Álvaro Obregón',                              caption: 'Acceso vehicular' },
+                            ] },
+  'cuajimalpa':           { banner: { src: '/images/banco/guardias-seguridad-rondines-condominio-01.avif',         alt: `Seguridad privada para residenciales en Cuajimalpa` },
+                            items: [
+                              { src: '/images/banco/seguridad-privada-condominios-03.avif',                alt: 'Guardia uniformado en condominio de Cuajimalpa',                caption: 'Personal certificado' },
+                              { src: '/images/banco/seguridad-residencial-inteligente-01.avif',           alt: 'Tecnología de seguridad residencial en Cuajimalpa',             caption: 'Tecnología integrada' },
+                            ] },
+  'magdalena-contreras':  { banner: { src: '/images/banco/guardias-seguridad-rondines-condominio-05.avif',         alt: `Vigilancia residencial en Magdalena Contreras` },
+                            items: [
+                              { src: '/images/banco/seguridad-residencial-inteligente-02.avif',           alt: 'Seguridad residencial inteligente en Magdalena Contreras',      caption: 'Smart security' },
+                              { src: '/images/banco/seguridad-privada-condominios-06.avif',                alt: 'Guardia atendiendo condominio en Magdalena Contreras',          caption: 'Atención al condómino' },
+                            ] },
+  'naucalpan':            { banner: { src: '/images/banco/guardia-seguridad-atencion-residentes-08.avif',          alt: `Seguridad privada en Naucalpan` },
+                            items: [
+                              { src: '/images/banco/familia-segura-condominio-residencial-01.avif',       alt: 'Familia segura en residencial de Naucalpan',                    caption: 'Familias seguras' },
+                              { src: '/images/banco/seguridad-residencial-inteligente-04.avif',           alt: 'Tecnología de seguridad en Naucalpan',                          caption: 'Tecnología' },
+                            ] },
+  'tlalnepantla':         { banner: { src: '/images/banco/guardia-seguridad-atencion-residentes-10.avif',          alt: `Seguridad para residenciales en Tlalnepantla` },
+                            items: [
+                              { src: '/images/banco/familia-segura-condominio-residencial-03.avif',       alt: 'Familia segura en residencial Tlalnepantla',                    caption: 'Familias residentes' },
+                              { src: '/images/banco/seguridad-residencial-inteligente-08.avif',           alt: 'Tecnología de seguridad residencial en Tlalnepantla',           caption: 'Tecnología integrada' },
+                            ] },
+  'huixquilucan':         { banner: { src: '/images/banco/caseta-seguridad-condominio-moderna-04.avif',            alt: `Caseta de seguridad moderna en Huixquilucan` },
+                            items: [
+                              { src: '/images/banco/familia-segura-condominio-residencial-08.avif',       alt: 'Familia segura en residencial Huixquilucan',                    caption: 'Familias' },
+                              { src: '/images/banco/equipo-respuesta-emergencias-condominio-01.avif',     alt: 'Equipo de respuesta a emergencias Huixquilucan',                caption: 'Respuesta inmediata' },
+                            ] },
+  'atizapan':             { banner: { src: '/images/banco/caseta-seguridad-condominio-moderna-05.avif',            alt: `Caseta de seguridad en Atizapán` },
+                            items: [
+                              { src: '/images/banco/familias-seguras-condominio-mexico-01.avif',          alt: 'Familias seguras en Atizapán',                                  caption: 'Familias residentes' },
+                              { src: '/images/banco/equipo-respuesta-emergencias-condominio-05.avif',     alt: 'Equipo de respuesta a emergencias en Atizapán',                 caption: 'Respuesta 24/7' },
+                            ] },
+  'cuautitlan-izcalli':   { banner: { src: '/images/banco/caseta-seguridad-condominio-moderna-07.avif',            alt: `Seguridad privada en Cuautitlán Izcalli` },
+                            items: [
+                              { src: '/images/banco/familias-seguras-condominio-mexico-02.avif',          alt: 'Familias seguras en Cuautitlán Izcalli',                        caption: 'Comunidad protegida' },
+                              { src: '/images/banco/centro-monitoreo-seguridad-condominio-01.avif',       alt: 'Centro de monitoreo SEPRICO',                                   caption: 'Centro de monitoreo' },
+                            ] },
+  'metepec':              { banner: { src: '/images/banco/guardia-seguridad-atencion-residentes-02.avif',          alt: `Seguridad privada para condominios en Metepec` },
+                            items: [
+                              { src: '/images/banco/guardia-seguridad-atencion-residentes-04.avif',       alt: 'Guardia atendiendo residentes en Metepec',                      caption: 'Atención a residentes' },
+                              { src: '/images/banco/familias-mexicanas-condominio-seguro-01.avif',        alt: 'Familias mexicanas seguras en Metepec',                         caption: 'Familias seguras' },
+                            ] },
+};
+const v = ZONE_VISUALS[entry.slug];
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
@@ -24,6 +101,35 @@ const regionLabel = entry.data.region === 'cdmx' ? 'Ciudad de México' : 'Estado
     { label: regionLabel, href: `/zonas/#${entry.data.region}` },
     { label: entry.data.title.replace('Seguridad para Condominios en ', '') },
   ]} />
+
+  {v && (
+    <section class="bg-ink-900">
+      <div class="container-pro py-6">
+        <figure class="relative overflow-hidden rounded-2xl border border-white/10 bg-ink-800">
+          <img
+            src={v.banner.src}
+            srcset={v.banner.src.endsWith('.avif')
+              ? `${v.banner.src.replace(/\.avif$/, '-card.avif')} 800w, ${v.banner.src} 1600w`
+              : undefined}
+            sizes="(min-width:1024px) 1024px, 100vw"
+            alt={v.banner.alt}
+            width="1600"
+            height="900"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            class="aspect-[16/9] w-full object-cover"
+          />
+          <figcaption class="absolute inset-x-0 bottom-0 flex items-center gap-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-5 py-4 text-[11px] uppercase tracking-widest2 text-white/85">
+            <span class="inline-flex h-2 w-2 rounded-full bg-brand-500"></span>
+            <span class="font-bold text-brand-300">{regionLabel}</span>
+            <span class="text-white/40">·</span>
+            <span class="line-clamp-1">SEPRICO opera en {zoneShort}</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  )}
 
   <Section>
     <div class="mx-auto max-w-3xl">
@@ -50,6 +156,17 @@ const regionLabel = entry.data.region === 'cdmx' ? 'Ciudad de México' : 'Estado
       </article>
     </div>
   </Section>
+
+  {v && v.items.length > 0 && (
+    <ImageGallery
+      eyebrow={`Operación SEPRICO en ${zoneShort}`}
+      title="Cobertura visual de la zona"
+      subtitle={`Esquemas operativos representativos del servicio SEPRICO en condominios y residenciales de ${zoneShort}. Personal certificado SETEC, supervisión 24/7 y centro de monitoreo propio.`}
+      items={v.items}
+      columns={2}
+      bg="ink-800"
+    />
+  )}
 
   <CtaBanner />
 </BaseLayout>

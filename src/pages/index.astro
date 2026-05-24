@@ -13,6 +13,7 @@ import ValueProps from '@/components/ValueProps.astro';
 import Communities from '@/components/Communities.astro';
 import Testimonials from '@/components/Testimonials.astro';
 import Faq from '@/components/Faq.astro';
+import ImageGallery from '@/components/ImageGallery.astro';
 ---
 
 <BaseLayout
@@ -91,6 +92,19 @@ import Faq from '@/components/Faq.astro';
   >
     <Testimonials />
   </Section>
+
+  <ImageGallery
+    eyebrow="Operación SEPRICO en condominios"
+    title="Cómo se ve la operación en condominios reales"
+    subtitle="Imágenes representativas del esquema SEPRICO: caseta de control de acceso, rondines documentados, atención al residente, centro de monitoreo propio y respuesta a emergencias. Personal certificado SETEC con supervisión activa 24/7."
+    items={[
+      { src: '/images/general/hero-condominio.avif',                         alt: 'Hero — condominio bajo protección SEPRICO', caption: 'Esquema integral' },
+      { src: '/images/banco/centro-monitoreo-seguridad-condominio-01.avif',  alt: 'Centro de monitoreo electrónico SEPRICO', caption: 'Centro de monitoreo' },
+      { src: '/images/banco/equipo-respuesta-emergencias-condominio-01.avif',alt: 'Equipo de respuesta a emergencias en condominio', caption: 'Respuesta a emergencias' },
+    ]}
+    columns={3}
+    bg="ink-800"
+  />
 
   <Section
     eyebrow="Sectores atendidos"

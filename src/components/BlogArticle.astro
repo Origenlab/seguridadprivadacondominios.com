@@ -55,7 +55,11 @@ const related = all
 // ── URLs / contactos ─────────────────────────────────────────────
 const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
 const canonical = `${SITE.url}/${category.slug}/${entry.slug}/`;
-const ogImage = new URL('/images/og/og-image.webp', SITE.url).toString();
+const heroImageRel = entry.data.image;
+const ogImage = heroImageRel
+  ? new URL(heroImageRel, SITE.url).toString()
+  : new URL('/images/og/og-image.webp', SITE.url).toString();
+const heroImageAlt = entry.data.imageAlt ?? entry.data.title;
 
 // ── TOC (H2 auto generados por Astro) ────────────────────────────
 const tocItems = headings.filter((h) => h.depth === 2);
@@ -71,7 +75,12 @@ const articleSchema = {
   inLanguage: 'es-MX',
   datePublished: entry.data.pubDate.toISOString(),
   dateModified: entry.data.pubDate.toISOString(),
-  image: ogImage,
+  image: heroImageRel
+    ? [
+        new URL(heroImageRel, SITE.url).toString(),
+        ogImage,
+      ]
+    : ogImage,
   url: canonical,
   articleSection: category.articleSection,
   keywords: entry.data.tags.join(', '),
@@ -143,6 +152,36 @@ const heroAsideP2 = `Lectura aproximada: <strong class="text-white">${readingMin
     asideP2={heroAsideP2}
     isH1={true}
   />
+
+  {/* BANNER VISUAL DEL ARTÍCULO (imagen SEO con alt descriptivo) */}
+  {heroImageRel && (
+    <section class="bg-ink-900">
+      <div class="container-pro pt-2 pb-8">
+        <figure class="relative overflow-hidden rounded-2xl border border-white/10 bg-ink-800">
+          <img
+            src={heroImageRel}
+            srcset={heroImageRel.startsWith('/images/banco/') && heroImageRel.endsWith('.avif')
+              ? `${heroImageRel.replace(/\.avif$/, '-card.avif')} 800w, ${heroImageRel} 1600w`
+              : undefined}
+            sizes="(min-width:1024px) 1024px, 100vw"
+            alt={heroImageAlt}
+            width="1600"
+            height="900"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            class="aspect-[16/9] w-full object-cover"
+          />
+          <figcaption class="absolute inset-x-0 bottom-0 flex items-center gap-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-[11px] uppercase tracking-widest2 text-white/80">
+            <span class="inline-flex h-2 w-2 rounded-full bg-brand-500"></span>
+            <span class="font-bold text-brand-300">{category.label}</span>
+            <span class="text-white/40">·</span>
+            <span class="line-clamp-1">{entry.data.title}</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  )}
 
   <!-- ══════════════════════════════════════════════════════════════
        META STRIP (autor + certificaciones)
@@ -343,8 +382,26 @@ const heroAsideP2 = `Lectura aproximada: <strong class="text-white">${readingMin
                     class="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-900 hover:border-brand-500/40"
                   >
                     <div class="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-ink-700 via-ink-800 to-ink-900">
-                      <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(244,63,63,0.25),transparent_55%)]"></div>
-                      <span class="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-lg bg-brand-500 text-white shadow-md shadow-brand-500/30">
+                      {p.data.image ? (
+                        <img
+                          src={p.data.image.startsWith('/images/banco/') && p.data.image.endsWith('.avif')
+                            ? p.data.image.replace(/\.avif$/, '-card.avif')
+                            : p.data.image}
+                          srcset={p.data.image.startsWith('/images/banco/') && p.data.image.endsWith('.avif')
+                            ? `${p.data.image.replace(/\.avif$/, '-card.avif')} 800w, ${p.data.image} 1600w`
+                            : undefined}
+                          sizes="(min-width:1024px) 280px, (min-width:640px) 50vw, 100vw"
+                          alt={p.data.imageAlt ?? p.data.title}
+                          loading="lazy"
+                          decoding="async"
+                          width="800"
+                          height="450"
+                          class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                        />
+                      ) : (
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(244,63,63,0.25),transparent_55%)]"></div>
+                      )}
+                      <span class="absolute left-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-lg bg-brand-500 text-white shadow-md shadow-brand-500/30">
                         <Icon name={category.icon} class="h-5 w-5" />
                       </span>
                     </div>

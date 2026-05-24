@@ -66,7 +66,13 @@ const CAT_META: Record<string, { label: string; icon: string }> = {
                 <div class="relative aspect-[16/8] overflow-hidden bg-gradient-to-br from-ink-700 via-ink-800 to-ink-900">
                   {p.data.image ? (
                     <img
-                      src={p.data.image}
+                      src={p.data.image.startsWith('/images/banco/') && p.data.image.endsWith('.avif')
+                        ? p.data.image.replace(/\.avif$/, '-card.avif')
+                        : p.data.image}
+                      srcset={p.data.image.startsWith('/images/banco/') && p.data.image.endsWith('.avif')
+                        ? `${p.data.image.replace(/\.avif$/, '-card.avif')} 800w, ${p.data.image} 1600w`
+                        : undefined}
+                      sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
                       alt={p.data.imageAlt ?? p.data.title}
                       loading="lazy"
                       decoding="async"

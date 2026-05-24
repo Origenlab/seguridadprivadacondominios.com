@@ -4,6 +4,7 @@ import Section from '@/components/Section.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 import Icon from '@/components/Icon.astro';
 import CtaBanner from '@/components/CtaBanner.astro';
+import ImageGallery, { type GalleryItem } from '@/components/ImageGallery.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -19,6 +20,35 @@ const allServicios = await getCollection('servicios');
 const recommended = entry.data.recommended
   .map((slug) => allServicios.find((s) => s.slug === slug))
   .filter(Boolean) as CollectionEntry<'servicios'>[];
+
+// Galería específica por tipo de comunidad (alt SEO contextualizado)
+const COMMUNITY_GALLERY: Record<string, GalleryItem[]> = {
+  'cotos-cerrados': [
+    { src: '/images/banco/guardias-seguridad-rondines-condominio-03.avif', alt: `Rondines de seguridad privada en ${entry.data.title}`, caption: 'Rondines perimetrales' },
+    { src: '/images/banco/familia-segura-condominio-residencial-04.avif', alt: `Familias seguras en ${entry.data.title}`, caption: 'Familias residentes' },
+    { src: '/images/banco/patrullaje-interior-condominio-03.avif',         alt: `Patrullaje interior del coto cerrado`,                  caption: 'Patrullaje interior' },
+    { src: '/images/banco/vigilancia-nocturna-condominios-02.avif',        alt: `Vigilancia nocturna en coto cerrado`,                   caption: 'Vigilancia nocturna' },
+  ],
+  'fraccionamientos': [
+    { src: '/images/banco/familias-mexicanas-condominio-seguro-01.avif',   alt: `Familias seguras en fraccionamientos mexicanos`,        caption: 'Comunidad protegida' },
+    { src: '/images/banco/guardias-seguridad-rondines-condominio-05.avif', alt: `Guardia haciendo rondines en fraccionamiento`,          caption: 'Rondines documentados' },
+    { src: '/images/banco/familia-segura-condominio-residencial-05.avif',  alt: `Familia segura en fraccionamiento residencial`,         caption: 'Áreas comunes' },
+    { src: '/images/banco/vigilancia-nocturna-condominios-03.avif',        alt: `Vigilancia nocturna en fraccionamiento`,                caption: 'Cobertura 24/7' },
+  ],
+  'residenciales-premium': [
+    { src: '/images/banco/seguridad-privada-condominio-lujo-01.avif',      alt: `Seguridad privada en residenciales premium`,            caption: 'Estándar premium' },
+    { src: '/images/banco/seguridad-privada-condominio-lujo-02.avif',      alt: `Guardia uniformado en residencial de lujo`,             caption: 'Guardias certificados' },
+    { src: '/images/banco/caseta-seguridad-condominio-moderna-03.avif',    alt: `Caseta de seguridad moderna en residencial premium`,    caption: 'Caseta moderna' },
+    { src: '/images/banco/familia-segura-condominio-residencial-06.avif',  alt: `Familia segura en residencial premium`,                 caption: 'Tranquilidad familiar' },
+  ],
+  'torres-verticales': [
+    { src: '/images/banco/guardia-seguridad-atencion-residentes-02.avif',  alt: `Guardia atendiendo a residentes en torre vertical`,     caption: 'Atención a residentes' },
+    { src: '/images/banco/patrullaje-interior-condominio-04.avif',         alt: `Patrullaje interior de torre vertical`,                 caption: 'Patrullaje en pisos' },
+    { src: '/images/banco/guardia-seguridad-atencion-residentes-04.avif',  alt: `Recepción y atención en torre vertical`,                caption: 'Lobby y recepción' },
+    { src: '/images/banco/seguridad-privada-estacionamiento-condominio-01.avif', alt: `Seguridad en estacionamiento de torre vertical`,   caption: 'Estacionamiento' },
+  ],
+};
+const gallery = COMMUNITY_GALLERY[entry.slug] ?? [];
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
@@ -57,6 +87,22 @@ const recommended = entry.data.recommended
       <article class="prose prose-invert prose-headings:prose-a:text-brand-500 mt-10 max-w-none">
         <Content />
       </article>
+    </div>
+  </Section>
+
+  {gallery.length > 0 && (
+    <ImageGallery
+      eyebrow={`Operación SEPRICO en ${entry.data.title}`}
+      title="Cobertura visual del esquema"
+      subtitle={`Imágenes representativas de la operación de seguridad privada en ${entry.data.title.toLowerCase()}: rondines, atención a residentes y vigilancia perimetral. Personal certificado SETEC, supervisión 24/7.`}
+      items={gallery}
+      columns={2}
+      bg="ink-800"
+    />
+  )}
+
+  <Section>
+    <div class="mx-auto max-w-4xl">
 
       {recommended.length > 0 && (
         <div class="mt-12">
