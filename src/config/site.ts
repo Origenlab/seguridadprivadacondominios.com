@@ -55,15 +55,26 @@ export const SITE = {
  * SERVICIOS — slugs EXACTOS a producción (URLs raíz, no /servicios/[slug])
  */
 export const SERVICIOS = [
+  // Pilar 2 — Tecnología y Monitoreo
   { slug: 'control-de-acceso', title: 'Control de Acceso', icon: 'access' },
-  { slug: 'vigilancia-y-patrullaje', title: 'Vigilancia y Patrullaje', icon: 'patrol' },
   { slug: 'monitoreo-electronico', title: 'Monitoreo Electrónico', icon: 'cctv' },
-  { slug: 'consultoria-en-seguridad', title: 'Consultoría en Seguridad', icon: 'check' },
   { slug: 'sistemas-de-camaras-de-vigilancia', title: 'Cámaras de Vigilancia', icon: 'cctv' },
   { slug: 'control-biometrico-de-acceso', title: 'Control Biométrico', icon: 'access' },
   { slug: 'alarmas-de-seguridad', title: 'Alarmas de Seguridad', icon: 'alert' },
   { slug: 'intercomunicacion-avanzada', title: 'Intercomunicación', icon: 'phone' },
   { slug: 'sistemas-de-iluminacion-segura', title: 'Iluminación Segura', icon: 'shield' },
+  // Pilar 1 — Personal (servicio operativo)
+  { slug: 'vigilancia-y-patrullaje', title: 'Vigilancia y Patrullaje', icon: 'patrol' },
+  // Pilar 3 — Protocolos y Consultoría
+  { slug: 'consultoria-en-seguridad', title: 'Consultoría en Seguridad', icon: 'check' },
+  { slug: 'analisis-de-riesgos', title: 'Análisis de Riesgos', icon: 'check' },
+  { slug: 'planes-de-contingencia', title: 'Planes de Contingencia', icon: 'alert' },
+  { slug: 'auditorias-documentadas', title: 'Auditorías Documentadas', icon: 'shield' },
+  // Pilar 4 — Atención al Comité
+  { slug: 'ejecutivo-de-cuenta-dedicado', title: 'Ejecutivo de Cuenta Dedicado', icon: 'phone' },
+  { slug: 'reportes-mensuales-al-comite', title: 'Reportes Mensuales al Comité', icon: 'check' },
+  { slug: 'bitacora-digital-en-tiempo-real', title: 'Bitácora Digital en Tiempo Real', icon: 'clock' },
+  { slug: 'revision-trimestral-con-kpis', title: 'Revisión Trimestral con KPIs', icon: 'star' },
 ] as const;
 
 /**
@@ -125,9 +136,9 @@ export const NAV_LINKS = [
         desc: 'Análisis de riesgos, planes y auditorías documentadas.',
         items: [
           { label: 'Consultoría en Seguridad', href: '/consultoria-en-seguridad/', icon: 'check' as const },
-          { label: 'Análisis de Riesgos', href: '/protocolos-y-consultoria/#componentes', icon: 'check' as const },
-          { label: 'Planes de Contingencia', href: '/protocolos-y-consultoria/#componentes', icon: 'alert' as const },
-          { label: 'Auditorías Documentadas', href: '/protocolos-y-consultoria/#componentes', icon: 'shield' as const },
+          { label: 'Análisis de Riesgos', href: '/analisis-de-riesgos/', icon: 'check' as const },
+          { label: 'Planes de Contingencia', href: '/planes-de-contingencia/', icon: 'alert' as const },
+          { label: 'Auditorías Documentadas', href: '/auditorias-documentadas/', icon: 'shield' as const },
         ],
       },
       {
@@ -137,10 +148,10 @@ export const NAV_LINKS = [
         icon: 'star' as const,
         desc: 'Ejecutivo dedicado, KPIs trimestrales y bitácora digital.',
         items: [
-          { label: 'Ejecutivo de Cuenta Dedicado', href: '/atencion-al-comite-condominios/#componentes', icon: 'phone' as const },
-          { label: 'Reportes Mensuales al Comité', href: '/atencion-al-comite-condominios/#componentes', icon: 'check' as const },
-          { label: 'Bitácora Digital en Tiempo Real', href: '/atencion-al-comite-condominios/#componentes', icon: 'clock' as const },
-          { label: 'Revisión Trimestral con KPIs', href: '/atencion-al-comite-condominios/#componentes', icon: 'star' as const },
+          { label: 'Ejecutivo de Cuenta Dedicado', href: '/ejecutivo-de-cuenta-dedicado/', icon: 'phone' as const },
+          { label: 'Reportes Mensuales al Comité', href: '/reportes-mensuales-al-comite/', icon: 'check' as const },
+          { label: 'Bitácora Digital en Tiempo Real', href: '/bitacora-digital-en-tiempo-real/', icon: 'clock' as const },
+          { label: 'Revisión Trimestral con KPIs', href: '/revision-trimestral-con-kpis/', icon: 'star' as const },
         ],
       },
     ],

@@ -38,7 +38,7 @@ const pillarComponents = [
     desc: 'Una persona con nombre, número directo y conocimiento del condominio. Atiende solicitudes operativas, reclamos, escalamientos y acompaña al comité durante incidentes críticos.',
     image: '/images/general/seguridad-condominios.avif',
     icon: 'phone' as const,
-    href: '#ejecutivo',
+    href: '/ejecutivo-de-cuenta-dedicado/',
     badge: '01',
   },
   {
@@ -46,7 +46,7 @@ const pillarComponents = [
     desc: 'Informe ejecutivo entregado entre el día 1 y 5 de cada mes. Métricas de cumplimiento, incidentes documentados, hallazgos del supervisor y recomendaciones operativas — listo para presentar en asamblea.',
     image: '/images/servicios/monitoreo-electronico.avif',
     icon: 'check' as const,
-    href: '#reportes',
+    href: '/reportes-mensuales-al-comite/',
     badge: '02',
   },
   {
@@ -54,7 +54,7 @@ const pillarComponents = [
     desc: 'Panel web 24/7 con cada turno, ronda, ingreso, alerta y evento registrado con timestamp y operador responsable. Consultable por el comité y administración sin intermediarios técnicos.',
     image: '/images/servicios/control-de-acceso.avif',
     icon: 'clock' as const,
-    href: '#bitacora',
+    href: '/bitacora-digital-en-tiempo-real/',
     badge: '03',
   },
   {
@@ -62,7 +62,7 @@ const pillarComponents = [
     desc: 'Sesión formal de 90 minutos cada trimestre con la mesa directiva: análisis de tendencias, comparativa periodo a periodo y plan de ajustes documentado. Acta firmada por ambas partes.',
     image: '/images/servicios/consultoria-en-seguridad.avif',
     icon: 'star' as const,
-    href: '#revision',
+    href: '/revision-trimestral-con-kpis/',
     badge: '04',
   },
 ];
@@ -143,7 +143,11 @@ const collectionSchema = {
       position: i + 1,
       name: c.title,
       description: c.desc,
-      url: canonicalUrl + c.href,
+      url: c.href.startsWith('http')
+        ? c.href
+        : c.href.startsWith('/')
+          ? new URL(c.href, SITE.url).toString()
+          : canonicalUrl + (c.href.startsWith('#') ? c.href : '#' + c.href),
     })),
   },
 };
