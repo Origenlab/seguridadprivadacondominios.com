@@ -6,7 +6,7 @@ const servicios = defineCollection({
     title: z.string(),
     description: z.string(),
     icon: z.enum(['shield', 'cctv', 'patrol', 'access', 'alert', 'check', 'phone', 'mail', 'pin', 'clock', 'star', 'arrow']),
-    category: z.enum(['personal', 'tecnologia', 'protocolos']).default('protocolos'),
+    category: z.enum(['personal', 'tecnologia', 'protocolos', 'atencion']).default('protocolos'),
     /** 'servicio' aparece en /servicios-de-seguridad-privada/, 'rrhh' en /reclutamiento-para-seguridad-privada/ */
     kind: z.enum(['servicio', 'rrhh']).default('servicio'),
     /** Ruta a la imagen card (público) — ej. /images/servicios/control-de-acceso.avif */

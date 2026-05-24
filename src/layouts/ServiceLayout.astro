@@ -45,6 +45,7 @@ const subHubByCategory: Record<string, { label: string; href: string } | undefin
   tecnologia: { label: 'Tecnología y Monitoreo', href: '/tecnologia-y-monitoreo/' },
   personal: { label: 'Personal de Seguridad', href: '/personal-de-seguridad-residencial/' },
   protocolos: { label: 'Protocolos y Consultoría', href: '/protocolos-y-consultoria/' },
+  atencion: { label: 'Atención al Comité', href: '/atencion-al-comite-condominios/' },
 };
 
 // Aplica también a RRHH cuya categoría sea 'personal' (vigilancia-y-patrullaje, personal-de-seguridad, entrenamiento-continuo, investigacion-de-antecedentes)
@@ -83,6 +84,7 @@ const categoryLabelMap: Record<string, string> = {
   personal: 'Personal de seguridad',
   tecnologia: 'Tecnología y monitoreo',
   protocolos: 'Protocolos y consultoría',
+  atencion: 'Atención al comité administrativo',
 };
 const categoryLabel = categoryLabelMap[data.category] ?? hubLabel;
 
