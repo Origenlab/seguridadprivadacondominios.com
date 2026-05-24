@@ -1,14 +1,19 @@
 ---
-// Redirect: /blog/{slug}/ → /seguridad-privada/{slug}/ (URL canónica en producción)
+// Redirect: /blog/{slug}/ → /{category}/{slug}/ (URL canónica en producción)
+// Despacha por categoría real del frontmatter (sin esto, todos iban a
+// /seguridad-privada/{slug}/ y 70 de 117 posts caían en 404).
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((p) => ({ params: { slug: p.slug }, props: { slug: p.slug } }));
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+    props: { slug: p.slug, category: p.data.category },
+  }));
 }
 
-const { slug } = Astro.props;
-const target = `/seguridad-privada/${slug}/`;
+const { slug, category } = Astro.props;
+const target = `/${category}/${slug}/`;
 ---
 <!doctype html>
 <html lang="es-MX">

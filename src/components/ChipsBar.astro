@@ -1,0 +1,46 @@
+---
+/**
+ * ChipsBar — barra horizontal roja con chips para navegación contextual.
+ * Usada en los L2 sub-hubs justo después del Hero para mostrar los
+ * componentes/L3 hijos del cluster como entrada rápida.
+ *
+ * Reemplaza markup inline duplicado en los 4 L2 sub-hubs.
+ */
+import Icon from '@/components/Icon.astro';
+
+type IconName = 'shield' | 'cctv' | 'patrol' | 'access' | 'alert' | 'check' | 'phone' | 'mail' | 'pin' | 'clock' | 'star' | 'arrow';
+
+interface Chip {
+  label: string;
+  href: string;
+  icon: IconName;
+}
+
+interface Props {
+  chips: readonly Chip[];
+  ariaLabel?: string;
+}
+
+const { chips, ariaLabel = 'Navegación del cluster' } = Astro.props;
+
+const cols = chips.length === 4 ? 'md:grid-cols-4' : chips.length === 7 ? 'md:grid-cols-4 lg:grid-cols-7' : 'md:grid-cols-3';
+---
+
+<nav aria-label={ariaLabel} class="bg-brand-500">
+  <div class={`container-pro grid grid-cols-2 ${cols}`}>
+    {chips.map((c, i) => (
+      <a
+        href={c.href}
+        class:list={[
+          'group flex items-center gap-3 px-4 py-4 text-white transition-colors hover:bg-brand-600',
+          i > 0 && 'md:border-l border-white/10',
+        ]}
+      >
+        <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-white/15">
+          <Icon name={c.icon} class="h-4 w-4" />
+        </span>
+        <span class="truncate text-xs font-bold leading-tight">{c.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>

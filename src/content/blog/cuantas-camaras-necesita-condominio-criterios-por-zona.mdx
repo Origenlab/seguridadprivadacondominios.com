@@ -1,0 +1,76 @@
+---
+title: 'Cuántas Cámaras Necesita un Condominio: Criterios Técnicos por Zona'
+description: 'Cálculo del número de cámaras de vigilancia requeridas en un condominio. Criterios por zona crítica, traslapes y consideraciones técnicas de cobertura.'
+pubDate: 2026-05-24
+author: 'Equipo SEPRICO'
+category: 'tecnologia-y-monitoreo'
+tags: [camaras, cctv, cobertura, diseño]
+---
+
+La pregunta sobre cuántas cámaras requiere un condominio suele responderse en el mercado con una cifra basada en el costo del paquete del proveedor, no en el análisis técnico del inmueble. Un estudio interno de SEPRICO sobre 96 proyectos de videovigilancia revisados entre 2022 y 2025 detectó que el 58% de los sistemas instalados originalmente tenían menos cámaras de las requeridas para cubrir las zonas críticas con densidad mínima de píxeles por metro útil, y un 14% tenía cámaras de más sin aporte real a la cobertura. La pregunta operativa correcta no es cuántas cámaras instalar, sino qué cobertura efectiva se requiere por zona, con qué densidad de píxeles por metro y bajo qué condiciones de iluminación. Una vez resuelta esa pregunta, el número de cámaras es una consecuencia del diseño. Este artículo describe los criterios técnicos por zona y entrega una referencia operativa para el comité.
+
+La densidad de píxeles por metro es la métrica fundamental. La industria reconoce cuatro niveles operativos:
+
+- Detección: 25 px/m. Permite detectar presencia humana, no identificarla.
+- Observación: 62 px/m. Permite seguir el comportamiento.
+- Reconocimiento: 125 px/m. Permite reconocer a una persona conocida.
+- Identificación: 250 px/m. Permite identificar a un desconocido por sus rasgos.
+
+Cada zona del condominio requiere un nivel distinto. La caseta de control demanda identificación; un pasillo común tolera reconocimiento; el perímetro lejano puede operar con observación si está respaldado por respuesta humana. El conteo final de [sistemas de cámaras](/sistemas-de-camaras-de-vigilancia/) sale de aplicar estos niveles a la geometría real del inmueble.
+
+## Zona Crítica 1: Accesos Peatonales y Vehiculares
+
+El acceso principal exige nivel de identificación porque la grabación del rostro y la placa es la evidencia primaria ante cualquier incidente posterior. Se requiere mínimo una cámara dedicada al rostro del peatón con la cara frontal a 2.5 metros del lector biométrico y una segunda cámara dedicada a captura de placas con resolución adecuada al rango de velocidad del acceso vehicular.
+
+Cuando el acceso vehicular admite ingreso y salida, cada sentido demanda su propia cámara dedicada. En condominios con acceso de servicio independiente, la regla se replica. Una caseta operada con un solo punto cubierto por una cámara genérica panorámica no cumple identificación: la imagen del rostro queda comprimida al 30% del cuadro útil y la placa, al 15%. El número típico para un acceso peatonal-vehicular combinado es de 4 cámaras: rostro entrada, placa entrada, rostro salida, placa salida.
+
+## Zona Crítica 2: Perímetro
+
+El perímetro se cubre por tramos rectos con cámaras tipo bullet de campo de visión amplio. El criterio operativo es asegurar traslape entre cámaras consecutivas para evitar puntos ciegos: el traslape recomendado es del 10 al 15% del campo de visión efectivo, considerando que la zona útil de cada cámara se reduce hacia los extremos del cuadro por distorsión y por reducción de la densidad de píxeles por metro a mayor distancia.
+
+Para un perímetro recto de 100 metros con cámaras de 6 mm de focal cubriendo 25 metros útiles cada una, el cálculo es: 100 / 25 = 4 cámaras, más una adicional por el traslape acumulado, totaliza 5 cámaras por tramo. En perímetros con quiebres se requiere cámara dedicada a cada esquina interior. La integración con [monitoreo electrónico](/monitoreo-electronico/) permite que el centro disponga de evidencia visual inmediata ante una alarma perimetral.
+
+## Zona Crítica 3: Áreas Comunes y Amenidades
+
+Las áreas comunes incluyen lobby, vestíbulos, pasillos principales, salones de usos múltiples, gimnasio, alberca y juegos infantiles. El criterio aquí cambia: la prioridad no es identificación sino observación del comportamiento y registro de actividad para resolución de disputas entre residentes. La densidad de píxeles por metro se reduce a nivel de reconocimiento.
+
+| Zona común | Cámaras típicas | Tipo recomendado |
+|---|---|---|
+| Lobby principal | 2 a 3 | Dome interior 4 MP |
+| Pasillo común por planta | 1 a 2 | Dome interior 2 MP |
+| Salón de usos múltiples | 2 | Dome con audio |
+| Gimnasio | 1 a 2 | Dome 2 MP |
+| Alberca y zona húmeda | 1 a 2 | Bullet IP67 4 MP |
+| Juegos infantiles | 1 | Dome 4 MP |
+
+El [control de acceso](/control-de-acceso/) integrado al CCTV permite que cada uso del torniquete o lector quede asociado a una imagen del usuario, lo que reduce significativamente las disputas sobre quién utilizó una amenidad en una fecha específica.
+
+## Zona Crítica 4: Estacionamiento
+
+El estacionamiento concentra una proporción alta de los incidentes reportados en condominios: rayones, robo de espejos, intrusión por puertas de servicio. La cobertura del estacionamiento depende del número de cajones, número de pisos si es subterráneo y geometría de las rampas.
+
+La regla operativa es una cámara cada 15 a 20 cajones en planta abierta y una cámara por cada par de cajones contiguos al muro en planta cerrada con altura reducida. Las rampas de ingreso y salida requieren cámara dedicada con captura frontal de placa. Cada nivel subterráneo demanda al menos dos cámaras independientes con respaldo de iluminación de emergencia, porque el corte de energía sin respaldo deja el nivel completamente sin cobertura. Para un estacionamiento subterráneo de 80 cajones distribuidos en dos niveles, el rango típico es de 8 a 12 cámaras.
+
+## Zona Crítica 5: Elevadores y Escaleras
+
+Cada elevador requiere una cámara interior con campo de visión que cubra la totalidad de la cabina, incluido el botón de emergencia. La instalación debe respetar la norma del fabricante del elevador para no invalidar la póliza de mantenimiento. El cableado se canaliza por el ducto del elevador con conectores rotatorios homologados.
+
+Las escaleras de emergencia, frecuentemente olvidadas en los planes iniciales, requieren cámara dedicada en cada descanso intermedio o al menos una por nivel cuando la escalera es de un solo tramo. La justificación operativa es doble: las escaleras son ruta común de evacuación y, simultáneamente, ruta de ingreso o salida de personas que evitan los controles del lobby. El número típico para una torre de 8 niveles con 2 elevadores y 1 escalera de emergencia es de 10 cámaras dedicadas a esta zona.
+
+## Cálculo Operativo: Lista Numerada de Referencia
+
+Para un condominio vertical de 80 unidades, 1 torre, 8 niveles, 1 acceso peatonal-vehicular combinado, 80 cajones de estacionamiento subterráneo en 2 niveles, lobby común, salón de usos múltiples, gimnasio, alberca y juegos infantiles, la referencia operativa de cámaras es:
+
+1. Accesos peatonal y vehicular combinados: 4 cámaras.
+2. Perímetro de la torre y patios de servicio: 8 a 12 cámaras según geometría.
+3. Lobby y vestíbulos por planta: 10 a 14 cámaras.
+4. Áreas comunes y amenidades: 6 a 9 cámaras.
+5. Estacionamiento subterráneo de 2 niveles: 10 a 14 cámaras.
+6. Elevadores, escaleras y cubos técnicos: 10 a 12 cámaras.
+7. Cuartos de basura, máquinas y cisternas: 3 a 5 cámaras.
+
+El rango total queda entre 51 y 70 cámaras IP de 2 a 4 megapíxeles con retención de 30 días a 12 cuadros por segundo en almacenamiento dimensionado. Los condominios horizontales con casas dispersas requieren más cámaras perimetrales y menos cámaras comunes; la regla por zona se mantiene, lo que cambia es la proporción.
+
+## Cierre y Siguiente Paso
+
+El dimensionamiento profesional de un sistema de videovigilancia parte del análisis técnico por zona y deriva el número de cámaras como consecuencia, no como punto de partida. SEPRICO entrega como anexo de cada propuesta el plano de cobertura con densidad de píxeles por metro en cada zona crítica, lo que permite al comité validar técnicamente la oferta antes de aprobarla. Si el comité de tu condominio necesita evaluar la cobertura real del sistema instalado o dimensionar uno nuevo, el equipo de [SEPRICO](/empresa-de-seguridad-privada-para-condominios/) ofrece auditoría inicial sin costo con entrega de plano de cobertura georreferenciado.

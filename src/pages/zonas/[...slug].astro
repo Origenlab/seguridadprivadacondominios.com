@@ -20,8 +20,8 @@ const regionLabel = entry.data.region === 'cdmx' ? 'Ciudad de México' : 'Estado
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
   <Breadcrumb items={[
-    { label: 'Zonas', href: '/zonas' },
-    { label: regionLabel, href: `/zonas#${entry.data.region}` },
+    { label: 'Zonas', href: '/zonas/' },
+    { label: regionLabel, href: `/zonas/#${entry.data.region}` },
     { label: entry.data.title.replace('Seguridad para Condominios en ', '') },
   ]} />
 

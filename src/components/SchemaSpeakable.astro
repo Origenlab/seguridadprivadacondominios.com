@@ -11,10 +11,19 @@ import { SITE } from '@/config/site';
 
 interface Props {
   url: string;
+  /** Selectores CSS específicos de la página. Si se omite, usa los defaults de L3. */
+  selectors?: string[];
 }
 
-const { url } = Astro.props;
+const { url, selectors } = Astro.props;
 const absoluteUrl = url.startsWith('http') ? url : new URL(url, SITE.url).toString();
+
+const defaultSelectors = [
+  'h1',
+  'h2',
+  '[itemprop="description"]',
+  '.faq summary',
+];
 
 const schema = {
   '@context': 'https://schema.org',
@@ -23,12 +32,7 @@ const schema = {
   url: absoluteUrl,
   speakable: {
     '@type': 'SpeakableSpecification',
-    cssSelector: [
-      'h1',
-      '.prose-service > h2:first-child + p',
-      'article details summary',
-      '[itemprop="description"]',
-    ],
+    cssSelector: selectors && selectors.length > 0 ? selectors : defaultSelectors,
   },
   inLanguage: 'es-MX',
   isPartOf: { '@id': `${SITE.url}/#website` },

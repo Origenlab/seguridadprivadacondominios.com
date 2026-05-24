@@ -77,16 +77,16 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
         <li><a href="/personal-de-seguridad-residencial/" class="hover:text-brand-400">Personal de seguridad</a></li>
         <li><a href="/tecnologia-y-monitoreo/" class="hover:text-brand-400">Tecnología y monitoreo</a></li>
         <li><a href="/protocolos-y-consultoria/" class="hover:text-brand-400">Protocolos y consultoría</a></li>
-        <li><a href="/servicios-de-seguridad-privada/#comite" class="hover:text-brand-400">Atención al comité</a></li>
+        <li><a href="/atencion-al-comite-condominios/" class="hover:text-brand-400">Atención al comité</a></li>
         <li class="pt-1"><a href="/servicios-de-seguridad-privada/" class="text-brand-500 hover:text-brand-400">Ver catálogo →</a></li>
       </ul>
 
       <h3 class="mt-8 text-sm font-bold uppercase tracking-widest2 text-white">Empresa</h3>
       <ul class="mt-4 space-y-2.5 text-sm text-white/65">
-        <li><a href="/nosotros" class="hover:text-brand-400">Nosotros</a></li>
-        <li><a href="/comunidades" class="hover:text-brand-400">Tipos de comunidad</a></li>
-        <li><a href="/zonas" class="hover:text-brand-400">Zonas de cobertura</a></li>
-        <li><a href="/blog" class="hover:text-brand-400">Blog</a></li>
+        <li><a href="/nosotros/" class="hover:text-brand-400">Nosotros</a></li>
+        <li><a href="/comunidades/" class="hover:text-brand-400">Tipos de comunidad</a></li>
+        <li><a href="/zonas/" class="hover:text-brand-400">Zonas de cobertura</a></li>
+        <li><a href="/blog/" class="hover:text-brand-400">Blog</a></li>
         <li><a href="/empresa-de-seguridad-privada-para-condominios/" class="hover:text-brand-400">Contacto</a></li>
       </ul>
     </div>
@@ -95,9 +95,9 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
       <h3 class="text-sm font-bold uppercase tracking-widest2 text-white">CDMX</h3>
       <ul class="mt-4 space-y-2.5 text-sm text-white/65">
         {ZONAS_CDMX.slice(0, 6).map((z) => (
-          <li><a href={`/zonas/${z.slug}`} class="hover:text-brand-400">{z.name}</a></li>
+          <li><a href={`/zonas/${z.slug}/`} class="hover:text-brand-400">{z.name}</a></li>
         ))}
-        <li><a href="/zonas#cdmx" class="text-brand-500 hover:text-brand-400">Ver todas →</a></li>
+        <li><a href="/zonas/#cdmx" class="text-brand-500 hover:text-brand-400">Ver todas →</a></li>
       </ul>
     </div>
 
@@ -105,9 +105,9 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
       <h3 class="text-sm font-bold uppercase tracking-widest2 text-white">Estado de México</h3>
       <ul class="mt-4 space-y-2.5 text-sm text-white/65">
         {ZONAS_EDOMEX.slice(0, 6).map((z) => (
-          <li><a href={`/zonas/${z.slug}`} class="hover:text-brand-400">{z.name}</a></li>
+          <li><a href={`/zonas/${z.slug}/`} class="hover:text-brand-400">{z.name}</a></li>
         ))}
-        <li><a href="/zonas#edomex" class="text-brand-500 hover:text-brand-400">Ver todas →</a></li>
+        <li><a href="/zonas/#edomex" class="text-brand-500 hover:text-brand-400">Ver todas →</a></li>
       </ul>
     </div>
   </div>
@@ -131,7 +131,7 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
   <div class="container-pro flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/40 md:flex-row">
     <p>© {year} {SITE.name}. Todos los derechos reservados.</p>
     <nav class="flex gap-5">
-      <a href="/aviso-de-privacidad" class="hover:text-white">Aviso de Privacidad</a>
+      <a href="/aviso-de-privacidad/" class="hover:text-white">Aviso de Privacidad</a>
       <a href="/empresa-de-seguridad-privada-para-condominios/" class="hover:text-white">Contacto</a>
       <a href="/sitemap-index.xml" class="hover:text-white">Sitemap</a>
     </nav>

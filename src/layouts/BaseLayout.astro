@@ -96,13 +96,10 @@ const websiteSchema = {
   '@id': websiteId,
   url: SITE.url,
   name: SITE.name,
+  alternateName: SITE.legalName,
+  description: SITE.description,
   inLanguage: SITE.defaultLocale,
   publisher: { '@id': orgId },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${SITE.url}/blog/?q={search_term_string}`,
-    'query-input': 'required name=search_term_string',
-  },
 };
 
 // Brand entity para refuerzo en LLMs / Knowledge Graph
@@ -128,16 +125,24 @@ const cleanBrand = JSON.parse(JSON.stringify(brandSchema));
 <html lang="es-MX" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"

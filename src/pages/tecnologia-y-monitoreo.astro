@@ -7,27 +7,30 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import Icon from '@/components/Icon.astro';
 import Process from '@/components/Process.astro';
 import BadgeCard from '@/components/BadgeCard.astro';
+import SubHubFaq from '@/components/SubHubFaq.astro';
+import ChipsBar from '@/components/ChipsBar.astro';
 import ClusterGrid from '@/components/ClusterGrid.astro';
 import AboutSeprico from '@/components/AboutSeprico.astro';
-import Faq from '@/components/Faq.astro';
 import SchemaBreadcrumb from '@/components/SchemaBreadcrumb.astro';
 import SchemaSpeakable from '@/components/SchemaSpeakable.astro';
 import { SITE, SERVICIOS } from '@/config/site';
+import { getEntry } from 'astro:content';
 
-// ───── METADATA ─────
+// ───── METADATA SEO ─────
 const slug = 'tecnologia-y-monitoreo';
 const canonicalPath = `/${slug}/`;
 const canonicalUrl = new URL(canonicalPath, SITE.url).toString();
-const seoTitle = 'Tecnología y Monitoreo para Condominios — Pilar 2 SEPRICO';
-const seoDescription = 'CCTV, control de acceso biométrico, alarmas, intercomunicación e iluminación inteligente operando como un solo ecosistema con centro de monitoreo 24/7.';
+const seoTitle = 'Tecnología y Monitoreo para Condominios CDMX y Edomex';
+const seoDescription =
+  'CCTV, control de acceso biométrico, alarmas, intercomunicación e iluminación inteligente como un solo ecosistema, con centro de monitoreo 24/7 en CDMX y Edomex.';
 const keywords = [
   'tecnología de seguridad para condominios',
-  'monitoreo electrónico residencial',
+  'monitoreo electrónico residencial CDMX',
   'sistemas integrados de seguridad',
-  'CCTV condominio',
-  'control de acceso biométrico',
+  'CCTV con control de acceso biométrico',
   'centro de monitoreo 24/7',
-  'seguridad electrónica CDMX',
+  'seguridad electrónica condominios Edomex',
+  'integración CCTV alarmas e intercom',
 ];
 
 // ───── 7 servicios del cluster ─────
@@ -43,41 +46,121 @@ const techSlugs = [
 
 // ───── PROCESO general del cluster ─────
 const clusterProcess = [
-  { icon: 'phone' as const, title: 'Diagnóstico integrado', desc: 'Revisamos el ecosistema actual del condominio: cámaras existentes, alarmas, intercom y accesos. Identificamos silos y oportunidades de integración.' },
-  { icon: 'pin' as const, title: 'Levantamiento técnico sin costo', desc: 'Visita en sitio multidisciplinaria: red, eléctrico, perimetral y operativo. Diseño de arquitectura unificada con plano técnico documentado.' },
-  { icon: 'check' as const, title: 'Propuesta consolidada en 48 horas', desc: 'Cotización por servicio + paquete integral, plan de implementación por fases y SLAs contractuales agregados para el cluster.' },
-  { icon: 'shield' as const, title: 'Implementación coordinada', desc: 'Despliegue por etapas con un solo equipo SEPRICO: cero conflictos entre proveedores, cero culpa cruzada cuando algo no integra.' },
-  { icon: 'star' as const, title: 'Operación unificada 24/7', desc: 'Centro de monitoreo opera todo el ecosistema con reporte mensual ejecutivo agregado y revisión trimestral con la mesa directiva.' },
+  {
+    icon: 'phone' as const,
+    title: 'Diagnóstico integrado',
+    desc: 'Revisamos el ecosistema actual del condominio: cámaras existentes, alarmas, intercom y accesos. Identificamos silos operativos y oportunidades reales de integración.',
+  },
+  {
+    icon: 'pin' as const,
+    title: 'Levantamiento técnico sin costo',
+    desc: 'Visita en sitio multidisciplinaria: red, eléctrico, perimetral y operativo. Diseño de arquitectura unificada con plano técnico documentado y validado.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Propuesta consolidada en 48 horas',
+    desc: 'Cotización por servicio individual o paquete integral, plan de implementación por fases y SLAs contractuales agregados para todo el cluster.',
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Implementación coordinada',
+    desc: 'Despliegue por etapas con un solo equipo SEPRICO: cero conflictos entre proveedores, cero culpa cruzada cuando algo no integra entre subsistemas.',
+  },
+  {
+    icon: 'star' as const,
+    title: 'Operación unificada 24/7',
+    desc: 'Centro de monitoreo opera todo el ecosistema con reporte mensual ejecutivo agregado y revisión trimestral con la mesa directiva del condominio.',
+  },
 ];
 
 // ───── BENEFICIOS del enfoque integrado ─────
 const integratedBenefits = [
-  { title: 'Un solo proveedor responsable', desc: 'Personal, tecnología y centro de monitoreo bajo una sola operación. No hay culpa cruzada entre proveedores cuando un evento no se atiende.' },
-  { title: 'Eventos sincronizados', desc: 'Una alarma activa la cámara correspondiente, el operador valida con video y el guardia recibe el aviso con contexto. Respuesta coordinada, no acciones aisladas.' },
-  { title: 'Reporte ejecutivo unificado', desc: 'El comité recibe un solo informe mensual con KPIs agregados del ecosistema, no siete reportes desconectados por proveedor.' },
-  { title: 'Cumplimiento legal blindado', desc: 'SSPC + LFPDPPP + NOM-001-SEDE cubiertos en cada implementación. Una sola política de privacidad para todo el ecosistema.' },
-  { title: 'Inversión protegida por fases', desc: 'El condominio puede arrancar con CCTV + monitoreo y añadir acceso, alarmas e iluminación por etapas sin reemplazar la base.' },
-  { title: 'Mantenimiento coordinado', desc: 'Un solo cronograma de mantenimiento preventivo para todos los sistemas. Una sola visita técnica trimestral cubre el ecosistema completo.' },
+  {
+    title: 'Un solo proveedor responsable',
+    desc: 'Personal, tecnología y centro de monitoreo bajo una sola operación. No hay culpa cruzada entre proveedores cuando un evento no se atiende a tiempo.',
+  },
+  {
+    title: 'Eventos sincronizados',
+    desc: 'Una alarma activa la cámara correspondiente, el operador valida con video y el guardia recibe el aviso con contexto. Respuesta coordinada, no acciones aisladas.',
+  },
+  {
+    title: 'Reporte ejecutivo unificado',
+    desc: 'El comité recibe un solo informe mensual con KPIs agregados del ecosistema, no siete reportes desconectados por proveedor individual.',
+  },
+  {
+    title: 'Cumplimiento legal blindado',
+    desc: 'Permiso SSPC, LFPDPPP y NOM-001-SEDE cubiertos en cada implementación. Una sola política de privacidad y un solo expediente para todo el ecosistema.',
+  },
+  {
+    title: 'Inversión protegida por fases',
+    desc: 'El condominio puede arrancar con CCTV y monitoreo, y añadir acceso, alarmas e iluminación por etapas sin reemplazar la base ya instalada.',
+  },
+  {
+    title: 'Mantenimiento coordinado',
+    desc: 'Un solo cronograma de mantenimiento preventivo para todos los sistemas. Una visita técnica trimestral cubre el ecosistema completo, sin coordinación manual.',
+  },
 ];
 
 // ───── DIFERENCIADORES del cluster ─────
 const clusterValueProps = [
-  { icon: 'shield' as const, title: '25 años en seguridad residencial', desc: 'Desde el año 2000 implementando tecnología en condominios CDMX y Edomex. Permiso SSPC vigente, ISO 9001:2015, capacitación SETEC.' },
-  { icon: 'cctv' as const, title: 'Centro de monitoreo propio', desc: 'No tercerizamos. Operadores SEPRICO certificados con SLA documentado, relevos cada 4 horas y respaldo eléctrico + conectividad dual.' },
-  { icon: 'check' as const, title: 'Marcas líderes con respaldo MX', desc: 'Hikvision, Dahua, ZKTeco, Suprema, Honeywell, Axis, Bosch, Philips. Refacciones disponibles localmente y firmware actualizado mensualmente.' },
-  { icon: 'clock' as const, title: 'SLAs contractuales medibles', desc: 'MTTD, MTTR, falsas alarmas filtradas, disponibilidad del sistema. Métricas escritas en contrato, no promesas verbales.' },
-  { icon: 'phone' as const, title: 'Ejecutivo de cuenta dedicado', desc: 'Una persona con nombre y número directo atiende el ecosistema completo del condominio. Sin call centers ni interlocutores rotativos.' },
-  { icon: 'star' as const, title: '94% de renovación al primer año', desc: 'Los comités que contratan el ecosistema integrado renuevan con SEPRICO. La integración operativa es más difícil de reemplazar que un proveedor único.' },
+  {
+    icon: 'shield' as const,
+    title: '25 años en seguridad residencial',
+    desc: 'Desde el año 2000 implementando tecnología en condominios de CDMX y Edomex. Permiso SSPC vigente, ISO 9001:2015 y capacitación SETEC actualizada.',
+  },
+  {
+    icon: 'cctv' as const,
+    title: 'Centro de monitoreo propio',
+    desc: 'No tercerizamos. Operadores SEPRICO certificados con SLA documentado, relevos cada 4 horas y respaldo eléctrico más conectividad dual blindada.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Marcas líderes con respaldo en México',
+    desc: 'Hikvision, Dahua, ZKTeco, Suprema, Honeywell, Axis, Bosch y Philips. Refacciones disponibles localmente y soporte técnico documentado por contrato.',
+  },
+  {
+    icon: 'clock' as const,
+    title: 'SLAs contractuales medibles',
+    desc: 'MTTD, MTTR, tasa de falsas alarmas filtradas y disponibilidad del sistema. Métricas escritas en contrato, no promesas verbales que se diluyen.',
+  },
+  {
+    icon: 'phone' as const,
+    title: 'Ejecutivo de cuenta dedicado',
+    desc: 'Una persona con nombre y número directo atiende el ecosistema completo del condominio. Sin call centers ni interlocutores rotativos para escalaciones.',
+  },
+  {
+    icon: 'star' as const,
+    title: '94% de renovación al primer año',
+    desc: 'Los comités que contratan el ecosistema integrado renuevan con SEPRICO. La integración operativa es más difícil de reemplazar que un proveedor más barato.',
+  },
 ];
 
 // ───── FAQ del cluster ─────
 const clusterFaqs = [
-  { q: '¿Puedo contratar los servicios por separado o tienen que ser todos juntos?', a: 'Por separado. Cada uno de los 7 servicios se puede contratar independientemente. El valor del ecosistema crece cuando se integran, pero no exigimos paquete completo — empezamos donde el condominio más lo necesita.' },
-  { q: '¿Qué diferencia hay entre contratar el cluster integrado vs proveedores separados?', a: 'Coordinación operativa real. Cuando cámaras, alarmas y acceso vienen de un solo proveedor, los eventos se procesan en sincronía. Con proveedores separados cada uno opera en silo y nadie es responsable cuando algo falla entre sistemas.' },
-  { q: '¿Reutilizan el equipo existente del condominio?', a: 'Sí cuando es viable. Auditamos lo que ya está instalado: si la calidad y los protocolos lo permiten, lo integramos. Si está obsoleto, proponemos plan de migración por etapas sin tirar equipo prematuramente.' },
-  { q: '¿Cuánto tiempo toma implementar el ecosistema completo?', a: 'Depende del alcance. Un condominio mediano arranca el centro de monitoreo en 2-3 semanas, integra accesos y alarmas en otras 4 semanas, y completa iluminación + intercom en 8-12 semanas totales. Por etapas y sin interrumpir operación.' },
-  { q: '¿Quién opera el centro de monitoreo?', a: 'Personal SEPRICO certificado en nuestro centro propio de operaciones (NOC). No tercerizamos a centrales externas tipo Verisure ni ADT — la cadena de responsabilidad termina en SEPRICO sin intermediarios.' },
-  { q: '¿Qué reportes recibe el comité administrativo?', a: 'Informe mensual ejecutivo con métricas agregadas del ecosistema: eventos detectados, MTTD, MTTR, falsas alarmas filtradas, disponibilidad de cada subsistema, consumo energético de iluminación y recomendaciones operativas. Revisión trimestral con la mesa directiva.' },
+  {
+    q: '¿Puedo contratar los servicios por separado o tienen que ser todos juntos?',
+    a: 'Por separado. Cada uno de los siete servicios se contrata individualmente. El valor del ecosistema crece cuando se integran porque la cadena de responsabilidad queda en un solo proveedor, pero no exigimos paquete completo para arrancar: empezamos donde el condominio más lo necesita.',
+  },
+  {
+    q: '¿Qué diferencia hay entre contratar el cluster integrado vs proveedores separados?',
+    a: 'La coordinación operativa real. Cuando cámaras, alarmas y acceso vienen de un solo proveedor, los eventos se procesan en sincronía y cada evento tiene un responsable claro. Con proveedores separados cada uno opera en silo y nadie es responsable cuando algo falla en la integración entre sistemas.',
+  },
+  {
+    q: '¿Reutilizan el equipo existente del condominio?',
+    a: 'Sí cuando es viable. Auditamos lo que ya está instalado: si la calidad de imagen, los codecs y los protocolos lo permiten, lo integramos a nuestra plataforma. Si está obsoleto, proponemos plan de migración por etapas sin tirar equipo prematuramente ni interrumpir la operación.',
+  },
+  {
+    q: '¿Cuánto tiempo toma implementar el ecosistema completo?',
+    a: 'Depende del alcance. Un condominio mediano arranca el centro de monitoreo en 2 a 3 semanas, integra accesos y alarmas en otras 4 semanas y completa iluminación e intercomunicación en 8 a 12 semanas totales. Implementamos por etapas para no interrumpir la operación.',
+  },
+  {
+    q: '¿Quién opera el centro de monitoreo?',
+    a: 'Personal SEPRICO certificado en nuestro centro propio de operaciones (NOC). No tercerizamos a centrales externas tipo Verisure ni ADT: la cadena de responsabilidad termina en SEPRICO sin intermediarios y el comité tiene un solo número para escalación.',
+  },
+  {
+    q: '¿Qué reportes recibe el comité administrativo mes a mes?',
+    a: 'Informe mensual ejecutivo con métricas agregadas del ecosistema: eventos detectados, MTTD, MTTR, falsas alarmas filtradas, disponibilidad de cada subsistema, consumo energético de iluminación y recomendaciones operativas. Revisión trimestral con la mesa directiva para ajustar protocolos.',
+  },
 ];
 
 // ───── Breadcrumb ─────
@@ -91,38 +174,75 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Ho
 const quickNavBottomChips = [
   { label: 'Personal SETEC', sub: 'Pilar 1 — guardias y patrullaje', href: '/personal-de-seguridad-residencial/', icon: 'shield' as const },
   { label: 'Protocolos', sub: 'Pilar 3 — consultoría', href: '/protocolos-y-consultoria/', icon: 'check' as const },
-  { label: 'Atención al Comité', sub: 'Pilar 4 — ejecutivo dedicado', href: '/servicios-de-seguridad-privada/#comite', icon: 'star' as const },
+  { label: 'Atención al Comité', sub: 'Pilar 4 — ejecutivo dedicado', href: '/atencion-al-comite-condominios/', icon: 'star' as const },
   { label: 'Catálogo completo', sub: '13 servicios SEPRICO', href: '/servicios-de-seguridad-privada/', icon: 'cctv' as const },
   { label: 'Contacto', sub: 'Cotización sin costo', href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' as const },
   { label: 'WhatsApp 24/7', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as const, external: true },
 ];
 
-// ───── Schema CollectionPage ─────
+// ───── Schema: CollectionPage con Service[] por L3 ─────
+const itemEntries = await Promise.all(
+  techSlugs.map(async (s) => {
+    const meta = SERVICIOS.find((sv) => sv.slug === s);
+    const entry = await getEntry('servicios', s);
+    return {
+      slug: s,
+      title: entry?.data.title ?? meta?.title ?? s,
+      seoDesc: entry?.data.seoDescription ?? entry?.data.description ?? '',
+      image: entry?.data.image ?? '/images/og/og-image.webp',
+    };
+  }),
+);
+
 const collectionSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   '@id': `${canonicalUrl}#collection`,
   url: canonicalUrl,
-  name: 'Tecnología y Monitoreo para Condominios',
+  name: 'Tecnología y Monitoreo para Condominios y Residenciales',
   description: seoDescription,
   inLanguage: 'es-MX',
   isPartOf: { '@id': `${SITE.url}/#website` },
   about: {
     '@type': 'Thing',
-    name: 'Tecnología de seguridad electrónica residencial',
+    name: 'Tecnología de seguridad electrónica residencial en CDMX y Edomex',
   },
   mainEntity: {
     '@type': 'ItemList',
-    name: '7 servicios de tecnología y monitoreo SEPRICO',
+    name: 'Siete servicios de tecnología y monitoreo SEPRICO',
     numberOfItems: techSlugs.length,
-    itemListElement: techSlugs.map((s, i) => ({
+    itemListElement: itemEntries.map((it, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: new URL(`/${s}/`, SITE.url).toString(),
-      name: SERVICIOS.find((sv) => sv.slug === s)?.title || s,
+      item: {
+        '@type': 'Service',
+        '@id': new URL(`/${it.slug}/`, SITE.url).toString(),
+        url: new URL(`/${it.slug}/`, SITE.url).toString(),
+        name: it.title,
+        description: it.seoDesc,
+        image: new URL(it.image, SITE.url).toString(),
+        provider: { '@id': `${SITE.url}/#organization` },
+        areaServed: SITE.coverage,
+        serviceType: 'Seguridad electrónica residencial',
+      },
     })),
   },
 };
+
+// ───── Schema: Speakable con selectores específicos del L2 ─────
+const speakableSelectors = [
+  'h1',
+  '.section-title',
+  '#servicios p',
+  '#beneficios p',
+  '#faq details summary',
+];
+
+// ───── ChipsBar top ─────
+const topChips = techSlugs.map((s) => {
+  const m = SERVICIOS.find((sv) => sv.slug === s);
+  return { label: m?.title ?? s, href: `/${s}/`, icon: (m?.icon as any) ?? 'cctv' };
+});
 ---
 
 <BaseLayout
@@ -134,7 +254,7 @@ const collectionSchema = {
 >
   <Fragment slot="schemas">
     <SchemaBreadcrumb items={breadcrumbItems} />
-    <SchemaSpeakable url={canonicalUrl} />
+    <SchemaSpeakable url={canonicalUrl} selectors={speakableSelectors} />
     <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
   </Fragment>
 
@@ -147,34 +267,14 @@ const collectionSchema = {
     headline="Tecnología y Monitoreo"
     subheadline="para Condominios y Residenciales"
     body={`Siete sistemas profesionales que <strong class="text-white">operan como un solo ecosistema</strong>: CCTV, control de acceso biométrico, alarmas, intercomunicación IP e iluminación inteligente — todo enlazado al <strong class="text-white">centro de monitoreo 24/7</strong> de SEPRICO.`}
-    asideP1={`Una cámara sola no protege. Un control de acceso sin monitoreo es una puerta con cerradura rota. En <strong class="text-white">SEPRICO</strong> integramos siete sistemas en una arquitectura unificada que responde como un solo organismo operativo, no como piezas separadas que el comité tiene que sincronizar manualmente.`}
+    asideP1={`Una cámara aislada no protege y un control de acceso sin monitoreo es una puerta sin vigilancia detrás. En <strong class="text-white">SEPRICO</strong> integramos siete sistemas en una arquitectura unificada que responde como un solo organismo operativo, no como piezas separadas que el comité tiene que sincronizar manualmente.`}
     asideP2={`Cada implementación parte de un <strong class="text-white">levantamiento técnico sin costo</strong>. Cotizamos cada servicio por separado o como paquete consolidado con plan de instalación por fases, SLAs medibles y operación coordinada desde nuestro NOC propio en CDMX.`}
     asideEyebrow="Sobre el pilar"
     isH1={true}
   />
 
   {/* ══════════ 2. QUICKNAV chips a los 7 L3 ══════════ */}
-  <nav aria-label="Servicios del cluster" class="bg-brand-500">
-    <div class="container-pro grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-      {techSlugs.map((s, i) => {
-        const meta = SERVICIOS.find((sv) => sv.slug === s);
-        return (
-          <a
-            href={`/${s}/`}
-            class:list={[
-              'group flex items-center gap-3 px-4 py-4 text-white transition-colors hover:bg-brand-600',
-              i > 0 && 'lg:border-l border-white/10',
-            ]}
-          >
-            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-white/15">
-              <Icon name={meta?.icon as any || 'cctv'} class="h-4 w-4" />
-            </span>
-            <span class="truncate text-xs font-bold leading-tight">{meta?.title}</span>
-          </a>
-        );
-      })}
-    </div>
-  </nav>
+  <ChipsBar chips={topChips} ariaLabel="Servicios del cluster" />
 
   {/* ══════════ 3. LOS 7 SERVICIOS ══════════ */}
   <Section
@@ -182,45 +282,50 @@ const collectionSchema = {
     eyebrow="Servicios del ecosistema"
     title="Los siete sistemas que protegen tu condominio"
     subtitle="Cada servicio se contrata por separado o integrado al cluster. La operación coordinada y el centro de monitoreo 24/7 son los mismos en ambos casos."
-    desc="Cuatro servicios cubren protección activa (cámaras, alarmas, acceso, biométrico), uno opera el centro de monitoreo, dos refuerzan la operación (intercomunicación e iluminación)."
+    desc="Cuatro servicios cubren protección activa (cámaras, alarmas, acceso, biométrico), uno opera el centro de monitoreo y dos refuerzan la operación (intercomunicación e iluminación segura)."
   >
     <ClusterGrid slugs={techSlugs} cols={4} />
   </Section>
 
-  {/* ══════════ 5. INTEGRACIÓN CRUZADA ══════════ */}
+  {/* ══════════ 4. INTEGRACIÓN CRUZADA — 4 EJES ══════════ */}
   <Section
     eyebrow="Cómo se conectan"
     title="Integración cruzada entre los siete sistemas"
     subtitle="Un evento en un subsistema dispara automáticamente la respuesta coordinada del resto. Esto es lo que hace que el ecosistema valga más que la suma de sus partes."
-    desc="A continuación los tres ejes principales de integración que el comité puede operacionalizar desde el primer mes."
+    desc="Estos son los cuatro ejes principales de integración que el comité puede operacionalizar desde el primer mes."
     bg="darker"
   >
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       <BadgeCard
         icon="cctv"
-        title="Eje detección + verificación"
-        desc="Alarmas y sensores activan grabación dedicada en la cámara correspondiente. El operador del centro valida con video antes de movilizar al guardia o autoridades. Cero despachos en vano."
+        title="Detección + verificación"
+        desc="Alarmas y sensores activan grabación dedicada en la cámara correspondiente. El operador valida con video antes de movilizar al guardia o autoridades. Cero despachos en vano."
       />
       <BadgeCard
         icon="access"
-        title="Eje identidad + acceso"
+        title="Identidad + acceso"
         desc="Control biométrico, tarjetas RFID, registro de visitantes e intercomunicación operan bajo un solo panel. Cada lectura genera bitácora con video sincronizado del momento exacto."
       />
       <BadgeCard
         icon="shield"
-        title="Eje iluminación + CCTV"
-        desc="La iluminación inteligente se calibra para que las cámaras Color Vu / ColorView devuelvan imagen útil 24/7. La luz correcta multiplica el rendimiento del sistema CCTV existente."
+        title="Iluminación + CCTV"
+        desc="La iluminación inteligente se calibra para que las cámaras Color Vu y ColorView devuelvan imagen útil 24/7. La luz correcta multiplica el rendimiento del sistema CCTV existente."
+      />
+      <BadgeCard
+        icon="check"
+        title="Cumplimiento + auditabilidad"
+        desc="Una sola política LFPDPPP, una sola bitácora cifrada y un solo expediente legal cubren los siete subsistemas. Auditoría del comité en minutos, no en días."
       />
     </div>
   </Section>
 
-  {/* ══════════ 6. BENEFICIOS DEL ENFOQUE INTEGRADO ══════════ */}
+  {/* ══════════ 5. BENEFICIOS DEL ENFOQUE INTEGRADO ══════════ */}
   <Section
     id="beneficios"
     eyebrow="Ventajas del ecosistema"
     title="Por qué el cluster integrado supera a proveedores separados"
-    subtitle="El valor no está en cada equipo aislado — está en la coordinación operativa entre los siete sistemas bajo un solo proveedor responsable."
-    desc="Los condominios que migran de múltiples proveedores a este modelo reducen costos administrativos y mejoran tiempos de respuesta documentados."
+    subtitle="El valor no está en cada equipo aislado: está en la coordinación operativa entre los siete sistemas bajo un solo proveedor responsable."
+    desc="Los condominios que migran de múltiples proveedores a este modelo reducen costos administrativos y mejoran los tiempos de respuesta documentados en bitácora."
   >
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {integratedBenefits.map((b, i) => (
@@ -229,7 +334,7 @@ const collectionSchema = {
     </div>
   </Section>
 
-  {/* ══════════ 7. PROCESO DE IMPLEMENTACIÓN DEL CLUSTER ══════════ */}
+  {/* ══════════ 6. PROCESO DE IMPLEMENTACIÓN ══════════ */}
   <Section
     id="proceso"
     eyebrow="Cómo lo implementamos"
@@ -252,13 +357,13 @@ const collectionSchema = {
     </div>
   </Section>
 
-  {/* ══════════ 8. DIFERENCIADORES SEPRICO ══════════ */}
+  {/* ══════════ 7. DIFERENCIADORES SEPRICO ══════════ */}
   <Section
     id="diferenciadores"
     eyebrow="Por qué SEPRICO"
     title="Qué distingue al cluster Tecnología y Monitoreo de SEPRICO"
     subtitle="No competimos por hardware ni por precio: competimos por integración operativa, cumplimiento legal documentado y centro de monitoreo propio."
-    desc="Cada diferenciador es una decisión operativa concreta, verificable contra el contrato y los reportes mensuales del comité."
+    desc="Cada diferenciador es una decisión operativa concreta, verificable contra el contrato y los reportes mensuales que recibe el comité administrativo."
   >
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {clusterValueProps.map((v) => (
@@ -267,7 +372,7 @@ const collectionSchema = {
     </div>
   </Section>
 
-  {/* ══════════ 9. FAQ del cluster ══════════ */}
+  {/* ══════════ 8. FAQ del cluster ══════════ */}
   <Section
     id="faq"
     eyebrow="Preguntas frecuentes"
@@ -276,63 +381,12 @@ const collectionSchema = {
     desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un asesor especializado te responde en menos de 15 minutos."
     bg="darker"
   >
-    <div class="grid gap-8 lg:grid-cols-3">
-      <div class="lg:col-span-2 space-y-3">
-        {clusterFaqs.map((f, i) => (
-          <details
-            class="group rounded-lg border border-white/5 bg-ink-800 transition-colors open:border-brand-500/40"
-            open={i === 0}
-          >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-base font-semibold text-white">
-              <span>{f.q}</span>
-              <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-500 text-white transition-transform group-open:rotate-45">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-3.5 w-3.5">
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
-              </span>
-            </summary>
-            <div class="border-t border-white/5 px-5 py-4 text-sm leading-relaxed text-white/70">
-              {f.a}
-            </div>
-          </details>
-        ))}
-      </div>
-
-      <aside class="card self-start">
-        <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500 text-white shadow-brand">
-          <Icon name="phone" class="h-6 w-6" />
-        </span>
-        <h3 class="mt-5 text-xl font-bold text-white">¿Más preguntas?</h3>
-        <p class="mt-2 text-sm text-white/65">
-          Resolvemos cualquier duda sobre el ecosistema en minutos. WhatsApp 24/7.
-        </p>
-        <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-brand mt-5 w-full">
-          Chatear por WhatsApp
-        </a>
-        <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="btn-ghost mt-3 w-full">
-          {SITE.contact.phoneDisplay}
-        </a>
-      </aside>
-    </div>
-
-    {/* FAQPage JSON-LD del cluster */}
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: clusterFaqs.map((f) => ({
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
-      })}
-    />
+    <SubHubFaq items={clusterFaqs} contextMessage="Hola SEPRICO, requiero información sobre tecnología y monitoreo" />
   </Section>
 
-  {/* ══════════ 10. ACERCA DE SEPRICO ══════════ */}
+  {/* ══════════ 9. ACERCA DE SEPRICO ══════════ */}
   <AboutSeprico serviceContext="el ecosistema de tecnología y monitoreo" />
 
-  {/* ══════════ 11. QUICKNAV BOTTOM ══════════ */}
+  {/* ══════════ 10. QUICKNAV BOTTOM ══════════ */}
   <QuickNavBottom chips={quickNavBottomChips} />
 </BaseLayout>

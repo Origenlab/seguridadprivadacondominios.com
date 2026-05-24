@@ -1,0 +1,26 @@
+---
+import BlogArticle from '@/components/BlogArticle.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) =>
+    !data.draft && data.category === 'vigilancia'
+  );
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { entry: p } }));
+}
+
+interface Props { entry: CollectionEntry<'blog'>; }
+const { entry } = Astro.props;
+---
+
+<BlogArticle
+  entry={entry}
+  category={{
+    slug: 'vigilancia',
+    label: 'Vigilancia',
+    headline: 'Vigilancia',
+    archiveHref: '/category/vigilancia/',
+    articleSection: 'Vigilancia para Condominios',
+    icon: 'patrol',
+  }}
+/>

@@ -1,5 +1,37 @@
+# SEPRICO — robots.txt
+# https://seguridadprivadacondominios.com
+
 User-agent: *
 Allow: /
-Disallow: /gracias
+
+# Páginas internas que no deben aparecer en buscadores
+Disallow: /gracias/
+Disallow: /contacto/
+Disallow: /404/
+Disallow: /producto/
+Disallow: /uncategorized/
+
+# URLs legacy de WordPress que redirigen (no indexar destinos duplicados)
+Disallow: /blog/$
+Disallow: /servicios/
+
+# Permitir explícitamente bots de IA (Google AI, Bing Copilot, ChatGPT-Browse, etc.)
+User-agent: Googlebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://seguridadprivadacondominios.com/sitemap-index.xml

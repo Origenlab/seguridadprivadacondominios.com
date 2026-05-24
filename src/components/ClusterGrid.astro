@@ -1,37 +1,77 @@
 ---
 /**
  * ClusterGrid — grid de service-cards para L2 sub-hubs.
- * Recibe array de slugs (no exclusión) y renderiza con badge + imagen overlay.
- * Reutilizable para Tecnología, Personal, Protocolos, Comité.
+ *
+ * Soporta DOS modos:
+ *  1) `slugs`: lee servicios desde la collection (Tecnología, Personal)
+ *  2) `items`: items conceptuales custom (Protocolos, Atención al Comité)
+ *
+ * Pasa SOLO uno de los dos. Si pasas `items`, se ignoran `slugs`.
  */
 import Icon from '@/components/Icon.astro';
 import { resolveServiceMeta } from '@/config/site';
 import { getEntry } from 'astro:content';
 
+type IconName = 'shield' | 'cctv' | 'patrol' | 'access' | 'alert' | 'check' | 'phone' | 'mail' | 'pin' | 'clock' | 'star' | 'arrow';
+
+interface CustomItem {
+  title: string;
+  desc: string;
+  image: string;
+  icon: IconName;
+  href: string;
+  badge?: string;
+  /** Texto del CTA. Default "Ver servicio" si href es URL, "Ver detalle" si es anchor. */
+  cta?: string;
+}
+
 interface Props {
-  /** Slugs a mostrar en orden. */
-  slugs: readonly string[];
+  /** Slugs desde la collection. Mutuamente excluyente con `items`. */
+  slugs?: readonly string[];
+  /** Items custom (Protocolos, Atención). Mutuamente excluyente con `slugs`. */
+  items?: readonly CustomItem[];
   /** Columnas en desktop. Default 4. */
   cols?: 3 | 4;
 }
 
-const { slugs, cols = 4 } = Astro.props;
-const items = resolveServiceMeta([...slugs]);
+const { slugs, items, cols = 4 } = Astro.props;
 
-const enriched = await Promise.all(
-  items.map(async (it) => {
-    try {
-      const entry = await getEntry('servicios', it.slug);
-      return {
-        ...it,
-        description: entry?.data.description ?? '',
-        image: entry?.data.image ?? '/images/og/og-image.webp',
-      };
-    } catch {
-      return { ...it, description: '', image: '/images/og/og-image.webp' };
-    }
-  }),
-);
+// Resolver lista final a renderizar
+let renderItems: Array<CustomItem & { description?: string }> = [];
+
+if (items && items.length > 0) {
+  renderItems = items.map((it) => ({ ...it, description: it.desc }));
+} else if (slugs && slugs.length > 0) {
+  const meta = resolveServiceMeta([...slugs]);
+  renderItems = await Promise.all(
+    meta.map(async (it, i) => {
+      try {
+        const entry = await getEntry('servicios', it.slug);
+        return {
+          title: it.title,
+          desc: entry?.data.description ?? '',
+          description: entry?.data.description ?? '',
+          image: entry?.data.image ?? '/images/og/og-image.webp',
+          icon: it.icon as IconName,
+          href: it.href,
+          badge: `0${i + 1}`,
+          cta: 'Ver servicio',
+        };
+      } catch {
+        return {
+          title: it.title,
+          desc: '',
+          description: '',
+          image: '/images/og/og-image.webp',
+          icon: it.icon as IconName,
+          href: it.href,
+          badge: `0${i + 1}`,
+          cta: 'Ver servicio',
+        };
+      }
+    }),
+  );
+}
 
 const gridClass = cols === 3
   ? 'grid gap-5 sm:grid-cols-2 lg:grid-cols-3'
@@ -39,41 +79,47 @@ const gridClass = cols === 3
 ---
 
 <div class={gridClass}>
-  {enriched.map((s, i) => (
-    <a
-      href={s.href}
-      class="service-card group flex flex-col"
-      title={`Conoce el servicio de ${s.title}`}
-    >
-      <div class="service-card-image">
-        <img
-          src={s.image}
-          alt={s.title}
-          loading="lazy"
-          decoding="async"
-          class="absolute inset-0 h-full w-full object-cover"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/10"></div>
-        <span class="absolute top-3 left-3 rounded-md bg-brand-500/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest2 text-white shadow-brand backdrop-blur-sm">
-          0{i + 1}
-        </span>
-        <span class="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-md bg-ink-950/70 text-brand-300 backdrop-blur-sm">
-          <Icon name={s.icon as any} class="h-4 w-4" />
-        </span>
-        <div class="absolute bottom-0 left-0 right-0 p-5">
-          <h3 class="text-lg font-bold leading-tight text-white">{s.title}</h3>
+  {renderItems.map((s, i) => {
+    const badge = s.badge ?? `0${i + 1}`;
+    const isExternal = s.href.startsWith('http');
+    const isAnchor = s.href.startsWith('#');
+    const cta = s.cta ?? (isAnchor ? 'Ver detalle' : 'Ver servicio');
+    return (
+      <a
+        href={s.href}
+        class="service-card group flex flex-col"
+        title={`Conoce ${s.title}`}
+      >
+        <div class="service-card-image">
+          <img
+            src={s.image}
+            alt={s.title}
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/10"></div>
+          <span class="absolute top-3 left-3 rounded-md bg-brand-500/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest2 text-white shadow-brand backdrop-blur-sm">
+            {badge}
+          </span>
+          <span class="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-md bg-ink-950/70 text-brand-300 backdrop-blur-sm">
+            <Icon name={s.icon} class="h-4 w-4" />
+          </span>
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            <h3 class="text-lg font-bold leading-tight text-white">{s.title}</h3>
+          </div>
         </div>
-      </div>
 
-      <div class="service-card-body">
-        {s.description && (
-          <p class="flex-1 text-sm leading-relaxed text-white/70">{s.description}</p>
-        )}
-        <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
-          Ver servicio
-          <Icon name="arrow" class="h-3.5 w-3.5" />
-        </span>
-      </div>
-    </a>
-  ))}
+        <div class="service-card-body">
+          {s.description && (
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{s.description}</p>
+          )}
+          <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
+            {cta}
+            <Icon name="arrow" class="h-3.5 w-3.5" />
+          </span>
+        </div>
+      </a>
+    );
+  })}
 </div>

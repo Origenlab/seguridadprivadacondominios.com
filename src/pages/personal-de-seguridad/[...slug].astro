@@ -1,0 +1,26 @@
+---
+import BlogArticle from '@/components/BlogArticle.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) =>
+    !data.draft && data.category === 'personal-de-seguridad'
+  );
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { entry: p } }));
+}
+
+interface Props { entry: CollectionEntry<'blog'>; }
+const { entry } = Astro.props;
+---
+
+<BlogArticle
+  entry={entry}
+  category={{
+    slug: 'personal-de-seguridad',
+    label: 'Personal de Seguridad',
+    headline: 'Personal de Seguridad',
+    archiveHref: '/category/personal-de-seguridad/',
+    articleSection: 'Personal de Seguridad para Condominios',
+    icon: 'patrol',
+  }}
+/>

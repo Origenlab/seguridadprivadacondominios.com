@@ -24,9 +24,6 @@ const recientes = allPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 5);
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
-
 const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
 ---
 
@@ -76,10 +73,6 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
             <span class="flex-1 min-w-0">
               <p class="text-sm font-semibold leading-snug text-white/85 line-clamp-2 group-hover:text-white">
                 {p.data.title}
-              </p>
-              <p class="mt-1.5 flex items-center gap-1.5 text-[10px] text-white/40">
-                <Icon name="clock" class="h-3 w-3" />
-                {fmt(p.data.pubDate)}
               </p>
             </span>
           </a>

@@ -7,6 +7,9 @@ import Breadcrumb from '@/components/Breadcrumb.astro';
 import Icon from '@/components/Icon.astro';
 import Process from '@/components/Process.astro';
 import BadgeCard from '@/components/BadgeCard.astro';
+import SubHubFaq from '@/components/SubHubFaq.astro';
+import ChipsBar from '@/components/ChipsBar.astro';
+import ClusterGrid from '@/components/ClusterGrid.astro';
 import AboutSeprico from '@/components/AboutSeprico.astro';
 import SchemaBreadcrumb from '@/components/SchemaBreadcrumb.astro';
 import SchemaSpeakable from '@/components/SchemaSpeakable.astro';
@@ -33,7 +36,7 @@ const pillarComponents = [
   {
     title: 'Análisis de Riesgos',
     desc: 'Diagnóstico técnico que cruza variables del condominio (geometría, accesos, vulnerabilidades) con datos del entorno (incidencia delictiva del cuadrante, eventos recurrentes en el sector). Entregable: matriz de riesgo con probabilidad e impacto cuantificado.',
-    image: '/images/servicios/consultoria-en-seguridad.jpg',
+    image: '/images/servicios/consultoria-en-seguridad.avif',
     icon: 'check' as const,
     href: '#analisis-riesgos',
     badge: '01',
@@ -41,7 +44,7 @@ const pillarComponents = [
   {
     title: 'Planes de Contingencia',
     desc: 'Protocolos documentados por escenario crítico: intrusión activa, incendio, sismo, emergencia médica residente, asalto a caseta. Cada plan se practica con simulacros y se ajusta tras cada incidente real del condominio.',
-    image: '/images/general/seguridad-condominios.jpg',
+    image: '/images/general/seguridad-condominios.avif',
     icon: 'alert' as const,
     href: '#planes-contingencia',
     badge: '02',
@@ -49,7 +52,7 @@ const pillarComponents = [
   {
     title: 'Auditorías Documentadas',
     desc: 'Revisión semestral o anual de cumplimiento operativo: bitácoras, equipo, plantilla, capacitación vigente, prestaciones laborales del personal y cumplimiento legal. Reporte ejecutivo entregado al comité con hallazgos y plan de remediación.',
-    image: '/images/servicios/control-de-acceso.jpg',
+    image: '/images/servicios/control-de-acceso.avif',
     icon: 'shield' as const,
     href: '#auditorias',
     badge: '03',
@@ -57,7 +60,7 @@ const pillarComponents = [
   {
     title: 'Consultoría Integral',
     desc: 'Acompañamiento estratégico al comité administrativo sobre proveedores, contratos, normatividad SSPC/LFPDPPP y diseño de operación de seguridad. Trabajamos como asesor independiente o integrado al servicio operativo SEPRICO.',
-    image: '/images/general/seguridad-residenciales.jpg',
+    image: '/images/general/seguridad-residenciales.avif',
     icon: 'phone' as const,
     href: '/consultoria-en-seguridad/',
     badge: '04',
@@ -114,7 +117,7 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Ho
 const quickNavBottomChips = [
   { label: 'Personal SETEC', sub: 'Pilar 1 — guardias y patrullaje', href: '/personal-de-seguridad-residencial/', icon: 'shield' as const },
   { label: 'Tecnología', sub: 'Pilar 2 — CCTV, accesos, alarmas', href: '/tecnologia-y-monitoreo/', icon: 'cctv' as const },
-  { label: 'Atención al Comité', sub: 'Pilar 4 — ejecutivo dedicado', href: '/servicios-de-seguridad-privada/#comite', icon: 'star' as const },
+  { label: 'Atención al Comité', sub: 'Pilar 4 — ejecutivo dedicado', href: '/atencion-al-comite-condominios/', icon: 'star' as const },
   { label: 'Consultoría L3', sub: 'Servicio detallado', href: '/consultoria-en-seguridad/', icon: 'check' as const },
   { label: 'Contacto', sub: 'Cotización sin costo', href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' as const },
   { label: 'WhatsApp 24/7', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as const, external: true },
@@ -146,6 +149,12 @@ const collectionSchema = {
     })),
   },
 };
+const topChips = pillarComponents.map((c) => ({
+  label: c.title,
+  href: c.href,
+  icon: c.icon,
+}));
+
 ---
 
 <BaseLayout
@@ -177,24 +186,7 @@ const collectionSchema = {
   />
 
   {/* ══════════ 2. QUICKNAV chips a los 4 componentes ══════════ */}
-  <nav aria-label="Componentes del pilar" class="bg-brand-500">
-    <div class="container-pro grid grid-cols-2 md:grid-cols-4">
-      {pillarComponents.map((c, i) => (
-        <a
-          href={c.href}
-          class:list={[
-            'group flex items-center gap-3 px-4 py-4 text-white transition-colors hover:bg-brand-600',
-            i > 0 && 'md:border-l border-white/10',
-          ]}
-        >
-          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-white/15">
-            <Icon name={c.icon} class="h-4 w-4" />
-          </span>
-          <span class="truncate text-xs font-bold leading-tight">{c.title}</span>
-        </a>
-      ))}
-    </div>
-  </nav>
+  <ChipsBar chips={topChips} ariaLabel="Componentes del pilar" />
 
   {/* ══════════ 3. LOS 4 COMPONENTES — grid service-card inline ══════════ */}
   <Section
@@ -204,43 +196,7 @@ const collectionSchema = {
     subtitle="Cada componente se contrata por separado o integrado al cluster. Análisis, planes y auditorías operan como herramientas independientes que se complementan en la consultoría integral."
     desc="Solo la consultoría integral tiene página propia. Los demás son alcances definidos que se ejecutan según necesidad del condominio."
   >
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {pillarComponents.map((c) => (
-        <a
-          href={c.href}
-          class="service-card group flex flex-col"
-          title={c.title}
-        >
-          <div class="service-card-image">
-            <img
-              src={c.image}
-              alt={c.title}
-              loading="lazy"
-              decoding="async"
-              class="absolute inset-0 h-full w-full object-cover"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/10"></div>
-            <span class="absolute top-3 left-3 rounded-md bg-brand-500/95 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest2 text-white shadow-brand backdrop-blur-sm">
-              {c.badge}
-            </span>
-            <span class="absolute top-3 right-3 grid h-9 w-9 place-items-center rounded-md bg-ink-950/70 text-brand-300 backdrop-blur-sm">
-              <Icon name={c.icon} class="h-4 w-4" />
-            </span>
-            <div class="absolute bottom-0 left-0 right-0 p-5">
-              <h3 class="text-lg font-bold leading-tight text-white">{c.title}</h3>
-            </div>
-          </div>
-
-          <div class="service-card-body">
-            <p class="flex-1 text-sm leading-relaxed text-white/70">{c.desc}</p>
-            <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-brand-500 group-hover:text-brand-400">
-              {c.href.startsWith('/') && !c.href.startsWith('#') ? 'Ver servicio' : 'Ver detalle'}
-              <Icon name="arrow" class="h-3.5 w-3.5" />
-            </span>
-          </div>
-        </a>
-      ))}
-    </div>
+    <ClusterGrid items={pillarComponents} cols={4} />
   </Section>
 
   {/* ══════════ 4. INTEGRACIÓN CRUZADA ══════════ */}
@@ -332,57 +288,7 @@ const collectionSchema = {
     desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un consultor especializado en seguridad residencial te responde en menos de 15 minutos."
     bg="darker"
   >
-    <div class="grid gap-8 lg:grid-cols-3">
-      <div class="lg:col-span-2 space-y-3">
-        {clusterFaqs.map((f, i) => (
-          <details
-            class="group rounded-lg border border-white/5 bg-ink-800 transition-colors open:border-brand-500/40"
-            open={i === 0}
-          >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-base font-semibold text-white">
-              <span>{f.q}</span>
-              <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-500 text-white transition-transform group-open:rotate-45">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-3.5 w-3.5">
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
-              </span>
-            </summary>
-            <div class="border-t border-white/5 px-5 py-4 text-sm leading-relaxed text-white/70">
-              {f.a}
-            </div>
-          </details>
-        ))}
-      </div>
-
-      <aside class="card self-start">
-        <span class="grid h-12 w-12 place-items-center rounded-md bg-brand-500 text-white shadow-brand">
-          <Icon name="phone" class="h-6 w-6" />
-        </span>
-        <h3 class="mt-5 text-xl font-bold text-white">¿Más preguntas?</h3>
-        <p class="mt-2 text-sm text-white/65">
-          Resolvemos cualquier duda sobre el enfoque consultivo en minutos. WhatsApp 24/7.
-        </p>
-        <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-brand mt-5 w-full">
-          Chatear por WhatsApp
-        </a>
-        <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`} class="btn-ghost mt-3 w-full">
-          {SITE.contact.phoneDisplay}
-        </a>
-      </aside>
-    </div>
-
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: clusterFaqs.map((f) => ({
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
-      })}
-    />
+    <SubHubFaq items={clusterFaqs} contextMessage="Hola SEPRICO, requiero información sobre consultoría en seguridad" />
   </Section>
 
   {/* ══════════ 9. ACERCA DE SEPRICO ══════════ */}

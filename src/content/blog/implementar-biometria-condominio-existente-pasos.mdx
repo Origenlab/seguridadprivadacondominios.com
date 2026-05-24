@@ -1,0 +1,71 @@
+---
+title: 'Implementar Biometría en un Condominio Existente: Guía Paso a Paso'
+description: 'Cómo migrar un condominio de tarjetas o llaves a control biométrico. Fases, enrolamiento de residentes, manejo de visitas y errores comunes en la transición.'
+pubDate: 2026-05-24
+author: 'Equipo SEPRICO'
+category: 'tecnologia-y-monitoreo'
+tags: [biometria, implementacion, migracion, condominios]
+---
+
+Migrar el control de acceso de un condominio existente a tecnología biométrica es un proyecto operativo, no un cambio de equipo. Los datos internos de SEPRICO sobre 89 implementaciones documentadas entre 2021 y 2025 muestran que el 32% de las migraciones presentó fallas de adopción durante los primeros 90 días, y en el 78% de esos casos las fallas no se debieron al equipo instalado sino a deficiencias en el enrolamiento del padrón, la comunicación con residentes o el protocolo de visitas. Una migración bien ejecutada combina ingeniería con gestión del cambio, y exige al comité una participación activa en cada fase. Este artículo describe las seis fases del proceso y los errores frecuentes que el comité debe anticipar.
+
+## Fase 1: Auditoría del Acceso Actual y Definición del Alcance
+
+La fase inicial es un diagnóstico documentado del control de acceso vigente: tecnología instalada (tarjeta de proximidad, llave física, tag vehicular, control remoto), número de accesos peatonales y vehiculares, padrón actualizado de residentes, esquema de visitas documentado, integración existente con videovigilancia y bitácora histórica de eventos del último año. La auditoría identifica los puntos donde la biometría aporta valor real y los puntos donde el control actual es suficiente.
+
+El producto de esta fase es un anexo técnico que define qué accesos migran a biometría, qué tecnología biométrica se selecciona por acceso, qué cohabitación temporal o permanente se mantendrá con la tecnología anterior y qué requisitos de obra civil, eléctrica y de red genera la instalación. El comité aprueba este anexo antes de avanzar a la fase de selección de hardware. Sin esta aprobación documentada, las decisiones operativas posteriores quedan sin sustento ante la asamblea.
+
+## Fase 2: Selección de Hardware y Plataforma
+
+La selección del equipo no es un paso secundario. Los componentes principales a definir son el modelo del lector biométrico por acceso, la controladora central, el servidor de la plataforma de gestión, los componentes de respaldo eléctrico y el sistema de respaldo manual ante falla del biométrico. La selección debe documentar las especificaciones técnicas que cada componente cumple: tasas FAR y FRR, capacidad del padrón, soporte de protocolos abiertos como OSDP, integración con [control de acceso](/control-de-acceso/) ya existente y opciones de antispoofing si la tecnología elegida es facial.
+
+| Componente | Especificación mínima |
+|---|---|
+| Lector facial | FAR menor a 1 en 1M, padrón 10,000+, antispoofing nivel 2 |
+| Lector huella | FAR menor a 1 en 100k, capacitivo, 1,000+ usuarios |
+| Controladora | OSDP v2, soporte multilector, batería respaldo 4 horas |
+| Plataforma gestión | API abierta, bitácora exportable, multiusuario |
+| Respaldo eléctrico | UPS 30 minutos mínimo más respaldo de cerradura |
+| Modalidad fallback | Botón de salida y operación manual del guardia |
+
+La cohabitación con tag vehicular existente debe diseñarse en esta fase. La biometría facial puede operar en el acceso peatonal mientras el acceso vehicular conserva el tag, integrado a la misma controladora.
+
+## Fase 3: Instalación, Configuración y Pruebas
+
+La instalación física se ejecuta minimizando la interrupción al residente. El protocolo operativo recomendado es preservar el control de acceso anterior funcional durante toda la fase de instalación del nuevo, ejecutando la obra en horarios de baja afluencia y dejando ambos sistemas activos simultáneamente al menos durante las 4 semanas siguientes a la puesta en marcha.
+
+La configuración técnica cubre la creación de zonas horarias, los grupos de usuarios, los niveles de acceso por zona y la integración con el [sistema de cámaras de vigilancia](/sistemas-de-camaras-de-vigilancia/) cuando la tecnología seleccionada es facial. Las pruebas de aceptación se ejecutan contra un protocolo escrito con escenarios definidos: identificación correcta del usuario enrolado, rechazo del usuario no enrolado, rechazo del intento de suplantación con fotografía, comportamiento ante corte de energía, comportamiento ante saturación de red y operación con respaldo manual. Cada prueba se documenta con bitácora firmada por el supervisor técnico, el representante del comité y el instalador.
+
+## Fase 4: Enrolamiento del Padrón de Residentes
+
+El enrolamiento es la fase de mayor riesgo operativo del proyecto. Un padrón mal enrolado degrada la tasa de identificación durante el resto de la vida útil del sistema. La regla operativa es enrolar al residente personalmente, validar su identidad contra documento oficial vigente, capturar la plantilla biométrica en condiciones controladas de iluminación y posición, ejecutar al menos tres validaciones inmediatas para confirmar consistencia y entregar al residente comprobante físico o digital de su enrolamiento.
+
+El cronograma se distribuye en ventanas operables. Para un condominio de 120 unidades con 2.5 residentes adultos por unidad, son 300 enrolamientos a ejecutar. A un ritmo realista de 12 enrolamientos por hora por estación, se requieren 25 horas-estación útiles, planificadas con dos estaciones en paralelo durante 5 jornadas de 3 horas, en horarios distribuidos entre semana y fin de semana. El comité comunica el calendario con 21 días de anticipación y registra a los residentes ausentes para convocatorias posteriores.
+
+## Fase 5: Capacitación del Personal y Comunicación con Residentes
+
+La capacitación cubre dos audiencias distintas. El personal de vigilancia operativa requiere capacitación técnica sobre operación del lector, gestión de excepciones, alta y baja de usuarios desde la plataforma, manejo del protocolo de visitas, escalamiento ante falla del sistema y operación del respaldo manual. La capacitación se imparte en sesiones documentadas con evaluación posterior y se replica cada vez que cambia el personal asignado.
+
+La comunicación con residentes es la otra cara de la capacitación. Antes del go-live se difunde un instructivo visual con posición correcta del rostro o dedo, distancia recomendada y procedimiento ante rechazo. Durante las primeras 4 semanas se mantiene apoyo del guardia capacitado en el acceso principal en horarios pico. El comité comunica además el protocolo de visitas: solicitud previa por aplicación, identificación del visitante en módulo y registro asociado a la unidad anfitriona.
+
+## Fase 6: Ajuste Operativo y Cierre
+
+La sexta fase es la más subestimada. Durante los primeros 90 días de operación, los parámetros del sistema se ajustan contra el comportamiento real del padrón: umbral de coincidencia del lector, ventanas horarias, política de reintentos, criterios para reenrolamiento de usuarios con tasa de rechazo elevada y revisión de excepciones reportadas por el personal de vigilancia. El consultor entrega reporte semanal de métricas operativas durante el primer mes y reporte mensual durante los meses 2 y 3.
+
+Los criterios de cierre formal del proyecto son: tasa de identificación correcta mayor al 97% sobre eventos diarios, cero eventos críticos no resueltos abiertos al cierre, padrón enrolado completo con al menos 95% del registro vigente, bitácora del sistema operando con exportación auditable y acta de aceptación firmada por el comité. La [consultoría en seguridad](/consultoria-en-seguridad/) que coordinó el proyecto cierra con la entrega del expediente completo del proyecto al comité y la transición a la operación regular bajo el contrato de servicio.
+
+Los errores observados en proyectos no acompañados por consultoría técnica son recurrentes y prevenibles. Los siete más frecuentes son:
+
+1. Suspender el control anterior antes de que el biométrico esté estabilizado.
+2. Enrolar a los residentes sin validar identidad contra documento oficial.
+3. Omitir el protocolo de visitas y permitir ingreso sin registro.
+4. No capacitar al personal de vigilancia sobre operación de la plataforma.
+5. Ignorar el respaldo eléctrico y dejar el acceso vulnerable ante apagones.
+6. Aceptar tasas FRR superiores al 5% sin ejecutar reenrolamiento dirigido.
+7. No comunicar al comité los KPI operativos del sistema durante los primeros 90 días.
+
+La suspensión prematura del control anterior provoca reclamos que el comité debe atender en sesión extraordinaria. La omisión del protocolo de visitas crea una vulnerabilidad estructural que invalida la inversión en biometría. La inversión en el [control biométrico de acceso](/control-biometrico-de-acceso/) solo entrega el valor proyectado cuando estos siete riesgos están explícitamente gestionados en el plan del proyecto.
+
+## Cierre y Siguiente Paso
+
+Una migración a control biométrico bien ejecutada combina ingeniería del sistema, gestión del padrón y comunicación con residentes en un proyecto integrado de 90 a 120 días desde diagnóstico hasta cierre formal. Si el comité de tu condominio necesita evaluar la migración a control biométrico o auditar una implementación reciente que presenta fallas de adopción, el equipo de [SEPRICO](/empresa-de-seguridad-privada-para-condominios/) ofrece auditoría inicial sin costo con plan de remediación documentado.

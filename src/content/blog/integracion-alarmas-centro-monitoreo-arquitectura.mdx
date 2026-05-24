@@ -1,0 +1,48 @@
+---
+title: 'Integración de Alarmas con Centro de Monitoreo: Arquitectura Recomendada'
+description: 'Cómo se integran los paneles de alarma a un centro de monitoreo 24/7. Topología de red, protocolos, redundancia y métricas de respuesta esperadas.'
+pubDate: 2026-05-24
+author: 'Equipo SEPRICO'
+category: 'tecnologia-y-monitoreo'
+tags: [alarmas, monitoreo, integracion, arquitectura]
+---
+
+Un panel de [alarmas de seguridad](/alarmas-de-seguridad/) instalado sin integración efectiva a una central de monitoreo opera como sirena local: avisa al vecindario pero no garantiza respuesta documentada. En revisiones técnicas a 31 condominios de Edomex durante el primer trimestre de 2026, el 41% mantenía paneles cuyas señales no llegaban a ninguna central, ya sea por línea telefónica cancelada, comunicador GSM con saldo agotado o configuración IP errónea tras un cambio de proveedor de internet. Este artículo describe la arquitectura recomendada para integrar paneles residenciales a un centro de monitoreo 24/7, los protocolos vigentes y los criterios de redundancia que evitan zonas ciegas operativas.
+
+## Topología base: panel, comunicador, central y mesa operativa
+
+La arquitectura de integración consta de cuatro capas claramente delimitadas. La primera es el panel de alarma en sitio, que recibe señales de sensores cableados o inalámbricos y aplica lógica de zonas y particiones. La segunda es el comunicador, que traduce los eventos del panel a un formato transmisible por GSM, IP, radio o línea telefónica conmutada. La tercera capa es el receptor en la central, hardware o software que decodifica las señales entrantes y las inyecta al sistema de gestión de eventos. La cuarta es la mesa operativa, donde un operador humano valida cada evento contra el protocolo del condominio y ejecuta el despacho correspondiente. La omisión de cualquier capa rompe la cadena: un comunicador sin receptor compatible o una central sin operador 24/7 invalidan toda la inversión previa.
+
+## Protocolos de comunicación: Contact ID, SIA y reportes IP
+
+El protocolo dominante en paneles residenciales sigue siendo Contact ID, formato DTMF que codifica cada evento en una cadena numérica estandarizada (zona, partición, código de evento). Es robusto pero limitado a 256 zonas y carece de cifrado nativo. SIA DC-09 es el protocolo moderno, basado en IP, con cifrado AES-128, supervisión bidireccional y soporte para textos descriptivos. Su adopción es obligatoria en centrales que buscan certificación UL bajo lineamientos vigentes. En condominios con paneles de generación intermedia se mantiene Contact ID sobre IP, encapsulando la trama DTMF en paquetes UDP para conservar compatibilidad sin perder velocidad. La selección de protocolo se documenta en la ficha técnica del panel y debe coincidir con las capacidades de la central receptora, lo que se verifica durante el comisionamiento.
+
+## Redundancia: caminos primario y secundario obligatorios
+
+Un solo medio de comunicación es punto único de falla. La arquitectura recomendada combina dos caminos físicamente independientes con conmutación automática supervisada cada 60 a 240 segundos. El esquema más común en CDMX es IP primario sobre red del condominio, con GSM secundario en módulo dual SIM. Cuando el panel detecta pérdida de conectividad IP durante más de 90 segundos, el comunicador GSM toma el relevo y notifica el cambio de canal a la central como evento prioritario. La central, a su vez, alerta al técnico responsable si la condición de respaldo se mantiene más de 15 minutos, evitando que el sitio opere indefinidamente sobre el canal secundario. La prueba de conmutación se ejecuta trimestralmente desconectando el medio primario y verificando registro completo del cambio.
+
+## Métricas operativas y niveles de servicio esperados
+
+La integración solo se valida con métricas medibles. Las cinco más relevantes en centrales serias son: latencia de recepción del evento, tiempo de validación por operador, tiempo de despacho hacia personal en sitio, porcentaje de eventos falsos sobre el total, y disponibilidad anual del sistema. La latencia de recepción esperada en arquitectura IP redundada está entre 1 y 4 segundos. La validación por operador, según tipo de evento, debe completarse en menos de 30 segundos para eventos de alta prioridad. El despacho, cuando depende del [monitoreo electrónico](/monitoreo-electronico/) de SEPRICO, se documenta con SLA específico por evento. La disponibilidad anual debe superar 99.5%, equivalente a menos de 44 horas de indisponibilidad acumulada por año, incluyendo ventanas de mantenimiento programado.
+
+## Eventos prioritarios y criterios de despacho
+
+No todos los eventos requieren el mismo nivel de respuesta. La clasificación operativa por prioridad permite optimizar tiempos y evitar saturación de la mesa. Esta es la jerarquía aplicada en condominios bajo monitoreo profesional:
+
+1. Pánico residente o caseta: notificación inmediata a autoridades y al comité, sin validación previa.
+2. Intrusión perimetral con confirmación por video: despacho de unidad y aviso al comité en menos de 5 minutos.
+3. Intrusión interna en oficina o cuarto técnico: validación remota y despacho según protocolo.
+4. Alarma técnica de humo o gas: notificación a bomberos según gravedad y aviso a residentes.
+5. Falla de energía mayor a 15 minutos: notificación al administrador y registro en bitácora.
+6. Falla de comunicación primaria: alerta interna a técnico de guardia.
+7. Apertura y cierre programada: registro silencioso sin notificación.
+
+Cada categoría se vincula a un guion operativo escrito que el operador sigue de forma estricta. La desviación del guion requiere justificación documentada, no criterio personal.
+
+## Integración con control de acceso y video verificación
+
+La eficacia de la central crece cuando los eventos de alarma se correlacionan con otras fuentes en sitio. La integración con [control de acceso](/control-de-acceso/) permite confirmar si el área en intrusión tuvo acceso legítimo segundos antes, descartando falsos positivos por personal autorizado. La video verificación, donde el operador revisa cámaras del área en menos de 20 segundos tras el evento, eleva la calidad del despacho y reduce solicitudes innecesarias a autoridades. Esta correlación exige que panel, control de acceso y CCTV compartan una capa de gestión común, sea por protocolo abierto (ONVIF para video, OSDP para acceso) o por API documentada del fabricante. La instalación dispersa de cada sistema con marcas distintas y sin pasarela común duplica costos operativos y crea zonas grises de responsabilidad.
+
+## Conclusión y siguiente paso
+
+Una arquitectura de integración bien diseñada no se evalúa por la marca del panel sino por la trazabilidad completa del evento, desde el sensor hasta el cierre del incidente. Si el comité de tu condominio necesita evaluar el estado real de su integración panel a central, verificar si el comunicador transmite, si la central responde con SLA documentado y si la redundancia funciona en pruebas reales, el equipo de SEPRICO ofrece auditoría inicial sin costo. La revisión entrega un informe con configuración actual, eventos perdidos en los últimos 30 días, brechas de redundancia y plan de remediación priorizado. Solicita la visita técnica desde [empresa de seguridad privada para condominios](/empresa-de-seguridad-privada-para-condominios/).

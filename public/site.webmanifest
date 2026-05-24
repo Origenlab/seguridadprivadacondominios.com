@@ -1,12 +1,17 @@
 {
-  "name": "Seguridad Privada Condominios",
-  "short_name": "SPC",
-  "description": "Seguridad privada para condominios y residenciales en CDMX y Estado de México.",
+  "name": "SEPRICO — Seguridad Privada para Condominios",
+  "short_name": "SEPRICO",
+  "description": "Empresa de seguridad privada para condominios y residenciales en CDMX y Estado de México. Vigilancia 24/7, control de acceso, monitoreo electrónico y protocolos auditables desde el año 2000.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#050505",
+  "lang": "es-MX",
+  "dir": "ltr",
+  "categories": ["business", "security", "lifestyle"],
   "icons": [
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/images/brand/logo.png", "sizes": "286x77", "type": "image/png", "purpose": "any" }
   ]
 }

@@ -1,0 +1,26 @@
+---
+import BlogArticle from '@/components/BlogArticle.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) =>
+    !data.draft && data.category === 'tecnologia-y-monitoreo'
+  );
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { entry: p } }));
+}
+
+interface Props { entry: CollectionEntry<'blog'>; }
+const { entry } = Astro.props;
+---
+
+<BlogArticle
+  entry={entry}
+  category={{
+    slug: 'tecnologia-y-monitoreo',
+    label: 'Tecnología y Monitoreo',
+    headline: 'Tecnología y Monitoreo',
+    archiveHref: '/category/tecnologia-y-monitoreo/',
+    articleSection: 'Tecnología y Monitoreo para Condominios',
+    icon: 'cctv',
+  }}
+/>

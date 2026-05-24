@@ -1,0 +1,297 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import QuickNavBottom from '@/components/QuickNavBottom.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import Process from '@/components/Process.astro';
+import BadgeCard from '@/components/BadgeCard.astro';
+import SubHubFaq from '@/components/SubHubFaq.astro';
+import ChipsBar from '@/components/ChipsBar.astro';
+import ClusterGrid from '@/components/ClusterGrid.astro';
+import AboutSeprico from '@/components/AboutSeprico.astro';
+import SchemaBreadcrumb from '@/components/SchemaBreadcrumb.astro';
+import SchemaSpeakable from '@/components/SchemaSpeakable.astro';
+import { SITE } from '@/config/site';
+
+// ───── METADATA ─────
+const slug = 'atencion-al-comite-condominios';
+const canonicalPath = `/${slug}/`;
+const canonicalUrl = new URL(canonicalPath, SITE.url).toString();
+const seoTitle = 'Atención al Comité Administrativo — Pilar 4 SEPRICO';
+const seoDescription = 'Ejecutivo de cuenta dedicado, reportes mensuales ejecutivos, bitácora digital 24/7 y revisión trimestral con KPIs para el comité de tu condominio.';
+const keywords = [
+  'atención al comité administrativo',
+  'ejecutivo de cuenta seguridad condominio',
+  'reportes mensuales condominio',
+  'bitácora digital condominio',
+  'KPIs seguridad residencial',
+  'revisión trimestral seguridad',
+  'soporte mesa directiva condominio',
+];
+
+// ───── 4 COMPONENTES del pilar ─────
+const pillarComponents = [
+  {
+    title: 'Ejecutivo de Cuenta Dedicado',
+    desc: 'Una persona con nombre, número directo y conocimiento del condominio. Atiende solicitudes operativas, reclamos, escalamientos y acompaña al comité durante incidentes críticos.',
+    image: '/images/general/seguridad-condominios.avif',
+    icon: 'phone' as const,
+    href: '#ejecutivo',
+    badge: '01',
+  },
+  {
+    title: 'Reportes Mensuales al Comité',
+    desc: 'Informe ejecutivo entregado entre el día 1 y 5 de cada mes. Métricas de cumplimiento, incidentes documentados, hallazgos del supervisor y recomendaciones operativas — listo para presentar en asamblea.',
+    image: '/images/servicios/monitoreo-electronico.avif',
+    icon: 'check' as const,
+    href: '#reportes',
+    badge: '02',
+  },
+  {
+    title: 'Bitácora Digital en Tiempo Real',
+    desc: 'Panel web 24/7 con cada turno, ronda, ingreso, alerta y evento registrado con timestamp y operador responsable. Consultable por el comité y administración sin intermediarios técnicos.',
+    image: '/images/servicios/control-de-acceso.avif',
+    icon: 'clock' as const,
+    href: '#bitacora',
+    badge: '03',
+  },
+  {
+    title: 'Revisión Trimestral con KPIs',
+    desc: 'Sesión formal de 90 minutos cada trimestre con la mesa directiva: análisis de tendencias, comparativa periodo a periodo y plan de ajustes documentado. Acta firmada por ambas partes.',
+    image: '/images/servicios/consultoria-en-seguridad.avif',
+    icon: 'star' as const,
+    href: '#revision',
+    badge: '04',
+  },
+];
+
+// ───── PROCESO ─────
+const clusterProcess = [
+  { icon: 'phone' as const, title: 'Llamada con la mesa directiva', desc: 'Conversación inicial con presidencia y tesorería del comité para entender prioridades, frecuencia de reportes deseada y nivel de involucramiento esperado.' },
+  { icon: 'pin' as const, title: 'Levantamiento documental', desc: 'Recopilación de reglamento interno, lista de residentes, plantilla actual y bitácora existente. Inventario del ecosistema de seguridad ya operativo.' },
+  { icon: 'check' as const, title: 'Asignación de ejecutivo + setup', desc: 'El comité conoce al ejecutivo asignado por videollamada o presencial. Setup del panel digital con accesos diferenciados por rol (presidencia, administración, residentes).' },
+  { icon: 'shield' as const, title: 'Onboarding y primer reporte', desc: 'Capacitación al comité sobre uso del panel, política de comunicación y formato del reporte mensual. Primer informe entregado al mes 1 con baseline operativo.' },
+  { icon: 'star' as const, title: 'Operación con revisión trimestral', desc: 'Reportes mensuales puntuales, sesión formal cada trimestre con la mesa directiva y mejora continua documentada con acta firmada.' },
+];
+
+// ───── BENEFICIOS del enfoque integrado ─────
+const integratedBenefits = [
+  { title: 'Un interlocutor real, no un call center', desc: 'El comité no marca a un número genérico esperando ser transferido. Habla directo con el ejecutivo que conoce el condominio y sus eventos previos.' },
+  { title: 'Reportes que se presentan sin traducir', desc: 'El informe mensual está diseñado para llevarse directo a asamblea de condóminos. Gráficos claros, comparativas y métricas defendibles ante cualquier residente.' },
+  { title: 'Trazabilidad legal de cada turno', desc: 'La bitácora digital cifrada es prueba documental válida ante autoridades, aseguradoras y ante la propia asamblea. Cero "no recuerdo qué pasó esa noche".' },
+  { title: 'KPIs comparables periodo a periodo', desc: 'No solo entregamos números — los comparamos contra el mes anterior y el mismo periodo del año pasado. El comité ve evolución cuantificable, no anécdotas.' },
+  { title: 'Continuidad ante cambio de comité', desc: 'Cada cambio de mesa directiva recibe el expediente completo del condominio: histórico de eventos, decisiones tomadas y configuración actual. Sin pérdida de contexto.' },
+  { title: 'Acompañamiento en eventos críticos', desc: 'Ante incidente grave, el ejecutivo se moviliza al condominio en menos de 60 minutos para coordinar con el comité, supervisar al equipo en sitio y documentar el evento.' },
+];
+
+// ───── DIFERENCIADORES ─────
+const clusterValueProps = [
+  { icon: 'phone' as const, title: 'Ejecutivo con nombre y número directo', desc: 'No es extensión ni call center: es WhatsApp y celular personal. La relación con el comité es 1:1, no contractual con SEPRICO en abstracto.' },
+  { icon: 'check' as const, title: 'Reportes ejecutivos listos para asamblea', desc: 'Formato diseñado con presidentes de comité reales. Lenguaje claro, gráficos defendibles, datos verificables — no jerga técnica que el comité tiene que traducir.' },
+  { icon: 'clock' as const, title: 'Bitácora consultable 24/7', desc: 'Panel web con SSO. El comité accede al evento de hace 3 minutos o de hace 6 meses con la misma facilidad y sin intermediarios técnicos.' },
+  { icon: 'star' as const, title: 'Revisión trimestral con acta firmada', desc: 'No es reunión informal: 90 minutos con agenda, presentación de resultados, plan de acciones y acta que ambas partes firman. Trazabilidad ejecutiva real.' },
+  { icon: 'shield' as const, title: 'Continuidad de expediente', desc: 'El comité entrante recibe documento histórico completo del condominio. Cero "tienes que empezar de cero porque no sabemos qué hacía el anterior administrador".' },
+  { icon: 'alert' as const, title: 'Movilización en eventos graves', desc: 'Ejecutivo + supervisor regional en condominio en menos de 60 minutos ante incidente serio. Acompañamiento al comité durante toda la gestión del evento.' },
+];
+
+// ───── FAQ ─────
+const clusterFaqs = [
+  { q: '¿Qué pasa con la operación cuando cambia el comité administrativo?', a: 'El ejecutivo de SEPRICO entrega al comité entrante el expediente histórico completo del condominio: incidentes previos, decisiones tomadas por mesas anteriores, configuración actual del servicio y métricas comparativas. La operación no se detiene un solo turno.' },
+  { q: '¿Qué incluye exactamente el reporte mensual?', a: 'Cumplimiento de plantilla (asistencias y rotaciones), completitud de bitácora, incidencias por categoría, tiempos de respuesta promedio, hallazgos del supervisor, eventos relevantes del mes y recomendaciones operativas. Entre 8 y 12 páginas en formato presentable.' },
+  { q: '¿Cómo accede el comité al panel digital?', a: 'Acceso web con cuenta protegida y autenticación 2FA. Roles diferenciados: presidencia ve todo, tesorería ve métricas financieras, residentes con permiso ven su bitácora de acceso personal. Cada consulta queda registrada en log de auditoría.' },
+  { q: '¿Qué pasa si el ejecutivo de cuenta deja la empresa?', a: 'Transición documentada con la mesa directiva: el ejecutivo entrante recibe el expediente completo del condominio y se reúne presencialmente con el comité dentro de los primeros 7 días. La continuidad es responsabilidad de SEPRICO, no del comité.' },
+  { q: '¿La revisión trimestral es presencial o virtual?', a: 'El comité elige. Presencial cuando lo prefieren (recomendado para condominios grandes) o videollamada para mesas con miembros en horarios complejos. Cualquiera de las dos modalidades termina con acta firmada digitalmente.' },
+  { q: '¿Cuánto cuesta el pilar Atención al Comité?', a: 'Está incluido en todos los contratos de servicios operativos de SEPRICO sin costo adicional. No es upgrade premium ni concepto separado en factura: es la forma estándar en la que operamos cada relación con un comité administrativo.' },
+];
+
+// ───── Breadcrumb ─────
+const breadcrumbItems = [
+  { label: 'Servicios', href: '/servicios-de-seguridad-privada/' },
+  { label: 'Atención al Comité' },
+];
+
+// ───── QuickNav contextual + bottom ─────
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent('Hola SEPRICO, requiero información sobre atención al comité')}`;
+const quickNavBottomChips = [
+  { label: 'Personal SETEC', sub: 'Pilar 1 — guardias y patrullaje', href: '/personal-de-seguridad-residencial/', icon: 'shield' as const },
+  { label: 'Tecnología', sub: 'Pilar 2 — CCTV, accesos, alarmas', href: '/tecnologia-y-monitoreo/', icon: 'cctv' as const },
+  { label: 'Protocolos', sub: 'Pilar 3 — consultoría', href: '/protocolos-y-consultoria/', icon: 'check' as const },
+  { label: 'Catálogo completo', sub: '13 servicios SEPRICO', href: '/servicios-de-seguridad-privada/', icon: 'star' as const },
+  { label: 'Contacto', sub: 'Cotización sin costo', href: '/empresa-de-seguridad-privada-para-condominios/', icon: 'mail' as const },
+  { label: 'WhatsApp 24/7', sub: 'Respuesta en <15 min', href: wa, icon: 'phone' as const, external: true },
+];
+
+// ───── Schema CollectionPage ─────
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${canonicalUrl}#collection`,
+  url: canonicalUrl,
+  name: 'Atención al Comité Administrativo de Condominios',
+  description: seoDescription,
+  inLanguage: 'es-MX',
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@type': 'Thing', name: 'Atención y soporte al comité administrativo de condominios' },
+  mainEntity: {
+    '@type': 'ItemList',
+    name: 'Componentes del pilar Atención al Comité',
+    numberOfItems: pillarComponents.length,
+    itemListElement: pillarComponents.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.title,
+      description: c.desc,
+      url: canonicalUrl + c.href,
+    })),
+  },
+};
+const topChips = pillarComponents.map((c) => ({
+  label: c.title,
+  href: c.href,
+  icon: c.icon,
+}));
+
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDescription}
+  canonical={canonicalPath}
+  type="website"
+  keywords={keywords}
+>
+  <Fragment slot="schemas">
+    <SchemaBreadcrumb items={breadcrumbItems} />
+    <SchemaSpeakable url={canonicalUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  </Fragment>
+
+  <Breadcrumb items={breadcrumbItems} />
+
+  {/* ══════════ 1. HERO ══════════ */}
+  <Hero
+    eyebrow="Pilar 4 — Atención al Comité · CDMX y Edomex"
+    label="SEPRICO · Soporte ejecutivo para"
+    headline="Atención al Comité"
+    subheadline="Administrativo del Condominio"
+    body={`Ejecutivo de cuenta con nombre y número directo, <strong class="text-white">reportes ejecutivos listos para asamblea</strong>, bitácora digital consultable 24/7 y revisión trimestral formal con la mesa directiva. La relación con el comité es parte del servicio, no un favor adicional.`}
+    asideP1={`La mayoría de las empresas de seguridad <strong class="text-white">asignan un guardia y desaparecen</strong>. En SEPRICO el trato con el comité es estructural: ejecutivo dedicado, reportes mensuales documentados y panel de gestión disponible en cualquier momento desde cualquier dispositivo.`}
+    asideP2={`Revisamos contigo los indicadores cada trimestre porque <strong class="text-white">el contrato no termina cuando se firma — empieza ahí</strong>. Cada cambio de mesa directiva recibe expediente histórico completo del condominio, garantizando continuidad operativa sin pérdida de contexto.`}
+    asideEyebrow="Sobre el pilar"
+    isH1={true}
+  />
+
+  {/* ══════════ 2. QUICKNAV chips a los 4 componentes ══════════ */}
+  <ChipsBar chips={topChips} ariaLabel="Componentes del pilar" />
+
+  {/* ══════════ 3. LOS 4 COMPONENTES — grid service-card inline ══════════ */}
+  <Section
+    id="componentes"
+    eyebrow="Componentes del pilar"
+    title="Los cuatro frentes de la relación con el comité"
+    subtitle="Cuatro componentes operativos que conforman el estándar SEPRICO de atención a la mesa directiva. Ninguno es opcional ni se cobra aparte — están incluidos en todos los contratos de servicio."
+    desc="La calidad de la relación con el comité es lo que determina si un contrato se renueva al primer año. Por eso este pilar no es un add-on: es el modelo operativo base."
+  >
+    <ClusterGrid items={pillarComponents} cols={4} />
+  </Section>
+
+  {/* ══════════ 4. INTEGRACIÓN CRUZADA ══════════ */}
+  <Section
+    eyebrow="Cómo se conectan"
+    title="Integración cruzada entre los cuatro componentes"
+    subtitle="Ejecutivo, reportes, bitácora y revisión trimestral forman un ciclo completo de comunicación con la mesa directiva. Cada componente alimenta a los demás y cierra la trazabilidad operativa."
+    desc="A continuación los tres ejes principales que el comité experimenta desde el primer mes de servicio."
+    bg="darker"
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <BadgeCard
+        icon="phone"
+        title="Eje comunicación"
+        desc="El ejecutivo es el punto único de contacto, los reportes son la comunicación periódica formal. Combinados eliminan la sensación de hablar con un proveedor impersonal."
+      />
+      <BadgeCard
+        icon="check"
+        title="Eje trazabilidad"
+        desc="La bitácora digital alimenta los reportes mensuales con datos verificables. Ningún evento pasa desapercibido y cada decisión queda respaldada en evidencia."
+      />
+      <BadgeCard
+        icon="star"
+        title="Eje mejora continua"
+        desc="Los KPIs revisados cada trimestre se traducen en ajustes documentados que el comité entrante hereda como expediente vigente del condominio."
+      />
+    </div>
+  </Section>
+
+  {/* ══════════ 5. BENEFICIOS ══════════ */}
+  <Section
+    id="beneficios"
+    eyebrow="Ventajas del modelo"
+    title="Por qué el comité gana con atención estructurada, no improvisada"
+    subtitle="Una mesa directiva que opera sobre reportes mensuales, bitácora consultable y revisión trimestral firmada deja de tomar decisiones por presión y comienza a defender cada decisión con datos auditables."
+    desc="Los condominios con este modelo reducen rotación de proveedores y mantienen consistencia operativa medible entre cambios de mesa directiva."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {integratedBenefits.map((b, i) => (
+        <BadgeCard title={b.title} desc={b.desc} number={String(i + 1).padStart(2, '0')} />
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 6. PROCESO ══════════ */}
+  <Section
+    id="proceso"
+    eyebrow="Cómo lo implementamos"
+    title="Del primer contacto al ritmo operativo trimestral"
+    subtitle="Cinco etapas con entregables documentados. Cada paso valida la siguiente decisión antes de continuar. El comité tiene control total sobre el ritmo de implementación."
+    desc="Tiempos típicos: setup completo entre 7 y 14 días, primer reporte ejecutivo al mes 1, primera revisión trimestral formal al mes 3."
+    bg="darker"
+  >
+    <Process items={clusterProcess} />
+
+    <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-brand inline-flex items-center gap-2">
+        <Icon name="phone" class="h-4 w-4" />
+        Iniciar diagnóstico gratuito
+      </a>
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-ghost inline-flex items-center gap-2">
+        <Icon name="check" class="h-4 w-4" />
+        WhatsApp 24/7
+      </a>
+    </div>
+  </Section>
+
+  {/* ══════════ 7. DIFERENCIADORES ══════════ */}
+  <Section
+    id="diferenciadores"
+    eyebrow="Por qué SEPRICO"
+    title="Qué distingue a la atención al comité de SEPRICO"
+    subtitle="No competimos por contestar el teléfono más rápido: competimos por construir una relación operativa documentada que sobreviva al cambio de mesa directiva y se defienda con evidencia ante cualquier residente."
+    desc="Cada diferenciador es una decisión operativa verificable contra el contrato y los entregables mensuales."
+  >
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {clusterValueProps.map((v) => (
+        <BadgeCard title={v.title} desc={v.desc} icon={v.icon} />
+      ))}
+    </div>
+  </Section>
+
+  {/* ══════════ 8. FAQ ══════════ */}
+  <Section
+    id="faq"
+    eyebrow="Preguntas frecuentes"
+    title="Dudas comunes del comité administrativo"
+    subtitle="Las preguntas que los presidentes de comité y tesoreros hacen con más frecuencia al evaluar el modelo de atención SEPRICO frente a proveedores con esquema tradicional."
+    desc="Si tu duda no aparece aquí, escríbenos por WhatsApp y un ejecutivo te responde en menos de 15 minutos durante horario hábil."
+    bg="darker"
+  >
+    <SubHubFaq items={clusterFaqs} contextMessage="Hola SEPRICO, requiero información sobre atención al comité" />
+  </Section>
+
+  {/* ══════════ 9. ACERCA DE SEPRICO ══════════ */}
+  <AboutSeprico serviceContext="el modelo de atención al comité administrativo" />
+
+  {/* ══════════ 10. QUICKNAV BOTTOM ══════════ */}
+  <QuickNavBottom chips={quickNavBottomChips} />
+</BaseLayout>

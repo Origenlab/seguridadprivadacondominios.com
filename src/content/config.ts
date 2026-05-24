@@ -9,7 +9,7 @@ const servicios = defineCollection({
     category: z.enum(['personal', 'tecnologia', 'protocolos']).default('protocolos'),
     /** 'servicio' aparece en /servicios-de-seguridad-privada/, 'rrhh' en /reclutamiento-para-seguridad-privada/ */
     kind: z.enum(['servicio', 'rrhh']).default('servicio'),
-    /** Ruta a la imagen card (público) — ej. /images/servicios/control-de-acceso.jpg */
+    /** Ruta a la imagen card (público) — ej. /images/servicios/control-de-acceso.avif */
     image: z.string().optional(),
     order: z.number().default(0),
     features: z.array(z.string()).default([]),
@@ -141,6 +141,10 @@ const blog = defineCollection({
       'uncategorized',
     ]).default('seguridad-privada'),
     draft: z.boolean().default(false),
+    /** Ruta a la imagen hero del artículo (público) — ej. /images/banco/centro-monitoreo-cctv-condominio-01.avif */
+    image: z.string().optional(),
+    /** Alt SEO de la imagen hero. Si vacío, usa title. */
+    imageAlt: z.string().optional(),
   }),
 });
 

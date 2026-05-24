@@ -1,0 +1,504 @@
+---
+/**
+ * BlogArticle.astro — Template aprobado para artículos de blog (todas las categorías).
+ *
+ * Estructura: Hero autorizado + meta strip + layout 8/4 con TOC sticky + bloque
+ * "Sobre SEPRICO" (E-E-A-T) + JSON-LD BlogPosting/Breadcrumb. Doc completa en
+ * docs/02-Diseno/04-Template-Articulo-Blog.md.
+ *
+ * Recibe el entry y la metadata de categoría — todo lo demás se renderiza igual
+ * para los 89 artículos.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Icon from '@/components/Icon.astro';
+import CtaBanner from '@/components/CtaBanner.astro';
+import { SITE } from '@/config/site';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+type IconName = 'shield' | 'cctv' | 'patrol' | 'access' | 'alert' | 'check' | 'phone' | 'mail' | 'pin' | 'clock' | 'star' | 'arrow';
+
+export interface CategoryMeta {
+  /** slug interno (matches frontmatter.category) — ej. 'seguridad-privada' */
+  slug: string;
+  /** Etiqueta visible en breadcrumb y eyebrows — ej. 'Seguridad privada' */
+  label: string;
+  /** Headline del Hero (gradient brand gigante) — ej. 'Seguridad Privada' */
+  headline: string;
+  /** Path absoluto del archive de categoría — ej. '/category/seguridad-privada/' */
+  archiveHref: string;
+  /** articleSection para BaseLayout + JSON-LD — ej. 'Seguridad Privada para Condominios' */
+  articleSection: string;
+  /** Icon brand del badge en related cards */
+  icon: IconName;
+}
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+  category: CategoryMeta;
+}
+
+const { entry, category } = Astro.props;
+const { Content, headings } = await entry.render();
+
+// ── Reading time (≈220 wpm español) ──────────────────────────────
+const words = (entry.body ?? '').trim().split(/\s+/).length;
+const readingMin = Math.max(1, Math.round(words / 220));
+
+// ── Posts relacionados (mismos tags, excluyendo el actual) ───────
+const all = await getCollection('blog', ({ data }) => !data.draft);
+const related = all
+  .filter((p) => p.slug !== entry.slug && p.data.tags.some((t) => entry.data.tags.includes(t)))
+  .slice(0, 3);
+
+// ── URLs / contactos ─────────────────────────────────────────────
+const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+const canonical = `${SITE.url}/${category.slug}/${entry.slug}/`;
+const ogImage = new URL('/images/og/og-image.webp', SITE.url).toString();
+
+// ── TOC (H2 auto generados por Astro) ────────────────────────────
+const tocItems = headings.filter((h) => h.depth === 2);
+
+// ── Schemas JSON-LD ──────────────────────────────────────────────
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${canonical}#article`,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  headline: entry.data.title,
+  description: entry.data.description,
+  inLanguage: 'es-MX',
+  datePublished: entry.data.pubDate.toISOString(),
+  dateModified: entry.data.pubDate.toISOString(),
+  image: ogImage,
+  url: canonical,
+  articleSection: category.articleSection,
+  keywords: entry.data.tags.join(', '),
+  wordCount: words,
+  author: {
+    '@type': 'Organization',
+    '@id': `${SITE.url}/#organization`,
+    name: SITE.name,
+    legalName: SITE.legalName,
+    url: SITE.url,
+  },
+  publisher: { '@id': `${SITE.url}/#organization` },
+  about: entry.data.tags.map((t) => ({ '@type': 'Thing', name: t })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${SITE.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Blog',   item: `${SITE.url}/blog/` },
+    { '@type': 'ListItem', position: 3, name: category.label, item: `${SITE.url}${category.archiveHref}` },
+    { '@type': 'ListItem', position: 4, name: entry.data.title, item: canonical },
+  ],
+};
+
+const cleanArticle    = JSON.parse(JSON.stringify(articleSchema));
+const cleanBreadcrumb = JSON.parse(JSON.stringify(breadcrumbSchema));
+
+// ── Hero props ───────────────────────────────────────────────────
+const tagCount = entry.data.tags.length;
+const tagPlural = tagCount === 1 ? '' : 's';
+const heroBody = `<strong class="text-white">${entry.data.description}</strong>`;
+const heroAsideP1 = `Este artículo es parte de la documentación abierta de <strong class="text-white">SEPRICO</strong> — empresa de seguridad privada para condominios y residenciales en CDMX y Estado de México desde el año ${SITE.founded}. Cada publicación nace de un caso real atendido por nuestro equipo operativo, no de contenido genérico de marketing.`;
+const heroAsideP2 = `Lectura aproximada: <strong class="text-white">${readingMin} minutos</strong> · ${tagCount} tema${tagPlural} cubierto${tagPlural}. Si trabajas en un comité vecinal o administración profesional, este material está pensado para ti.`;
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Blog SEPRICO`}
+  description={entry.data.description}
+  type="article"
+  canonical={canonical}
+  keywords={entry.data.tags}
+  articleSection={category.articleSection}
+  lastReviewed={entry.data.pubDate}
+>
+  <Fragment slot="schemas">
+    <script type="application/ld+json" set:html={JSON.stringify(cleanArticle)} />
+    <script type="application/ld+json" set:html={JSON.stringify(cleanBreadcrumb)} />
+  </Fragment>
+
+  <Breadcrumb items={[
+    { label: 'Blog', href: '/blog/' },
+    { label: category.label, href: category.archiveHref },
+    { label: entry.data.title },
+  ]} />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       HERO AUTORIZADO (mismo patrón que index/blog)
+  ══════════════════════════════════════════════════════════════ -->
+  <Hero
+    eyebrow={`Blog SEPRICO · Artículo · ${readingMin} min de lectura`}
+    label="Equipo SEPRICO · Documentación operativa"
+    headline={category.headline}
+    subheadline={entry.data.title}
+    body={heroBody}
+    asideEyebrow="Sobre este artículo"
+    asideP1={heroAsideP1}
+    asideP2={heroAsideP2}
+    isH1={true}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════════
+       META STRIP (autor + certificaciones)
+  ══════════════════════════════════════════════════════════════ -->
+  <section class="border-b border-white/10 bg-ink-900">
+    <div class="container-pro py-5">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-extrabold text-white shadow-md shadow-brand-500/30">
+            S
+          </span>
+          <div class="flex flex-col">
+            <span class="text-xs font-bold text-white">{entry.data.author}</span>
+            <span class="text-[10px] uppercase tracking-widest2 text-white/50">
+              {SITE.legalName} · desde {SITE.founded}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-ink-800 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-white/70">
+            <Icon name="check" class="h-3 w-3 text-brand-400" />
+            Permiso SSPC
+          </span>
+          <span class="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-ink-800 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-white/70">
+            <Icon name="check" class="h-3 w-3 text-brand-400" />
+            ISO 9001:2015
+          </span>
+          <span class="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-ink-800 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-white/70">
+            <Icon name="check" class="h-3 w-3 text-brand-400" />
+            Personal SETEC
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       CONTENIDO + SIDEBAR
+  ══════════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container-pro">
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
+
+        <!-- ══ ARTICLE COLUMN ══ -->
+        <article class="lg:col-span-8 min-w-0">
+
+          {entry.data.tags.length > 0 && (
+            <div class="mb-8 flex flex-wrap gap-2">
+              {entry.data.tags.map((t) => (
+                <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-ink-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest2 text-white/60">
+                  #{t}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div
+            id="article-content"
+            class="prose prose-invert prose-lg max-w-none
+                   prose-headings:scroll-mt-28 prose-headings:font-bold prose-headings:text-white
+                   prose-h2:mt-12 prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:leading-tight
+                   prose-h2:border-l-4 prose-h2:border-brand-500 prose-h2:pl-4
+                   prose-h3:mt-8 prose-h3:text-xl prose-h3:text-white
+                   prose-p:leading-relaxed prose-p:text-white/80
+                   prose-strong:text-white prose-strong:font-semibold
+                   prose-a:text-brand-400 prose-a:font-semibold prose-a:no-underline hover:prose-a:text-brand-300 hover:prose-a:underline
+                   prose-ul:my-6 prose-li:text-white/80 prose-li:marker:text-brand-500
+                   prose-ol:my-6
+                   prose-blockquote:border-l-4 prose-blockquote:border-brand-500 prose-blockquote:bg-ink-900/50 prose-blockquote:py-2 prose-blockquote:px-5 prose-blockquote:not-italic prose-blockquote:text-white/85 prose-blockquote:rounded-r-lg
+                   prose-code:rounded prose-code:bg-ink-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-brand-300 prose-code:before:hidden prose-code:after:hidden
+                   prose-table:text-sm prose-th:bg-ink-800 prose-th:text-white prose-th:font-semibold prose-td:border-white/10 prose-th:border-white/10
+                   prose-img:rounded-xl prose-img:border prose-img:border-white/10
+                   prose-hr:border-white/10"
+          >
+            <Content />
+          </div>
+
+          <!-- Mid-article INLINE CTA -->
+          <aside class="my-12 overflow-hidden rounded-2xl border border-brand-500/30 bg-gradient-to-br from-brand-500/15 via-ink-900 to-ink-900 p-6 md:p-8">
+            <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div class="flex items-start gap-4">
+                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand-500 text-white shadow-md shadow-brand-500/40">
+                  <Icon name="shield" class="h-6 w-6" />
+                </span>
+                <div>
+                  <p class="text-[10px] font-bold uppercase tracking-widest2 text-brand-300">SEPRICO · Auditoría sin costo</p>
+                  <h3 class="mt-1 text-lg font-bold leading-snug text-white md:text-xl">
+                    ¿Tu condominio aplica estos criterios?
+                  </h3>
+                  <p class="mt-1 text-sm text-white/70">
+                    Auditoría inicial gratuita: diagnóstico operativo y propuesta económica en menos de 48 horas.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 md:shrink-0">
+                <a href={wa} target="_blank" rel="noopener noreferrer" class="btn-brand whitespace-nowrap text-sm">
+                  <Icon name="phone" class="h-4 w-4" />
+                  WhatsApp 24/7
+                </a>
+                <a href="/empresa-de-seguridad-privada-para-condominios/" class="btn-ghost whitespace-nowrap text-xs">
+                  Formulario
+                </a>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Bloque "Sobre SEPRICO" (E-E-A-T obligatorio) -->
+          <section class="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-ink-900">
+            <header class="border-b border-white/10 bg-ink-800/50 px-6 py-4">
+              <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+                <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                Sobre el autor
+              </span>
+            </header>
+            <div class="grid gap-6 p-6 md:grid-cols-3 md:p-8">
+              <div class="md:col-span-1">
+                <span class="grid h-14 w-14 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-xl font-extrabold text-white shadow-md shadow-brand-500/30">
+                  S
+                </span>
+                <h3 class="mt-4 text-lg font-bold text-white">{SITE.name}</h3>
+                <p class="text-sm text-white/55">{SITE.legalName}</p>
+                <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+                  <div class="rounded-lg border border-white/10 bg-ink-800 px-3 py-2">
+                    <div class="text-base font-extrabold text-white">{SITE.stats.anios}</div>
+                    <div class="text-[10px] uppercase tracking-widest2 text-white/50">Años</div>
+                  </div>
+                  <div class="rounded-lg border border-white/10 bg-ink-800 px-3 py-2">
+                    <div class="text-base font-extrabold text-white">{SITE.stats.eventos}</div>
+                    <div class="text-[10px] uppercase tracking-widest2 text-white/50">Comunidades</div>
+                  </div>
+                </div>
+              </div>
+              <div class="md:col-span-2">
+                <p class="text-sm leading-relaxed text-white/80">
+                  <strong class="text-white">SEPRICO</strong> ({SITE.legalName}) opera desde el <strong class="text-white">año {SITE.founded}</strong> como
+                  empresa especializada en <a href="/" class="text-brand-400 hover:text-brand-300">seguridad privada para condominios</a>, fraccionamientos y residenciales en
+                  CDMX y Estado de México. Esta publicación es parte de nuestra documentación abierta para
+                  comités administrativos, presidentes vecinales y administradores profesionales que requieren
+                  criterios técnicos, no recomendaciones genéricas.
+                </p>
+                <ul class="mt-5 grid gap-2 sm:grid-cols-2">
+                  {SITE.certifications.map((c) => (
+                    <li class="flex items-start gap-2 text-xs text-white/75">
+                      <Icon name="check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-400" />
+                      <span>{c}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-5 flex flex-wrap gap-2">
+                  <a href="/nosotros/" class="btn-ghost text-xs">
+                    Conocer SEPRICO
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </a>
+                  <a href="/servicios-de-seguridad-privada/" class="btn-ghost text-xs">
+                    Catálogo de servicios
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tag footer -->
+          {entry.data.tags.length > 0 && (
+            <div class="mt-10 border-t border-white/10 pt-6">
+              <span class="text-[10px] font-bold uppercase tracking-widest2 text-white/40">Temas tratados</span>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {entry.data.tags.map((t) => (
+                  <a
+                    href={category.archiveHref}
+                    class="rounded-md border border-white/10 bg-ink-900 px-3 py-1 text-xs uppercase tracking-widest2 text-white/70 hover:border-brand-500/40 hover:text-brand-400"
+                  >
+                    #{t}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Related posts -->
+          {related.length > 0 && (
+            <section class="mt-14 border-t border-white/10 pt-10">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+                  <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                  Continúa leyendo
+                </span>
+                <span class="h-px flex-1 bg-white/10"></span>
+              </div>
+              <h2 class="mt-3 text-2xl font-bold text-white md:text-3xl">Artículos relacionados</h2>
+              <p class="mt-2 text-sm text-white/60">Más documentación operativa del equipo SEPRICO para comités administrativos.</p>
+
+              <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {related.map((p) => (
+                  <a
+                    href={`/${p.data.category}/${p.slug}/`}
+                    class="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-900 hover:border-brand-500/40"
+                  >
+                    <div class="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-ink-700 via-ink-800 to-ink-900">
+                      <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(244,63,63,0.25),transparent_55%)]"></div>
+                      <span class="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-lg bg-brand-500 text-white shadow-md shadow-brand-500/30">
+                        <Icon name={category.icon} class="h-5 w-5" />
+                      </span>
+                    </div>
+                    <div class="flex flex-1 flex-col p-5">
+                      <span class="text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+                        {category.label}
+                      </span>
+                      <h3 class="mt-2 text-sm font-bold leading-snug text-white line-clamp-3 group-hover:text-brand-400">
+                        {p.data.title}
+                      </h3>
+                      <p class="mt-2 line-clamp-2 flex-1 text-xs text-white/65">{p.data.description}</p>
+                      <span class="mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest2 text-brand-500 group-hover:text-brand-400">
+                        Leer artículo
+                        <Icon name="arrow" class="h-3 w-3" />
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </article>
+
+        <!-- ══ SIDEBAR (TOC sticky) ══ -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24 space-y-6">
+
+            {tocItems.length > 0 && (
+              <nav
+                id="article-toc"
+                aria-label="Tabla de contenidos del artículo"
+                class="overflow-hidden rounded-2xl border border-white/10 bg-ink-900"
+              >
+                <header class="flex items-center justify-between border-b border-white/10 bg-ink-800/60 px-5 py-4">
+                  <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+                    <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                    En este artículo
+                  </span>
+                  <span class="text-[10px] font-semibold text-white/40">{tocItems.length} secciones</span>
+                </header>
+                <ol class="flex flex-col py-2 text-sm">
+                  {tocItems.map((h, i) => (
+                    <li>
+                      <a
+                        href={`#${h.slug}`}
+                        data-toc-link={h.slug}
+                        class="group flex items-start gap-3 border-l-2 border-transparent px-5 py-2.5 text-white/65 transition-colors hover:border-brand-500/40 hover:bg-brand-500/5 hover:text-white"
+                      >
+                        <span class="mt-0.5 text-[10px] font-bold text-white/35 group-hover:text-brand-400">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span class="leading-snug">{h.text}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
+
+            <div class="overflow-hidden rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 p-5 shadow-lg shadow-brand-500/20">
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest2 text-white">
+                <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+                Respuesta &lt; 15 min
+              </span>
+              <h3 class="mt-3 text-base font-bold leading-snug text-white">
+                ¿Aplica este artículo a tu condominio?
+              </h3>
+              <p class="mt-2 text-xs leading-relaxed text-white/85">
+                Un especialista SEPRICO te orienta gratis. Sin formularios largos.
+              </p>
+              <a
+                href={wa}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-white px-3 py-2.5 text-sm font-bold text-brand-600 hover:bg-white/95"
+              >
+                <Icon name="phone" class="h-4 w-4" />
+                WhatsApp directo
+              </a>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-white/10 bg-ink-900">
+              <header class="border-b border-white/10 bg-ink-800/60 px-5 py-4">
+                <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest2 text-brand-400">
+                  <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+                  Servicios SEPRICO
+                </span>
+              </header>
+              <ul class="flex flex-col text-sm">
+                <li><a href="/personal-de-seguridad/"      class="flex items-center justify-between border-b border-white/5 px-5 py-3 text-white/75 hover:bg-brand-500/5 hover:text-white"><span class="inline-flex items-center gap-2"><Icon name="shield" class="h-3.5 w-3.5 text-brand-400" />Personal de seguridad</span><Icon name="arrow" class="h-3 w-3" /></a></li>
+                <li><a href="/monitoreo-electronico/"      class="flex items-center justify-between border-b border-white/5 px-5 py-3 text-white/75 hover:bg-brand-500/5 hover:text-white"><span class="inline-flex items-center gap-2"><Icon name="cctv" class="h-3.5 w-3.5 text-brand-400" />Monitoreo electrónico</span><Icon name="arrow" class="h-3 w-3" /></a></li>
+                <li><a href="/control-de-acceso/"          class="flex items-center justify-between border-b border-white/5 px-5 py-3 text-white/75 hover:bg-brand-500/5 hover:text-white"><span class="inline-flex items-center gap-2"><Icon name="access" class="h-3.5 w-3.5 text-brand-400" />Control de acceso</span><Icon name="arrow" class="h-3 w-3" /></a></li>
+                <li><a href="/vigilancia-y-patrullaje/"    class="flex items-center justify-between border-b border-white/5 px-5 py-3 text-white/75 hover:bg-brand-500/5 hover:text-white"><span class="inline-flex items-center gap-2"><Icon name="patrol" class="h-3.5 w-3.5 text-brand-400" />Vigilancia y patrullaje</span><Icon name="arrow" class="h-3 w-3" /></a></li>
+                <li><a href="/alarmas-de-seguridad/"       class="flex items-center justify-between border-b border-white/5 px-5 py-3 text-white/75 hover:bg-brand-500/5 hover:text-white"><span class="inline-flex items-center gap-2"><Icon name="alert" class="h-3.5 w-3.5 text-brand-400" />Alarmas de seguridad</span><Icon name="arrow" class="h-3 w-3" /></a></li>
+                <li><a href="/consultoria-en-seguridad/"   class="flex items-center justify-between px-5 py-3 text-white/75 hover:bg-brand-500/5 hover:text-white"><span class="inline-flex items-center gap-2"><Icon name="check" class="h-3.5 w-3.5 text-brand-400" />Consultoría</span><Icon name="arrow" class="h-3 w-3" /></a></li>
+              </ul>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner />
+</BaseLayout>
+
+<!-- TOC scroll-spy -->
+<script is:inline>
+  (function () {
+    const toc = document.getElementById('article-toc');
+    const content = document.getElementById('article-content');
+    if (!toc || !content) return;
+
+    const links = Array.from(toc.querySelectorAll('a[data-toc-link]'));
+    const targets = links
+      .map((a) => document.getElementById(a.getAttribute('data-toc-link')))
+      .filter(Boolean);
+
+    if (targets.length === 0) return;
+
+    const activeCls = ['border-brand-500', 'bg-brand-500/10', 'text-white'];
+    const inactiveCls = ['border-transparent'];
+
+    function setActive(slug) {
+      links.forEach((a) => {
+        const isActive = a.getAttribute('data-toc-link') === slug;
+        if (isActive) {
+          a.classList.remove(...inactiveCls);
+          a.classList.add(...activeCls);
+        } else {
+          a.classList.remove(...activeCls);
+          a.classList.add(...inactiveCls);
+        }
+      });
+    }
+
+    const seen = new Map();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => seen.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0));
+        let topSlug = null;
+        let topRatio = 0;
+        seen.forEach((ratio, id) => {
+          if (ratio > topRatio) { topRatio = ratio; topSlug = id; }
+        });
+        if (topSlug) setActive(topSlug);
+      },
+      { rootMargin: '-100px 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    targets.forEach((t) => io.observe(t));
+    setActive(targets[0].id);
+  })();
+</script>
