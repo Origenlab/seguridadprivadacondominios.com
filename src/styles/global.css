@@ -24,9 +24,11 @@
 }
 
 @layer components {
-  /* Full-bleed: 100% del ancho con padding lateral cómodo */
+  /* Contenido centrado con tope de ancho + padding lateral cómodo.
+     Las bandas de color (header, chip-row, footer, CTA) siguen full-width
+     porque el bg vive en el <section>/<nav> padre; esto solo centra el contenido. */
   .container-pro {
-    @apply w-full px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-24;
+    @apply mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-14 xl:px-16;
   }
 
   /* Eyebrow estilo REDEIL: punto rojo + texto pequeño */
