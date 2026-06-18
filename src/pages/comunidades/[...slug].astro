@@ -51,7 +51,7 @@ const COMMUNITY_GALLERY: Record<string, GalleryItem[]> = {
 const gallery = COMMUNITY_GALLERY[entry.slug] ?? [];
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description}>
+<BaseLayout title={entry.data.seoTitle ?? entry.data.title} description={entry.data.seoDescription ?? entry.data.description}>
   <Breadcrumb items={[
     { label: 'Comunidades', href: '/comunidades/' },
     { label: entry.data.title },
@@ -109,7 +109,7 @@ const gallery = COMMUNITY_GALLERY[entry.slug] ?? [];
           <h2 class="text-2xl text-white">Servicios recomendados</h2>
           <div class="mt-6 grid gap-4 md:grid-cols-2">
             {recommended.map((s) => (
-              <a href={`/servicios/${s.slug}`} class="card-premium group">
+              <a href={`/${s.slug}/`} class="card-premium group">
                 <div class="flex items-center gap-4">
                   <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-500/15 text-brand-500">
                     <Icon name={s.data.icon} class="h-5 w-5" />

@@ -3,6 +3,9 @@ import { SITE, ZONAS_CDMX, ZONAS_EDOMEX } from '@/config/site';
 import Icon from '@/components/Icon.astro';
 const year = new Date().getFullYear();
 const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
+// El correo se ensambla en cliente (data-attrs + script) para no exponer el patrón email
+// al HTML servido. Evita que Cloudflare Email Obfuscation genere /cdn-cgi/l/email-protection (404).
+const [emailUser, emailDomain] = SITE.contact.email.split('@');
 ---
 
 <footer class="bg-ink-950">
@@ -43,9 +46,14 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
           </span>
           WhatsApp directo
         </a>
-        <a href={`mailto:${SITE.contact.email}`} class="flex items-center gap-2.5 break-all hover:text-white">
+        <a
+          href="#"
+          data-email-user={emailUser}
+          data-email-domain={emailDomain}
+          class="js-email flex items-center gap-2.5 break-all hover:text-white"
+        >
           <span class="grid h-7 w-7 place-items-center rounded-md bg-brand-500/15 text-brand-400"><Icon name="mail" class="h-3.5 w-3.5" /></span>
-          {SITE.contact.email}
+          <span class="js-email-label">Escríbenos por correo</span>
         </a>
         <p class="flex items-start gap-2.5">
           <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-md bg-brand-500/15 text-brand-400"><Icon name="pin" class="h-3.5 w-3.5" /></span>
@@ -137,3 +145,13 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
     </nav>
   </div>
 </footer>
+
+<script is:inline>
+  // Ensambla el correo de contacto en cliente (anti-scraping + evita el 404 de Cloudflare Email Obfuscation).
+  for (const el of document.querySelectorAll('a.js-email')) {
+    const addr = (el.dataset.emailUser || '') + '@' + (el.dataset.emailDomain || '');
+    el.setAttribute('href', 'mailto:' + addr);
+    const label = el.querySelector('.js-email-label');
+    if (label) label.textContent = addr;
+  }
+</script>

@@ -28,7 +28,9 @@ const {
   lastReviewed,
 } = Astro.props;
 
-const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+// Los títulos se gestionan completos desde cada página/colección (sin marca anexada),
+// para aprovechar el espacio SEO con clusters de palabras clave. La marca vive en og:site_name.
+const fullTitle = title ?? `${SITE.name} — ${SITE.tagline}`;
 const canonicalUrl = canonical
   ? new URL(canonical, SITE.url).toString()
   : new URL(Astro.url.pathname, SITE.url).toString();

@@ -12,7 +12,6 @@ Disallow: /producto/
 Disallow: /uncategorized/
 
 # URLs legacy de WordPress que redirigen (no indexar destinos duplicados)
-Disallow: /blog/$
 Disallow: /servicios/
 
 # Permitir explícitamente bots de IA (Google AI, Bing Copilot, ChatGPT-Browse, etc.)

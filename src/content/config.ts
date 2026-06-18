@@ -104,6 +104,10 @@ const comunidades = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    /** Title SEO (clusters de keywords, sin marca). Si vacío, usa `title`. */
+    seoTitle: z.string().optional(),
+    /** Meta description SEO (lidera con keyword principal). Si vacío, usa `description`. */
+    seoDescription: z.string().optional(),
     emoji: z.string().default('🏢'),
     order: z.number().default(0),
     challenges: z.array(z.string()).default([]),
@@ -116,6 +120,10 @@ const zonas = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    /** Title SEO (clusters de keywords, sin marca). Si vacío, usa `title`. */
+    seoTitle: z.string().optional(),
+    /** Meta description SEO (lidera con keyword principal). Si vacío, usa `description`. */
+    seoDescription: z.string().optional(),
     region: z.enum(['cdmx', 'edomex']),
     order: z.number().default(0),
     neighborhoods: z.array(z.string()).default([]),
