@@ -17,7 +17,7 @@ Generados para SEPRICO / Origins Private Security. 5 artículos MDX en `src/cont
 - **Palabras:** ~1,650
 - **Hook:** la pregunta que el comité termina haciendo a tres o cuatro proveedores
 - **Fuentes citadas:**
-  - [MercadoSeguridad — tarifas guardia 2025](https://www.mercadoseguridad.mx/blog/cuanto-cuesta-guardia-seguridad-precios)
+  - Datos de mercado de elaboración interna (sin enlaces a terceros / competencia)
 
 ---
 
@@ -70,7 +70,7 @@ Generados para SEPRICO / Origins Private Security. 5 artículos MDX en `src/cont
 - **Palabras:** ~1,600
 - **Hook:** dejó de ser accesorio; 29% de hogares mexicanos víctimas en 2024
 - **Fuentes citadas:**
-  - [ADT México — sistemas Sigfox](https://www.adt.com.mx/)
+  - Tecnología Sigfox/LPWAN (descripción genérica, sin enlaces a competencia)
   - [C5 CDMX — botón de auxilio virtual](https://www.c5.cdmx.gob.mx/canales-de-atencion-emergencias/boton-de-auxilio)
   - [INEGI ENVIPE 2025 — porcentaje hogares víctimas](https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/ENVIPE/ENVIPE_25.pdf)
 
