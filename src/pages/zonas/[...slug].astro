@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/Section.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
@@ -9,12 +10,12 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const items = await getCollection('zonas');
-  return items.map((e) => ({ params: { slug: e.slug }, props: { entry: e } }));
+  return items.map((e) => ({ params: { slug: e.id }, props: { entry: e } }));
 }
 
 interface Props { entry: CollectionEntry<'zonas'>; }
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const regionLabel = entry.data.region === 'cdmx' ? 'Ciudad de México' : 'Estado de México';
 const zoneShort = entry.data.title.replace('Seguridad para Condominios en ', '');
@@ -92,7 +93,7 @@ const ZONE_VISUALS: Record<string, { banner: { src: string; alt: string }; items
                               { src: '/images/banco/familias-mexicanas-condominio-seguro-01.avif',        alt: 'Familias mexicanas seguras en Metepec',                         caption: 'Familias seguras' },
                             ] },
 };
-const v = ZONE_VISUALS[entry.slug];
+const v = ZONE_VISUALS[entry.id];
 ---
 
 <BaseLayout title={entry.data.seoTitle ?? entry.data.title} description={entry.data.seoDescription ?? entry.data.description}>

@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/Section.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
@@ -34,7 +35,7 @@ if (!entry) {
   throw new Error(`Servicio no encontrado: ${slug}`);
 }
 
-const { Content, headings } = await entry.render();
+const { Content, headings } = await render(entry);
 const data = entry.data;
 
 // TOC: solo H2 (los H3 serían demasiado ruido en sidebar)

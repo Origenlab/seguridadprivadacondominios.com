@@ -64,7 +64,7 @@ const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SIT
       {recientes.map((p, i) => (
         <li class="border-b border-white/5 last:border-b-0">
           <a
-            href={`/${p.data.category}/${p.slug}/`}
+            href={`/${p.data.category}/${p.id}/`}
             class="group flex items-start gap-3 px-5 py-4 hover:bg-brand-500/5"
           >
             <span class="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-white/10 bg-ink-900 text-[11px] font-bold text-brand-400">

@@ -70,7 +70,7 @@ const featMeta = CAT_META[featured.data.category];
         <!-- ── Artículo destacado ── -->
         {featured && (
           <a
-            href={`/${featured.data.category}/${featured.slug}/`}
+            href={`/${featured.data.category}/${featured.id}/`}
             class="group mb-10 grid overflow-hidden rounded-2xl border border-white/10 bg-ink-800 md:grid-cols-5 hover:border-brand-500/40"
           >
             {/* Visual lateral */}
@@ -130,7 +130,7 @@ const featMeta = CAT_META[featured.data.category];
             const meta = CAT_META[p.data.category];
             return (
               <a
-                href={`/${p.data.category}/${p.slug}/`}
+                href={`/${p.data.category}/${p.id}/`}
                 class="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-800 hover:border-brand-500/40"
               >
                 {/* Visual header */}

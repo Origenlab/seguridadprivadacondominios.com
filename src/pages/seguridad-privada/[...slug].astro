@@ -6,7 +6,7 @@ export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) =>
     !data.draft && data.category === 'seguridad-privada'
   );
-  return posts.map((p) => ({ params: { slug: p.slug }, props: { entry: p } }));
+  return posts.map((p) => ({ params: { slug: p.id }, props: { entry: p } }));
 }
 
 interface Props { entry: CollectionEntry<'blog'>; }

@@ -27,7 +27,7 @@ const items = (await getCollection('comunidades')).sort(
   >
     <div class="grid gap-8 md:grid-cols-2">
       {items.map((c) => (
-        <a href={`/comunidades/${c.slug}`} class="card-premium group flex flex-col">
+        <a href={`/comunidades/${c.id}`} class="card-premium group flex flex-col">
           <div class="flex items-center justify-between">
             <span class="text-5xl">{c.data.emoji}</span>
             <Icon name="arrow" class="h-6 w-6 text-white/30" />

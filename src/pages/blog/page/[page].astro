@@ -59,7 +59,7 @@ const CAT_META: Record<string, { label: string; icon: string }> = {
             const meta = CAT_META[p.data.category];
             return (
               <a
-                href={`/${p.data.category}/${p.slug}/`}
+                href={`/${p.data.category}/${p.id}/`}
                 class="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-800 hover:border-brand-500/40"
               >
                 {/* Visual header */}

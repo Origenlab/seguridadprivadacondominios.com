@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Section from '@/components/Section.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
@@ -9,16 +10,16 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const items = await getCollection('comunidades');
-  return items.map((e) => ({ params: { slug: e.slug }, props: { entry: e } }));
+  return items.map((e) => ({ params: { slug: e.id }, props: { entry: e } }));
 }
 
 interface Props { entry: CollectionEntry<'comunidades'>; }
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const allServicios = await getCollection('servicios');
 const recommended = entry.data.recommended
-  .map((slug) => allServicios.find((s) => s.slug === slug))
+  .map((slug) => allServicios.find((s) => s.id === slug))
   .filter(Boolean) as CollectionEntry<'servicios'>[];
 
 // Galería específica por tipo de comunidad (alt SEO contextualizado)
@@ -48,7 +49,7 @@ const COMMUNITY_GALLERY: Record<string, GalleryItem[]> = {
     { src: '/images/banco/seguridad-privada-estacionamiento-condominio-01.avif', alt: `Seguridad en estacionamiento de torre vertical`,   caption: 'Estacionamiento' },
   ],
 };
-const gallery = COMMUNITY_GALLERY[entry.slug] ?? [];
+const gallery = COMMUNITY_GALLERY[entry.id] ?? [];
 ---
 
 <BaseLayout title={entry.data.seoTitle ?? entry.data.title} description={entry.data.seoDescription ?? entry.data.description}>
@@ -109,7 +110,7 @@ const gallery = COMMUNITY_GALLERY[entry.slug] ?? [];
           <h2 class="text-2xl text-white">Servicios recomendados</h2>
           <div class="mt-6 grid gap-4 md:grid-cols-2">
             {recommended.map((s) => (
-              <a href={`/${s.slug}/`} class="card-premium group">
+              <a href={`/${s.id}/`} class="card-premium group">
                 <div class="flex items-center gap-4">
                   <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-500/15 text-brand-500">
                     <Icon name={s.data.icon} class="h-5 w-5" />
