@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 /**
  * BlogArticle.astro — Template aprobado para artículos de blog (todas las categorías).
  *
@@ -40,7 +41,7 @@ interface Props {
 }
 
 const { entry, category } = Astro.props;
-const { Content, headings } = await entry.render();
+const { Content, headings } = await render(entry);
 
 // ── Reading time (≈220 wpm español) ──────────────────────────────
 const words = (entry.body ?? '').trim().split(/\s+/).length;
@@ -49,12 +50,12 @@ const readingMin = Math.max(1, Math.round(words / 220));
 // ── Posts relacionados (mismos tags, excluyendo el actual) ───────
 const all = await getCollection('blog', ({ data }) => !data.draft);
 const related = all
-  .filter((p) => p.slug !== entry.slug && p.data.tags.some((t) => entry.data.tags.includes(t)))
+  .filter((p) => p.id !== entry.id && p.data.tags.some((t) => entry.data.tags.includes(t)))
   .slice(0, 3);
 
 // ── URLs / contactos ─────────────────────────────────────────────
 const wa = `https://wa.me/${SITE.contact.whatsapp}?text=${encodeURIComponent(SITE.contact.whatsappMessage)}`;
-const canonical = `${SITE.url}/${category.slug}/${entry.slug}/`;
+const canonical = `${SITE.url}/${category.slug}/${entry.id}/`;
 const heroImageRel = entry.data.image;
 const ogImage = heroImageRel
   ? new URL(heroImageRel, SITE.url).toString()
@@ -378,7 +379,7 @@ const heroAsideP2 = `Lectura aproximada: <strong class="text-white">${readingMin
               <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {related.map((p) => (
                   <a
-                    href={`/${p.data.category}/${p.slug}/`}
+                    href={`/${p.data.category}/${p.id}/`}
                     class="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-ink-900 hover:border-brand-500/40"
                   >
                     <div class="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-ink-700 via-ink-800 to-ink-900">

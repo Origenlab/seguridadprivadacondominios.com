@@ -29,7 +29,7 @@ const edomex = all.filter((z) => z.data.region === 'edomex').sort((a, b) => a.da
       <h2 class="text-2xl text-brand-500">Ciudad de México</h2>
       <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {cdmx.map((z) => (
-          <a href={`/zonas/${z.slug}`} class="card-premium group">
+          <a href={`/zonas/${z.id}`} class="card-premium group">
             <div class="flex items-center justify-between">
               <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
                 <Icon name="pin" class="h-5 w-5" />
@@ -47,7 +47,7 @@ const edomex = all.filter((z) => z.data.region === 'edomex').sort((a, b) => a.da
       <h2 class="text-2xl text-brand-500">Estado de México</h2>
       <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {edomex.map((z) => (
-          <a href={`/zonas/${z.slug}`} class="card-premium group">
+          <a href={`/zonas/${z.id}`} class="card-premium group">
             <div class="flex items-center justify-between">
               <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-500/15 text-brand-500">
                 <Icon name="pin" class="h-5 w-5" />
