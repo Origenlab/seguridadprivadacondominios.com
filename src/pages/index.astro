@@ -13,12 +13,14 @@ import ValueProps from '@/components/ValueProps.astro';
 import Communities from '@/components/Communities.astro';
 import Testimonials from '@/components/Testimonials.astro';
 import Faq from '@/components/Faq.astro';
+import SchemaFaq from '@/components/SchemaFaq.astro';
 import ImageGallery from '@/components/ImageGallery.astro';
+import { FAQS } from '@/config/site';
 ---
 
 <BaseLayout
-  title="Seguridad Privada para Condominios | Empresa de Seguridad Privada | Vigilancia 24/7"
-  description="Seguridad privada para condominios con guardias SETEC, monitoreo 24/7 y control de acceso. Empresa de seguridad privada con 25 años en CDMX y Estado de México."
+  title="SEPRICO | Seguridad Privada para Condominios en CDMX | 25 Años"
+  description="Empresa especializada exclusivamente en condominios desde el año 2000. +120 comunidades, personal SETEC, permiso SSPC vigente, ejecutivo dedicado. Cotización gratis en 48h: 55 3628 2480."
 >
   <Hero
     label="Empresa de seguridad privada · Desde el año 2000"
@@ -128,6 +130,7 @@ import ImageGallery from '@/components/ImageGallery.astro';
   >
     <Faq />
   </Section>
+  <SchemaFaq items={FAQS} />
 
   <QuickNavBottom />
 </BaseLayout>

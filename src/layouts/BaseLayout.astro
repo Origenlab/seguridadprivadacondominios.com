@@ -39,6 +39,20 @@ const orgSchema = {
   email: SITE.contact.email,
   foundingDate: String(SITE.founded),
   slogan: SITE.tagline,
+  hasCredential: [
+    {
+      '@type': 'EducationalOccupationalCredential',
+      name: 'Permiso Federal SSPC — Empresa de Seguridad Privada',
+      credentialCategory: 'Permiso de Operación Federal',
+      recognizedBy: { '@type': 'GovernmentOrganization', name: 'Secretaría de Seguridad y Protección Ciudadana (SSPC)' },
+    },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      name: 'Capacitación SETEC — Personal de Seguridad Privada',
+      credentialCategory: 'Certificación de Personal',
+      recognizedBy: { '@type': 'GovernmentOrganization', name: 'SETEC — Sistema Nacional de Desarrollo Policial' },
+    },
+  ],
   priceRange: '$$',
   areaServed: SITE.coverage.map((c) => ({ '@type': 'AdministrativeArea', name: c })),
   serviceArea: SITE.coverage.map((c) => ({ '@type': 'AdministrativeArea', name: c })),
