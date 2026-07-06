@@ -13,7 +13,7 @@
 |---|---|
 | Marca | **SEPRICO** (Origins Private Security) |
 | Tagline | "Soluciones integrales que garantizan tranquilidad" |
-| WhatsApp (home) | +52 1 55 3628 2480 (`5636282480` en algunas referencias) |
+| WhatsApp (home) | +52 1 55 1079 6404 (`5610796404` en algunas referencias) |
 | Plataforma | WordPress + WooCommerce |
 | Idioma | español MX |
 | Sitemap XML | **No expuesto** públicamente (404 en `/sitemap.xml`, `/wp-sitemap.xml`) |
@@ -125,7 +125,7 @@ ORIGINS PRIVATE SECURITY (logo, link a /)
 └── CONTACTO (dropdown)         → /empresa-de-seguridad-privada-para-condominios/
 ```
 
-WhatsApp flotante: `https://api.whatsapp.com/send?phone=+5215636282480`
+WhatsApp flotante: `https://api.whatsapp.com/send?phone=+5215510796404`
 
 ---
 
@@ -170,7 +170,7 @@ WhatsApp flotante: `https://api.whatsapp.com/send?phone=+5215636282480`
 - Sidebar con destacados de productos
 
 ### Contacto (`/empresa-de-seguridad-privada-para-condominios/`)
-- Teléfono: **5636282480**
+- Teléfono: **5610796404**
 - Formulario: nombre, correo, asunto, mensaje
 - Bloques de copy: compromiso, aviso de privacidad
 - Link a aviso de privacidad

@@ -21,9 +21,9 @@ export const SITE = {
     respuestaLabel: 'Respuesta WhatsApp',
   },
   contact: {
-    phone: '+52 55 3628 2480',
-    phoneDisplay: '55 3628 2480',
-    whatsapp: '525536282480',
+    phone: '+52 55 1079 6404',
+    phoneDisplay: '55 1079 6404',
+    whatsapp: '525510796404',
     whatsappMessage: 'Requiero información por favor',
     email: 'contacto@seguridadprivadacondominios.com',
     address: 'CDMX y Estado de México',
@@ -299,6 +299,6 @@ export const FAQS = [
   },
   {
     q: '¿Cuánto cuesta el servicio de seguridad privada para un condominio en CDMX en 2025?',
-    a: 'El costo del servicio de seguridad para un condominio en CDMX varía según el número de guardias, turnos, tecnología integrada (CCTV, control de acceso biométrico) y tipo de comunidad (torre vertical, fraccionamiento, residencial premium). SEPRICO ofrece tres paquetes: Básico para comunidades pequeñas, Avanzado para comunidades medianas y Premium para desarrollos de más de 200 unidades con patrullaje motorizado y consultoría dedicada. La cotización incluye auditoría gratuita en sitio y propuesta económica desglosada en menos de 48 horas hábiles. Contacto: 55 3628 2480.',
+    a: 'El costo del servicio de seguridad para un condominio en CDMX varía según el número de guardias, turnos, tecnología integrada (CCTV, control de acceso biométrico) y tipo de comunidad (torre vertical, fraccionamiento, residencial premium). SEPRICO ofrece tres paquetes: Básico para comunidades pequeñas, Avanzado para comunidades medianas y Premium para desarrollos de más de 200 unidades con patrullaje motorizado y consultoría dedicada. La cotización incluye auditoría gratuita en sitio y propuesta económica desglosada en menos de 48 horas hábiles. Contacto: 55 1079 6404.',
   },
 ] as const;

@@ -7,7 +7,7 @@ tags: [roadmap, pendientes]
 ## Pendientes inmediatos (antes de publicar)
 
 ### Datos reales
-- [ ] Confirmar teléfono y WhatsApp con el cliente (actualmente: 55 3628 2480)
+- [ ] Confirmar teléfono y WhatsApp con el cliente (actualmente: 55 1079 6404)
 - [ ] Confirmar email de contacto (actualmente: contacto@seguridadprivadacondominios.com)
 - [ ] Validar la cifra "+120 comunidades atendidas"
 - [ ] Validar año de fundación (actualmente: 2000)

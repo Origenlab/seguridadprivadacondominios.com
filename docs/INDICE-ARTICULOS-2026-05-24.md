@@ -13,7 +13,7 @@ Generados para SEPRICO / Origins Private Security. 5 artículos MDX en `src/cont
 - **Keywords secundarias / LSI:** cuánto cuesta seguridad privada CDMX, tarifa guardia condominio, cotización seguridad fraccionamiento, precio vigilancia 24/7 residencial, costo guardias condominio mensual
 - **Intención de búsqueda:** TRANSACTIONAL (alta intención comercial; comité comparando antes de firmar)
 - **Meta description (151 chars):** Tarifas 2026 de seguridad privada para condominios y fraccionamientos en CDMX y Edomex: rangos por turno, qué incluye un costo legítimo y cómo leer una cotización para no pagar de más.
-- **CTA elegido:** Solicitar cotización formal vía `/contacto/` + WhatsApp directo `+52 55 3628 2480`
+- **CTA elegido:** Solicitar cotización formal vía `/contacto/` + WhatsApp directo `+52 55 1079 6404`
 - **Palabras:** ~1,650
 - **Hook:** la pregunta que el comité termina haciendo a tres o cuatro proveedores
 - **Fuentes citadas:**

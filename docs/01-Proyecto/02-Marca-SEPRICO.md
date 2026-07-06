@@ -13,8 +13,8 @@ tags: [marca, branding, datos]
 ## Datos de contacto
 | Canal | Valor |
 |---|---|
-| Teléfono | +52 55 3628 2480 |
-| WhatsApp | 525536282480 |
+| Teléfono | +52 55 1079 6404 |
+| WhatsApp | 525510796404 |
 | Email | contacto@seguridadprivadacondominios.com |
 | Cobertura | CDMX + Estado de México (ZMVM) |
 | Horario | 24/7 los 365 días |

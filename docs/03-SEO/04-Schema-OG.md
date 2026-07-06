@@ -14,7 +14,7 @@ Cada página renderiza schema `SecurityService`:
   "@type": "SecurityService",
   "name": "SEPRICO",
   "url": "https://seguridadprivadacondominios.com",
-  "telephone": "+52 55 3628 2480",
+  "telephone": "+52 55 1079 6404",
   "email": "contacto@seguridadprivadacondominios.com",
   "areaServed": [
     { "@type": "AdministrativeArea", "name": "Ciudad de México" },
